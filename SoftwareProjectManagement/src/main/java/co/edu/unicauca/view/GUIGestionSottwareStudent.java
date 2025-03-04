@@ -28,28 +28,149 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
+        lblestdudiante = new javax.swing.JLabel();
+        txttipo = new javax.swing.JTextField();
+        pnlopciones = new javax.swing.JPanel();
+        btnproyectos = new javax.swing.JButton();
+        btnmisproyectos = new javax.swing.JButton();
+        pnltabla = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnsalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(953, 700));
+
+        jPanel1.setBackground(new java.awt.Color(242, 247, 249));
 
         lblTitulo.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(9, 33, 103));
         lblTitulo.setText("            Gestion de Proyectos Sofware Academicos de ingenieria de sistemas");
 
+        lblestdudiante.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblestdudiante.setForeground(new java.awt.Color(9, 33, 104));
+        lblestdudiante.setText("Estudiante");
+
+        txttipo.setBackground(new java.awt.Color(211, 211, 211));
+        txttipo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txttipo.setEnabled(false);
+
+        pnlopciones.setBackground(new java.awt.Color(255, 255, 255));
+        pnlopciones.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+
+        btnproyectos.setBackground(new java.awt.Color(0, 0, 0));
+        btnproyectos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnproyectos.setForeground(new java.awt.Color(52, 52, 52));
+        btnproyectos.setText("Proyectos");
+        btnproyectos.setBorderPainted(false);
+        btnproyectos.setContentAreaFilled(false);
+
+        btnmisproyectos.setBackground(new java.awt.Color(0, 0, 0));
+        btnmisproyectos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnmisproyectos.setForeground(new java.awt.Color(52, 52, 52));
+        btnmisproyectos.setText("Mis Proyectos");
+        btnmisproyectos.setBorderPainted(false);
+        btnmisproyectos.setContentAreaFilled(false);
+
+        javax.swing.GroupLayout pnlopcionesLayout = new javax.swing.GroupLayout(pnlopciones);
+        pnlopciones.setLayout(pnlopcionesLayout);
+        pnlopcionesLayout.setHorizontalGroup(
+            pnlopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlopcionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnproyectos)
+                .addGap(38, 38, 38)
+                .addComponent(btnmisproyectos)
+                .addContainerGap(258, Short.MAX_VALUE))
+        );
+        pnlopcionesLayout.setVerticalGroup(
+            pnlopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlopcionesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnproyectos)
+                    .addComponent(btnmisproyectos))
+                .addContainerGap())
+        );
+
+        pnltabla.setBackground(new java.awt.Color(242, 247, 249));
+        pnltabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Numero", "Fecha de Publicacion", "Nombre de la Empresa", "Nombre del Proyecto", "Detalles"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout pnltablaLayout = new javax.swing.GroupLayout(pnltabla);
+        pnltabla.setLayout(pnltablaLayout);
+        pnltablaLayout.setHorizontalGroup(
+            pnltablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+        );
+        pnltablaLayout.setVerticalGroup(
+            pnltablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnltablaLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        btnsalir.setBackground(new java.awt.Color(223, 224, 226));
+        btnsalir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnsalir.setForeground(new java.awt.Color(52, 52, 52));
+        btnsalir.setText("Salir");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
-                .addComponent(lblTitulo)
-                .addGap(104, 104, 104))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(btnsalir)
+                        .addGap(131, 131, 131)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnltabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txttipo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(lblTitulo))
+                            .addComponent(lblestdudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(615, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(587, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblestdudiante)
+                        .addGap(516, 516, 516)
+                        .addComponent(btnsalir))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(pnlopciones, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnltabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,7 +225,16 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnmisproyectos;
+    private javax.swing.JButton btnproyectos;
+    private javax.swing.JButton btnsalir;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblestdudiante;
+    private javax.swing.JPanel pnlopciones;
+    private javax.swing.JPanel pnltabla;
+    private javax.swing.JTextField txttipo;
     // End of variables declaration//GEN-END:variables
 }

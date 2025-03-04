@@ -36,6 +36,9 @@ public class GUIRecordType extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(242, 247, 249));
+        jPanel1.setForeground(new java.awt.Color(242, 247, 249));
+
         lbltipoderegistro.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lbltipoderegistro.setForeground(new java.awt.Color(35, 38, 107));
         lbltipoderegistro.setText("Tipo de Registro");
