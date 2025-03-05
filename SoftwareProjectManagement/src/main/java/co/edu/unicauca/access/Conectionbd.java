@@ -1,5 +1,5 @@
 
-package co.edu.unicauca.model;
+package co.edu.unicauca.access;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

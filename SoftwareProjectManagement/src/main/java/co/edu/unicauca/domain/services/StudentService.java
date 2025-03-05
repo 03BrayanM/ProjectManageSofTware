@@ -1,9 +1,11 @@
-
-package co.edu.unicauca.controller;
+package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.interfaces.IGestor;
-import co.edu.unicauca.model.Conectionbd;
-import co.edu.unicauca.model.Student;
+import co.edu.unicauca.access.Conectionbd;
+import co.edu.unicauca.access.IRepository;
+import co.edu.unicauca.domain.entities.Student;
+import co.edu.unicauca.infra.Messages;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,15 +15,20 @@ import javax.swing.JOptionPane;
  *
  * @author Brayan
  */
-public class StudentControler  implements IGestor{
+public class StudentService {
 
-    @Override
-    public boolean Registrarusuario(Object usuario) {
-        Student estudiante=(Student)usuario;
+    private IRepository repository;
+
+    public StudentService(IRepository repository) {
+        this.repository = repository;
+    }
+
+    public boolean RegistrarStudent(Object usuario) {
+        Student estudiante = (Student) usuario;
         Connection conexion = Conectionbd.conectar(); // Conexión a la BD
 
         if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+             Messages.showMessageDialog("Error de conexion", "Atención");
             return false;
         }
 
@@ -46,5 +53,3 @@ public class StudentControler  implements IGestor{
         }
     }
 }
-    
-

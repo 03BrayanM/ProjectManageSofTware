@@ -4,9 +4,12 @@
  */
 package co.edu.unicauca.view;
 
-import co.edu.unicauca.controller.Controler;
+import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.interfaces.IGestor;
-import co.edu.unicauca.model.Student;
+import co.edu.unicauca.domain.entities.Student;
+import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.Messages;
+import com.google.protobuf.Message;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +21,10 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     /**
      * Creates new form GUIRegisterCompany
      */
-    public GUIRegisterStudent() {
+    StudentService servicestudent;
+    public GUIRegisterStudent(StudentService student) 
+    {
+        this.servicestudent = student;
         initComponents();
     }
 
@@ -273,9 +279,9 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
         String telefono = txttelefono.getText().trim();
         
         Student estudiante= new Student(nombre, cedula, codigo, email, telefono);
-        IGestor gestion = Controler.getInstance().getTipoUsuario("estudiante");
-        if (gestion.Registrarusuario(estudiante)) {
-            JOptionPane.showMessageDialog(null, "Registro exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        boolean res= servicestudent.RegistrarStudent(estudiante);
+        if (res) {
+                       Messages.showMessageDialog("Agregado correctamente", "Atención");
         } 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -290,38 +296,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIRegisterStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIRegisterStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIRegisterStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIRegisterStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIRegisterStudent().setVisible(true);
-            }
-        });
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnvolver;
