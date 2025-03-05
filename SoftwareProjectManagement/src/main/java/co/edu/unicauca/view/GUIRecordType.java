@@ -36,18 +36,24 @@ public class GUIRecordType extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(242, 247, 249));
+
         lbltipoderegistro.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lbltipoderegistro.setForeground(new java.awt.Color(35, 38, 107));
         lbltipoderegistro.setText("Tipo de Registro");
 
+        lblenunciado.setBackground(new java.awt.Color(255, 255, 255));
         lblenunciado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblenunciado.setForeground(new java.awt.Color(0, 0, 0));
         lblenunciado.setText("Por favor seleccione el tipo de resgitro deseado:");
 
         lbltiporegistro1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbltiporegistro1.setForeground(new java.awt.Color(35, 38, 107));
         lbltiporegistro1.setText("Tipo");
 
+        cbxtipo.setBackground(new java.awt.Color(255, 255, 255));
         cbxtipo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cbxtipo.setForeground(new java.awt.Color(0, 0, 0));
         cbxtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Empresa" }));
         cbxtipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
