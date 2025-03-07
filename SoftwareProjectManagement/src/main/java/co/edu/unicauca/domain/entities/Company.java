@@ -4,7 +4,6 @@
  */
 package co.edu.unicauca.domain.entities;
 
-import co.edu.unicauca.interfaces.IGestor;
 
 /**
  *

@@ -4,7 +4,7 @@
  */
 package co.edu.unicauca.domain.entities;
 
-import co.edu.unicauca.access.ICoordinatorRepository;
+import co.edu.unicauca.interfaces.ICoordinatorRepository;
 
 /**
  *

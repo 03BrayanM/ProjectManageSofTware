@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.interfaces.IStudentRepository;
 import co.edu.unicauca.domain.entities.Student;
 import java.util.List;
 

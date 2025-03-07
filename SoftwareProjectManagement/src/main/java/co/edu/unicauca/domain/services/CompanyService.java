@@ -3,7 +3,7 @@ package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.access.Conectionbd;
-import co.edu.unicauca.access.IRepository;
+import co.edu.unicauca.interfaces.IRepository;
 import javax.swing.JOptionPane; // Importar para mostrar mensajes en la GUI
 import java.sql.*;
 import java.util.ArrayList;

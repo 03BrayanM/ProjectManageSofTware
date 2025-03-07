@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.interfaces.ICoordinatorRepository;
 import co.edu.unicauca.domain.entities.Coordination;
 import java.util.List;
 

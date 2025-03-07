@@ -1,4 +1,4 @@
-package co.edu.unicauca.access;
+package co.edu.unicauca.interfaces;
 
 
 public interface IRepository {
