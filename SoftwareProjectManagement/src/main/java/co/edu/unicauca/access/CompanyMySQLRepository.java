@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.domain.entities.Company;
 import java.util.List;
 

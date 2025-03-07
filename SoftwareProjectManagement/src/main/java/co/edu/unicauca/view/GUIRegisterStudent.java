@@ -4,13 +4,9 @@
  */
 package co.edu.unicauca.view;
 
-import co.edu.unicauca.access.Factory;
-import co.edu.unicauca.interfaces.IGestor;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
-import com.google.protobuf.Message;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -279,7 +275,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
         String telefono = txttelefono.getText().trim();
         
         Student estudiante= new Student(nombre, cedula, codigo, email, telefono);
-        boolean res= servicestudent.RegistrarStudent(estudiante);
+        boolean res= servicestudent.registreStudent(estudiante);
         if (res) {
                        Messages.showMessageDialog("Agregado correctamente", "Atención");
         } 

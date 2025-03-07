@@ -3,7 +3,6 @@ package co.edu.unicauca.view;
 import javax.swing.JOptionPane; // Importar para mostrar mensajes en la GUI
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.access.Factory;
-import co.edu.unicauca.interfaces.IGestor;
 import co.edu.unicauca.domain.entities.Company;
 import javax.swing.JOptionPane;
 

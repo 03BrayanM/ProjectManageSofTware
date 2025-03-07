@@ -4,6 +4,8 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.interfaces.IRepository;
+
 /**
  *
  * @author Brayan
