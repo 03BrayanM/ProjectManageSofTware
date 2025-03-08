@@ -1,27 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package co.edu.unicauca.access;
 
-package co.edu.unicauca.controller;
-
-import co.edu.unicauca.interfaces.IGestor;
-import co.edu.unicauca.model.Conectionbd;
-import co.edu.unicauca.model.Student;
+import co.edu.unicauca.interfaces.IStudentRepository;
+import co.edu.unicauca.domain.entities.Student;
+import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Brayan
  */
-public class StudentControler  implements IGestor{
+public class StudentMySQLRepository implements IStudentRepository{
+
+
+    
 
     @Override
-    public boolean Registrarusuario(Object usuario) {
-        Student estudiante=(Student)usuario;
+    public boolean delete(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean save(Object usuario) {
+        Student estudiante = (Student) usuario;
         Connection conexion = Conectionbd.conectar(); // Conexión a la BD
 
         if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error de conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+             Messages.showMessageDialog("Error de conexion", "Atención");
             return false;
         }
 
@@ -45,6 +57,10 @@ public class StudentControler  implements IGestor{
             return false;  // Hubo un error
         }
     }
-}
-    
 
+    @Override
+    public boolean update(Object entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+}

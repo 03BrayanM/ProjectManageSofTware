@@ -4,11 +4,12 @@
  */
 package co.edu.unicauca.interfaces;
 
+import co.edu.unicauca.domain.entities.Coordination;
+
 /**
  *
  * @author Brayan
  */
-public interface IGestor {
+public interface ICoordinatorRepository extends IRepository {
     
-  boolean Registrarusuario(Object usuario);
 }

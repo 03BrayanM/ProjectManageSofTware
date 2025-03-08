@@ -338,9 +338,6 @@
                 <Property name="name" type="java.lang.String" value="lblName" noResource="true"/>
                 <Property name="text" type="java.lang.String" value="Nombre"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombre"/>
-              </AccessibilityProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtnombre">
             </Component>

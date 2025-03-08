@@ -1,10 +1,9 @@
 package co.edu.unicauca.view;
 
 import javax.swing.JOptionPane; // Importar para mostrar mensajes en la GUI
-import co.edu.unicauca.controller.CompanyControler;
-import co.edu.unicauca.controller.Controler;
-import co.edu.unicauca.interfaces.IGestor;
-import co.edu.unicauca.model.Company;
+import co.edu.unicauca.domain.services.CompanyService;
+import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.Company;
 import javax.swing.JOptionPane;
 
 /**
@@ -269,10 +268,10 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         String sector = cbxsector.getSelectedItem().toString().trim();
 
         Company empresa = new Company(WIDTH, nombre, email, sector, nombrecontacto, apellido, sector);
-        IGestor gestion = Controler.getInstance().getTipoUsuario("empresa");
+      /*  IGestor gestion = Factory.getInstance().getTipoUsuario("empresa");
         if (gestion.Registrarusuario(empresa)) {
             JOptionPane.showMessageDialog(null, "Registro exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } 
+        } */
 
 
     }//GEN-LAST:event_btnregistrarActionPerformed

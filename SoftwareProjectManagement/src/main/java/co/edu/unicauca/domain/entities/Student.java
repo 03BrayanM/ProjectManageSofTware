@@ -1,4 +1,4 @@
-package co.edu.unicauca.model;
+package co.edu.unicauca.domain.entities;
 
 public class Student {
 
