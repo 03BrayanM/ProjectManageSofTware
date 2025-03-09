@@ -4,13 +4,16 @@
  */
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.interfaces.IProjectObserver;
+import co.edu.unicauca.interfaces.IRepository;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,11 +23,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver{
 
-    private ProjectService projectService;
+     ProjectService projectService;
     
-    public GUIGestionSofwareCoordination() {
-        initComponents();
-        agregarEventos();
+    public GUIGestionSofwareCoordination(ProjectService projectService) {
+       initComponents();
+       agregarEventos();
        this.projectService=projectService;
        this.projectService.agregarObservador(this);
        
@@ -293,13 +296,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIGestionSofwareCoordination().setVisible(true);
-            }
-        });
-    }
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -366,5 +363,17 @@ public static void main(String args[]) {
     }
 }
 
+private void abrirGUICoordinador() {
+    // Obtener el repositorio de proyectos desde la fábrica
+    IRepository projectRepository = Factory.getInstance().getRepository("project");
+
+    // Crear el servicio de proyectos con su repositorio
+    ProjectService projectService = new ProjectService(projectRepository);
+
+    // Instanciar la GUI del coordinador y mostrarla
+    GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+    instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    instance.setVisible(true);
+}
 
 }

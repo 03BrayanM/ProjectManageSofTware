@@ -13,6 +13,7 @@ public class Factory {
         dictionary = new HashMap<>();
         dictionary.put("company", new CompanyMySQLRepository());
         dictionary.put("student", new StudentMySQLRepository());
+        dictionary.put("project",new ProyectMySQLRepository());
         
     }
 
