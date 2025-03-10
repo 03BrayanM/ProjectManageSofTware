@@ -30,6 +30,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
        agregarEventos();
        this.projectService=projectService;
        this.projectService.agregarObservador(this);
+       actualizarTablaP(projectService.obtenerProyectos());
        
     }
     
@@ -330,22 +331,22 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
-        actualizarTablaP();
+        actualizarTablaP(proyectos);
     }
     private void agregarEventos() {
     lblProyectos.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            actualizarTablaP();
+            actualizarTablaP(projectService.obtenerProyectos());
         }
     });
 }
-    private void actualizarTablaP() {
+    private void actualizarTablaP(List<Project> proyectos) {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.setRowCount(0); // Limpiar la tabla
     model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
-    List<Project> proyectos = projectService.obtenerProyectos();
+    //List<Project> proyectos = projectService.obtenerProyectos();
     if (proyectos == null || proyectos.isEmpty()) {
         JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
         return; // Salir del método para no procesar datos vacíos

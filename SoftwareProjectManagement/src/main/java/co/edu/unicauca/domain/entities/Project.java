@@ -37,7 +37,7 @@ public class Project {
         this.tiempo = tiempo;
         this.presupuesto = presupuesto;
         this.fecha = fecha;
-        this.estado = estado;
+        this.estado = "Aceptado";
         this.nombreEmpresa = nombreEmpresa;
     }
 

@@ -57,12 +57,14 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtnombre = new javax.swing.JTextField();
         txtempresa = new javax.swing.JTextField();
         txtfecha = new javax.swing.JTextField();
-        txtpresupuesto = new javax.swing.JTextField();
         txttiempo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        cbxEstado = new javax.swing.JComboBox<>();
+        btnaceptar = new javax.swing.JButton();
+        btnrechazar = new javax.swing.JButton();
+        txtpresupuesto = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
+        txtnombre1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -259,11 +261,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtfecha.setBorder(null);
         txtfecha.setEnabled(false);
 
-        txtpresupuesto.setBackground(new java.awt.Color(228, 228, 228));
-        txtpresupuesto.setForeground(new java.awt.Color(0, 0, 0));
-        txtpresupuesto.setBorder(null);
-        txtpresupuesto.setEnabled(false);
-
         txttiempo.setBackground(new java.awt.Color(228, 228, 228));
         txttiempo.setForeground(new java.awt.Color(0, 0, 0));
         txttiempo.setBorder(null);
@@ -295,9 +292,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txttiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(txttiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -319,10 +314,8 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txttiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel6)
                 .addGap(29, 29, 29))
         );
 
@@ -330,9 +323,18 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Estado");
 
-        cbxEstado.setBackground(new java.awt.Color(247, 247, 247));
-        cbxEstado.setForeground(new java.awt.Color(0, 0, 0));
-        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btnaceptar.setBackground(new java.awt.Color(9, 33, 103));
+        btnaceptar.setForeground(new java.awt.Color(255, 255, 255));
+        btnaceptar.setText("Aceptar");
+
+        btnrechazar.setBackground(new java.awt.Color(9, 33, 103));
+        btnrechazar.setForeground(new java.awt.Color(255, 255, 255));
+        btnrechazar.setText("Rechazar");
+
+        txtpresupuesto.setBackground(new java.awt.Color(228, 228, 228));
+        txtpresupuesto.setForeground(new java.awt.Color(0, 0, 0));
+        txtpresupuesto.setBorder(null);
+        txtpresupuesto.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -343,16 +345,21 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                     .addComponent(txtInformacion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 17, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnaceptar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnrechazar)
+                                .addGap(20, 20, 20)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -366,7 +373,9 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnaceptar)
+                    .addComponent(btnrechazar)
+                    .addComponent(txtpresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -390,8 +399,13 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
+
+        txtnombre1.setBackground(new java.awt.Color(228, 228, 228));
+        txtnombre1.setForeground(new java.awt.Color(0, 0, 0));
+        txtnombre1.setBorder(null);
+        txtnombre1.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -430,6 +444,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(344, 344, 344)
+                    .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(345, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,6 +480,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(292, 292, 292)
+                    .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(293, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -528,7 +552,8 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarEstudiante;
-    private javax.swing.JComboBox<String> cbxEstado;
+    private javax.swing.JButton btnaceptar;
+    private javax.swing.JButton btnrechazar;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -559,6 +584,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private javax.swing.JTextField txtempresa;
     private javax.swing.JTextField txtfecha;
     private javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txtnombre1;
     private javax.swing.JTextField txtnombrecordinador;
     private javax.swing.JTextField txtobjetivos;
     private javax.swing.JTextField txtpresupuesto;
