@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author RoLoNeGaTiVo
  */
 public class GUIDetalleProyecto extends javax.swing.JFrame {
-    
+    //hola
     private int idProyecto;
     private int idUsuario;
 
