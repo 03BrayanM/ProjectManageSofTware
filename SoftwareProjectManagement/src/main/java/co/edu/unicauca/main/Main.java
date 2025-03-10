@@ -24,6 +24,6 @@ public class Main {
         ProjectService serviceProyect = new ProjectService(projectRepository);
         //GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
         
-        GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"01");
+        GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
         instance.setVisible(true);
 }}

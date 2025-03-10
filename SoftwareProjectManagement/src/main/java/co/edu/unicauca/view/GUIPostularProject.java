@@ -24,6 +24,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
     private String nit;
     public GUIPostularProject(JFrame parent,ProjectService projectService,IFrameEventListener listener,String nit) {
         super(parent, "Nueva projecto", true);
+        this.nit=nit;
         this.projectService = projectService;
         this.listener = listener;
         initComponents();
