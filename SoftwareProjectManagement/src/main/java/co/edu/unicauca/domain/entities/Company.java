@@ -18,11 +18,11 @@ public class Company {
     private String nombrecontaccto;
     private String apellido;
     private String sector;
-
+    private String cargo;
     public Company() {
     }
 
-    public Company(int nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector) {
+    public Company(int nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo) {
         this.nit = nit;
         this.nombre = nombre;
         this.email = email;
@@ -30,6 +30,15 @@ public class Company {
         this.nombrecontaccto = nombrecontaccto;
         this.apellido = apellido;
         this.sector = sector;
+        this.cargo = cargo;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public int getNit() {
