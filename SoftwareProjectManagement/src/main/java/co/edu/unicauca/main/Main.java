@@ -1,16 +1,9 @@
 package co.edu.unicauca.main;
-
-import co.edu.unicauca.access.Factory;
-import co.edu.unicauca.interfaces.ICompanyRepository;
-import co.edu.unicauca.interfaces.IRepository;
-import co.edu.unicauca.domain.services.CompanyService;
-import co.edu.unicauca.domain.services.ProjectService;
-import co.edu.unicauca.domain.services.StudentService;
-import co.edu.unicauca.view.GUILoginEmpresa;
-import co.edu.unicauca.view.GUIRegisterStudent;
+import co.edu.unicauca.view.GUILogin;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+
 public class Main {
+<<<<<<< HEAD
     
  public static void main(String[] args) {
      
@@ -25,5 +18,3 @@ public class Main {
         //GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
         
         GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
-        instance.setVisible(true);
-}}
