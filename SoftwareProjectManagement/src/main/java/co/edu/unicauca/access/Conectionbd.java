@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Conectionbd {
     // Datos de conexión
-    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String url = "jdbc:mysql://localhost:3306/ingsoftware2";
     private static final String user = "root"; // Cambia si usas otro usuario
     private static final String password = "oracle"; // Cambia por tu contraseña
 

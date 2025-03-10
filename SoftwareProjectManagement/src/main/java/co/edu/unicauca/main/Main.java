@@ -1,5 +1,4 @@
 package co.edu.unicauca.main;
-
 import co.edu.unicauca.view.GUILogin;
 import javax.swing.JFrame;
 
