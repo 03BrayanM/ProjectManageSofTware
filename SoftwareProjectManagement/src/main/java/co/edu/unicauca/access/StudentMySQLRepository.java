@@ -38,7 +38,7 @@ public class StudentMySQLRepository implements IStudentRepository{
         }
 
         try {
-            String sql = "{CALL sp_registrar_estudiante(?, ?, ?, ?, ?)}";
+            String sql = "{CALL RegistrarEstudiante(?, ?, ?, ?, ?)}";
             CallableStatement stmt = conexion.prepareCall(sql);
 
             stmt.setInt(1, estudiante.getCodigo());

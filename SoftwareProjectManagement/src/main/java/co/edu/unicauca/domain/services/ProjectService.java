@@ -7,7 +7,6 @@ package co.edu.unicauca.domain.services;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
-import co.edu.unicauca.access.ProyectMySQLRepository;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,5 +38,9 @@ public class ProjectService {
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
         return (List<Project>)(Project)repository.list();
+    }
+    
+    public boolean saveProject(Project project){
+      return repository.save(project);
     }
 }

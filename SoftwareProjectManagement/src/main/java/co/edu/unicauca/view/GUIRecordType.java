@@ -4,6 +4,12 @@
  */
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.services.CompanyService;
+import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.interfaces.IRepository;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Yisus
@@ -35,8 +41,10 @@ public class GUIRecordType extends javax.swing.JFrame {
         btnsiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(450, 380));
 
         jPanel1.setBackground(new java.awt.Color(242, 247, 249));
+        jPanel1.setPreferredSize(new java.awt.Dimension(450, 380));
 
         lbltipoderegistro.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lbltipoderegistro.setForeground(new java.awt.Color(35, 38, 107));
@@ -44,16 +52,13 @@ public class GUIRecordType extends javax.swing.JFrame {
 
         lblenunciado.setBackground(new java.awt.Color(255, 255, 255));
         lblenunciado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblenunciado.setForeground(new java.awt.Color(0, 0, 0));
         lblenunciado.setText("Por favor seleccione el tipo de resgitro deseado:");
 
         lbltiporegistro1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbltiporegistro1.setForeground(new java.awt.Color(35, 38, 107));
         lbltiporegistro1.setText("Tipo");
 
-        cbxtipo.setBackground(new java.awt.Color(255, 255, 255));
         cbxtipo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        cbxtipo.setForeground(new java.awt.Color(0, 0, 0));
         cbxtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Empresa" }));
         cbxtipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,103 +93,97 @@ public class GUIRecordType extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
+                        .addGap(170, 170, 170)
                         .addComponent(lbltipoderegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblenunciado, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnvolver)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnsiguiente))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lbltiporegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxtipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(39, 39, 39)))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addGap(60, 60, 60)
+                        .addComponent(lblenunciado, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(lbltiporegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(cbxtipo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(btnvolver)
+                        .addGap(94, 94, 94)
+                        .addComponent(btnsiguiente)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(20, 20, 20)
                 .addComponent(lbltipoderegistro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
                 .addComponent(lblenunciado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbltiporegistro1)
                     .addComponent(cbxtipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGap(127, 127, 127)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnvolver)
-                    .addComponent(btnsiguiente))
-                .addGap(35, 35, 35))
+                    .addComponent(btnsiguiente)
+                    .addComponent(btnvolver))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
+        String seleccionado = cbxtipo.getSelectedItem().toString();
+        if (seleccionado.equals("Estudiante")) {
+            //  IRepository serviceRepository = Factory.getInstance().getRepository("company");
+            IRepository studentRepository = Factory.getInstance().getRepository("student");
+
+            //   CompanyService servicecompany = new CompanyService(serviceRepository);
+            StudentService servicestudent = new StudentService(studentRepository);
+
+            GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+            instance.setLocationRelativeTo(null); // Centrar en pantalla
+            instance.setVisible(true);
+        } else {
+            IRepository CompanyRepository = Factory.getInstance().getRepository("company");
+
+            //   CompanyService servicecompany = new CompanyService(serviceRepository);
+            CompanyService servicecompany = new CompanyService(CompanyRepository);
+
+            GUIRegistreCompany instance = new GUIRegistreCompany(servicecompany);
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+            instance.setLocationRelativeTo(null); // Centrar en pantalla
+             instance.setVisible(true);
+        }
+    }//GEN-LAST:event_btnsiguienteActionPerformed
+
+    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        this.dispose();
+        GUILogin instance = new GUILogin();
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnvolverActionPerformed
+
     private void cbxtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxtipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxtipoActionPerformed
 
-    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnvolverActionPerformed
-
-    private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnsiguienteActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIRecordType.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIRecordType.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIRecordType.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIRecordType.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIRecordType().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnsiguiente;

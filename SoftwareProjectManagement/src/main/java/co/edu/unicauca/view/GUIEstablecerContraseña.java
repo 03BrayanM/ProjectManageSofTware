@@ -63,7 +63,6 @@ public class GUIEstablecerContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(59, 38, 0, 0);
         jPanel3.add(jLabel4, gridBagConstraints);
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(89, 115, 147));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +90,6 @@ public class GUIEstablecerContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(41, 38, 0, 0);
         jPanel3.add(jLabel5, gridBagConstraints);
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);

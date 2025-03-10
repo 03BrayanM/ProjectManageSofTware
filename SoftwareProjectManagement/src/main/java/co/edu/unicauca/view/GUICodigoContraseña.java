@@ -114,7 +114,6 @@ public class GUICodigoContraseña extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(45, 6, 0, 0);
         jPanel3.add(jLabel4, gridBagConstraints);
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(89, 115, 147));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
