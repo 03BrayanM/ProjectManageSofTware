@@ -17,13 +17,15 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     /**
      * Creates new form GUIRegisterCompany
      */
-    StudentService servicestudent;
-    public GUIRegisterStudent(StudentService student) 
-    {
-        this.servicestudent = student;
+     private StudentService servicestudent;
+     private GUIGestionSofwareCoordination parent;
+     
+    public GUIRegisterStudent(StudentService student) {
         initComponents();
+        this.servicestudent = student;
+        this.parent = parent;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -222,7 +224,8 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        lblname1.getAccessibleContext().setAccessibleName("Nombre");
+        btnvolver.getAccessibleContext().setAccessibleName("btnBack");
+        jButton2.getAccessibleContext().setAccessibleName("btnRegister");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -264,21 +267,43 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        // TODO add your handling code here:
+       this.setVisible(false);
+        getParent().setVisible(true);
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String nombre = txtnombre.getText().trim();
-        String cedula = txtcedula.getText().trim();
-        int codigo = Integer.parseInt(txtcodigo.getText().trim());        
-        String email = txtemail.getText().trim();
-        String telefono = txttelefono.getText().trim();
+         String codigo = txtcodigo.getText();
+        String nombre = txtnombre.getText();
+        String email = txtemail.getText();
+        String telefono = txttelefono.getText();
+        String cedula = txtcedula.getText();
         
-        Student estudiante= new Student(nombre, cedula, codigo, email, telefono);
-        boolean res= servicestudent.registreStudent(estudiante);
-        if (res) {
-                       Messages.showMessageDialog("Agregado correctamente", "Atención");
-        } 
+        if (codigo.isEmpty() || nombre.isEmpty() || email.isEmpty() || telefono.isEmpty() || cedula.isEmpty()) {
+            Messages.showMessageDialog("Todos los campos son obligatorios", "Error");
+            return;
+        }
+        
+        if (!codigo.matches("\\d+") || !telefono.matches("\\d+")) {
+            Messages.showMessageDialog("Código, Teléfono y Cédula deben ser solo números", "Error");
+            return;
+        }
+        
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+            Messages.showMessageDialog("El nombre solo debe contener letras", "Error");
+            return;
+        }
+        
+        int auxCodigo = Integer.parseInt(codigo);
+        Student estudiante = new Student(nombre, cedula, auxCodigo, email, telefono);
+        
+        
+        boolean resultado = servicestudent.registreStudent(estudiante);
+        
+        if (resultado) {
+            Messages.showMessageDialog("Estudiante registrado exitosamente", "Éxito");
+        } else {
+            Messages.showMessageDialog("Error al registrar el estudiante", "Error");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
@@ -316,4 +341,13 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
+
+    public GUIGestionSofwareCoordination getParent() {
+        return parent;
+    }
+
+    public void setParent(GUIGestionSofwareCoordination parent) {
+        this.parent = parent;
+    }
+
 }

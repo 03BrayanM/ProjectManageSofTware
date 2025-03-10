@@ -4,6 +4,22 @@
  */
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Conectionbd;
+import co.edu.unicauca.view.GUIDetalleProyecto;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author Yisus
@@ -15,6 +31,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
      */
     public GUIGestionSottwareStudent() {
         initComponents();
+        botonDetalles();
     }
 
     /**
@@ -60,6 +77,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
         btnmisproyectos.setBackground(new java.awt.Color(255, 255, 255));
         btnmisproyectos.setForeground(new java.awt.Color(0, 0, 0));
         btnmisproyectos.setText("Mis Postulaciones");
+        btnmisproyectos.setBorder(null);
         btnmisproyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         btnmisproyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +88,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
         btnproyectos.setBackground(new java.awt.Color(255, 255, 255));
         btnproyectos.setForeground(new java.awt.Color(0, 0, 0));
         btnproyectos.setText("Proyectos");
+        btnproyectos.setBorder(null);
         btnproyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         btnproyectos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +122,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
                     .addComponent(btnproyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
+
+        btnproyectos.getAccessibleContext().setAccessibleName("btnProyectos");
 
         jPanel6.setBackground(new java.awt.Color(242, 247, 249));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -227,43 +248,83 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_btnmisproyectosActionPerformed
 
     private void btnproyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnproyectosActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        String query = "SELECT id, nombre, descripcion, fecha FROM proyectos WHERE estado = 'ACEPTADO'";
+
+        try (Connection conexion = Conectionbd.conectar(); PreparedStatement stmt = conexion.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                String fecha = rs.getString("fecha");
+                model.addRow(new Object[]{id, nombre, descripcion, fecha, "Ver Detalle"});
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void botonDetalles() {
+        TableColumnModel columnModel = jTable1.getColumnModel();
+        TableColumn buttonColumn = columnModel.getColumn(4);
+        buttonColumn.setCellRenderer(new ButtonRenderer());
+        buttonColumn.setCellEditor(new ButtonEditor(new JButton()));
+    }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setText("Ver Detalle");
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return this;
+        }
+    }
+
+    class ButtonEditor extends javax.swing.DefaultCellEditor {
+
+        private JButton button;
+        private int selectedRow;
+
+        public ButtonEditor(JButton button) {
+            super(new javax.swing.JTextField());
+            this.button = button;
+            this.button.setText("Ver Detalle");
+            this.button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    abrirDetalles(selectedRow);
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            selectedRow = row;
+            return button;
+        }
+
+        private void abrirDetalles(int row) {
+            int idProyecto = (int) jTable1.getValueAt(row, 0);
+            int idEstudiante = obtenerIdEstudianteSesion();
+
+            GUIDetalleProyecto detalleProyecto = new GUIDetalleProyecto(idProyecto, idEstudiante);
+            detalleProyecto.setVisible(true);
+
+        }
+
+        private int obtenerIdEstudianteSesion() {
+            return SesionUsuario.getIdEstudiante();
+        }
+
     }//GEN-LAST:event_btnproyectosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSottwareStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSottwareStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSottwareStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSottwareStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIGestionSottwareStudent().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnmisproyectos;
@@ -278,4 +339,5 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
+
 }

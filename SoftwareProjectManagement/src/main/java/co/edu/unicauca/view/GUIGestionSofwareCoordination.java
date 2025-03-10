@@ -4,17 +4,20 @@
  */
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.Messages;
+
 /**
  *
  * @author Brayan
  */
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
+    
+      private StudentService serviceStudent;
 
-    /**
-     * Creates new form GUIGestionSofware
-     */
-    public GUIGestionSofwareCoordination() {
+    public GUIGestionSofwareCoordination(StudentService service) {
         initComponents();
+        this.serviceStudent = service;
     }
 
     /**
@@ -34,7 +37,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrarEstudiantes = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -42,7 +45,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        btn = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -84,10 +87,10 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.CardLayout());
 
-        jButton1.setText("Registrar Estudiante");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarEstudiantes.setText("Registrar Estudiante");
+        btnRegistrarEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarEstudiantesActionPerformed(evt);
             }
         });
 
@@ -107,7 +110,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
 
         jLabel8.setText("Estudiantes");
 
-        jLabel9.setText("Proyectos");
+        btn.setText("Proyectos");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -119,7 +122,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addComponent(jLabel8)
                 .addGap(61, 61, 61)
-                .addComponent(jLabel9)
+                .addComponent(btn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -129,7 +132,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(btn))
                 .addContainerGap())
         );
 
@@ -219,7 +222,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
                 .addGap(58, 58, 58))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnRegistrarEstudiantes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -244,7 +247,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnRegistrarEstudiantes)
                 .addGap(3, 3, 3)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -269,52 +272,25 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnRegistrarEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudiantesActionPerformed
+        if (serviceStudent == null) {
+        Messages.showMessageDialog("Error: El servicio de estudiantes no está inicializado.", "Error");
+        return; 
+    }
+        GUIRegisterStudent registerStudent = new GUIRegisterStudent(serviceStudent);
+        registerStudent.setParent(this);
+        registerStudent.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegistrarEstudiantesActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSofwareCoordination.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSofwareCoordination.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSofwareCoordination.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIGestionSofwareCoordination.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIGestionSofwareCoordination().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel btn;
+    private javax.swing.JButton btnRegistrarEstudiantes;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -327,7 +303,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
