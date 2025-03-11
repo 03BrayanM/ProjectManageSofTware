@@ -9,14 +9,12 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
-    private int id;
     private String nitEmpresa;
-    private int codcor;
     private String nombre;// titulo en la bd
     private String resumen;
     private String descripcion;
     private String objetivo;
-    private int TiempoMaximo;
+    private String TiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
     private String estado;
@@ -26,10 +24,8 @@ public class Project {
         
     }
 
-    public Project(int id, String nit, int codcor, String nombre, String resumen, String descripcion, String objetivo, int tiempo, String presupuesto, String fecha, String estado, String nombreEmpresa) {
-        this.id = id;
+    public Project( String nit, String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String estado, String nombreEmpresa) {
         this.nitEmpresa = nit;
-        this.codcor = codcor;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -78,11 +74,11 @@ public class Project {
     }
 
 
-    public int getTiempoMaximo() {
+    public String getTiempoMaximo() {
         return TiempoMaximo;
     }
 
-    public void setTiempoMaximo(int tiempo) {
+    public void setTiempoMaximo(String tiempo) {
         this.TiempoMaximo = tiempo;
     }
 
@@ -111,14 +107,6 @@ public class Project {
     }
 
  
-    public int getId() {
-        return id;
-    }
-
- 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     public String getNitEmpresa() {
@@ -127,14 +115,6 @@ public class Project {
 
     public void setNit(String nit) {
         this.nitEmpresa = nit;
-    }
-
-    public int getCodcor() {
-        return codcor;
-    }
-
-    public void setCodcor(int codcor) {
-        this.codcor = codcor;
     }
 
     /**

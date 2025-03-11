@@ -60,7 +60,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         stmt.setString(3, project.getResumen());
         stmt.setString(4, project.getDescripcion());
         stmt.setString(5, project.getObjetivo());
-        stmt.setInt(6, project.getTiempoMaximo());
+        stmt.setString(6, project.getTiempoMaximo());
         stmt.setString(7, project.getPresupuesto());
         stmt.setString(8, project.getFechaEntregadaEsperada());
         stmt.setString(9, project.getFechaEntregadaEsperada());
@@ -94,12 +94,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             
             while(rs.next()){
                 Project proyecto= new Project();
-                proyecto.setId(rs.getInt("idProject"));
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("nombre"));
-                proyecto.setTiempoMaximo(rs.getInt("tiempoEst"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
-                proyecto.setFechaEntregadaEsperada(calcular.calcular(proyecto.getTiempoMaximo()));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
             
                 
                 listaproyectos.add(proyecto);
