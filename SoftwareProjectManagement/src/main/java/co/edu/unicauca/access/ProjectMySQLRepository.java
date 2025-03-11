@@ -6,13 +6,17 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -21,7 +25,7 @@ import java.util.logging.Logger;
 public class ProjectMySQLRepository implements IProjectRepository {
 
     private Connection conn;
-    private static final String url = "jdbc:mysql://localhost:3306/ingsoftware2";
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
     private static final String password = "oracle"; // Cambia por tu contraseña
 
@@ -57,7 +61,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(4, project.getPresupuesto());
             stmt.setString(5, project.getTiempoMaximo());
             stmt.setString(6, "HABILITADO");
-            stmt.setString(7, project.getFechaEntregaEsperada());
+            stmt.setString(7, project.getFechaEntregadaEsperada());
             
             stmt.execute();
             stmt.close();
@@ -73,6 +77,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return false;
         }
 
+    }
+
+    @Override
+    public List<Object> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

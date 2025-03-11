@@ -1,4 +1,3 @@
-
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.domain.entities.Project;
@@ -19,19 +18,19 @@ public class GUIPostularProject extends javax.swing.JDialog {
     /**
      * Creates new form GUIPostularProject
      */
-    private IFrameEventListener listener; 
+    private IFrameEventListener listener;
     private ProjectService projectService;
     private String nit;
-    public GUIPostularProject(JFrame parent,ProjectService projectService,IFrameEventListener listener,String nit) {
+
+    public GUIPostularProject(JFrame parent, ProjectService projectService, IFrameEventListener listener, String nit) {
         super(parent, "Nueva projecto", true);
-        this.nit=nit;
+        this.nit = nit;
         this.projectService = projectService;
         this.listener = listener;
         initComponents();
         setSize(800, 700);
         setLocationRelativeTo(parent);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -298,9 +297,9 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String presupuesto = txtEstimatedBudge.getText().trim();
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
-            
-        if (validacion) {
-            Project project = new Project(nombre,resumen,descripcion,objetivo,tiempoMaximo,presupuesto,fechaEntregaEsperada,nit);
+        boolean validarEntero= validarNumero(tiempoMaximo);
+        if (validacion && validarEntero) {
+            Project project = new Project(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada, nit);
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
@@ -358,6 +357,19 @@ public class GUIPostularProject extends javax.swing.JDialog {
 
         return true;
 
+    }
+
+    private boolean validarNumero(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            return false; // Si es nulo o vacío, no es válido
+        }
+
+        try {
+            Integer.parseInt(numero.trim()); // Intenta convertir a entero
+            return true;
+        } catch (NumberFormatException e) {
+            return false; // Si ocurre una excepción, no es un número válido
+        }
     }
 
     private void mostrarAdv(JLabel lb) {

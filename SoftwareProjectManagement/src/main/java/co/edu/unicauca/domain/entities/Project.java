@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.unicauca.domain.entities;
 
 /**
@@ -9,36 +6,36 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
-
     private String nitEmpresa;
-    
     private String nombre;
     private String resumen;
     private String descripcion;
     private String objetivo;
-    private String tiempoMaximo;
+    private String TiempoMaximo;
     private String presupuesto;
-    private String fechaEntregaEsperada;
+    private String FechaEntregadaEsperada;
+    private String estado;
+    private String nombreEmpresa;
+    
+    public Project(){
+        
+    }
 
-    public Project(String nombre, String resumen, String descripcion, String objetivo,
-            String tiempoMaximo, String presupuesto, String fechaEntregaEsperada,String nitEmpresa) {
+    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
+        this.nitEmpresa = nit;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
         this.objetivo = objetivo;
-        this.tiempoMaximo = tiempoMaximo;
+        this.TiempoMaximo = tiempo;
         this.presupuesto = presupuesto;
-        this.fechaEntregaEsperada = fechaEntregaEsperada;
-        this.nitEmpresa= nitEmpresa;
+        this.FechaEntregadaEsperada = fecha;
+        this.estado = "Aceptado";
+        this.nombreEmpresa = nombreEmpresa;
     }
 
-    public String getNitEmpresa() {
-        return nitEmpresa;
-    }
-
-    public void setNitEmpresa(String nitEmpresa) {
-        this.nitEmpresa = nitEmpresa;
-    }
+ 
+  
 
     public String getNombre() {
         return nombre;
@@ -73,12 +70,14 @@ public class Project {
     }
 
     public String getTiempoMaximo() {
-        return tiempoMaximo;
+        return TiempoMaximo;
     }
 
-    public void setTiempoMaximo(String tiempoMaximo) {
-        this.tiempoMaximo = tiempoMaximo;
+    public void setTiempoMaximo(String TiempoMaximo) {
+        this.TiempoMaximo = TiempoMaximo;
     }
+
+  
 
     public String getPresupuesto() {
         return presupuesto;
@@ -88,12 +87,43 @@ public class Project {
         this.presupuesto = presupuesto;
     }
 
-    public String getFechaEntregaEsperada() {
-        return fechaEntregaEsperada;
+    public String getFechaEntregadaEsperada() {
+        return FechaEntregadaEsperada;
     }
 
-    public void setFechaEntregaEsperada(String fechaEntregaEsperada) {
-        this.fechaEntregaEsperada = fechaEntregaEsperada;
+    public void setFechaEntregadaEsperada(String fecha) {
+        this.FechaEntregadaEsperada = fecha;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+
+
+    public String getNitEmpresa() {
+        return nitEmpresa;
+    }
+
+    public void setNit(String nit) {
+        this.nitEmpresa = nit;
+    }
+
+    /**
+     * @return the nombreEmpresa
+     */
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    /**
+     * @param nombreEmpresa the nombreEmpresa to set
+     */
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
 }
