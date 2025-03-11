@@ -62,6 +62,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
             stmt.setString(5, project.getTiempoMaximo());         
+
             stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
             

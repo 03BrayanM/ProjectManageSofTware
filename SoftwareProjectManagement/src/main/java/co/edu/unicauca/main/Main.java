@@ -3,6 +3,7 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.view.GUIGestionSofwareCoordination;
 import co.edu.unicauca.view.GUILogin;
 import co.edu.unicauca.view.GUILoginEmpresa;
 import javax.swing.JFrame;
@@ -21,8 +22,11 @@ public class Main {
         //StudentService servicestudent = new StudentService(studentRepository);
         ProjectService serviceProyect = new ProjectService(projectRepository);
         //GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
-        GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
-        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        instance.setVisible(true);
+       // GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
+        //instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //instance.setVisible(true);
+        GUIGestionSofwareCoordination instanceb= new GUIGestionSofwareCoordination(serviceProyect);
+        instanceb.setExtendedState(JFrame.NORMAL);
+        instanceb.setVisible(true);
  }
 }
