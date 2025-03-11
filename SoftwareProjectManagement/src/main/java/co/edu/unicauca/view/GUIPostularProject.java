@@ -375,6 +375,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
     }
 
 
+
     private void mostrarAdv(JLabel lb) {
         lb.setText("*"); // Color rojo para mayor visibilidad
         lb.setVisible(true);

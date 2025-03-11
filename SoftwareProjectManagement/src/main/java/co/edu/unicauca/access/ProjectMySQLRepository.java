@@ -61,7 +61,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(2, project.getDescripcion());
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
-            stmt.setString(5, project.getTiempoMaximo());
+            stmt.setString(5, project.getTiempoMaximo());         
+
             stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
             
@@ -71,7 +72,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al registrar el proyecto", e);
-
+            e.printStackTrace();
             Messages.showMessageDialog(
                     "Error al registrar el proyecto.",
                     "Atención"
