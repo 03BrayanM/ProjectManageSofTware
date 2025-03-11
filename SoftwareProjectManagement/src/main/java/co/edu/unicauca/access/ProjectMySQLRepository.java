@@ -68,7 +68,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al registrar el proyecto", e);
-
+            e.printStackTrace();
             Messages.showMessageDialog(
                     "Error al registrar el proyecto.",
                     "Atención"
