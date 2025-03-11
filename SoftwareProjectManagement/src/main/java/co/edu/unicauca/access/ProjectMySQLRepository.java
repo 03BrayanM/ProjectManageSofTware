@@ -13,9 +13,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -59,7 +61,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(2, project.getDescripcion());
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
-            stmt.setString(5, project.getTiempoMax          stmt.setString(6, "HABILITADO");
+            stmt.setString(5, project.getTiempoMaximo());
+            stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
             
             stmt.execute();

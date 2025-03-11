@@ -374,18 +374,6 @@ public class GUIPostularProject extends javax.swing.JDialog {
         }
     }
 
-    private boolean validarNumero(String numero) {
-        if (numero == null || numero.trim().isEmpty()) {
-            return false; // Si es nulo o vacío, no es válido
-        }
-
-        try {
-            Integer.parseInt(numero.trim()); // Intenta convertir a entero
-            return true;
-        } catch (NumberFormatException e) {
-            return false; // Si ocurre una excepción, no es un número válido
-        }
-    }
 
     private void mostrarAdv(JLabel lb) {
         lb.setText("*"); // Color rojo para mayor visibilidad
