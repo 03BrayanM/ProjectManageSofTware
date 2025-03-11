@@ -5,6 +5,7 @@
 package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IRepository;
+import java.util.List;
 
 /**
  *
@@ -24,6 +25,11 @@ public class pruebacompanyrepository  implements IRepository{
 
     @Override
     public boolean delete(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Object> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

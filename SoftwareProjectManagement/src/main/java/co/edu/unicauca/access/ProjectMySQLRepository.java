@@ -6,11 +6,16 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,10 +60,10 @@ public class ProjectMySQLRepository implements IProjectRepository {
         stmt.setString(3, project.getResumen());
         stmt.setString(4, project.getDescripcion());
         stmt.setString(5, project.getObjetivo());
-        stmt.setString(6, project.getTiempoMaximo());
+        stmt.setInt(6, project.getTiempoMaximo());
         stmt.setString(7, project.getPresupuesto());
-        stmt.setString(8, project.getFechaEntregaEsperada());
-        stmt.setString(9, project.getFechaEntregaEsperada());
+        stmt.setString(8, project.getFechaEntregadaEsperada());
+        stmt.setString(9, project.getFechaEntregadaEsperada());
 
         
         int rowsAffected = stmt.executeUpdate();
@@ -69,6 +74,46 @@ public class ProjectMySQLRepository implements IProjectRepository {
         Messages.showMessageDialog("Error al registrar el proyecto", "Atención");
         return false;
     } 
+    }
+
+    @Override
+    public List<Object> list() {
+       CalcularFecha calcular = new CalcularFecha();
+        List<Project> listaproyectos = new ArrayList<>();
+       Connection conexion = Conectionbd.conectar();
+           if (conexion == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null si la conexión falla
+           }
+           try{
+               // Llamada al procedimiento almacenado
+            String sql = "{CALL sp_ListarProyectosPostulados()}";
+            CallableStatement stmt = conexion.prepareCall(sql);
+            // Ejecutamos el procedimiento y obtenemos los resultados
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Project proyecto= new Project();
+                proyecto.setId(rs.getInt("idProject"));
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("nombre"));
+                proyecto.setTiempoMaximo(rs.getInt("tiempoEst"));
+                proyecto.setEstado(rs.getString("estado"));
+                proyecto.setFechaEntregadaEsperada(calcular.calcular(proyecto.getTiempoMaximo()));
+            
+                
+                listaproyectos.add(proyecto);
+            }
+            rs.close();
+            stmt.close();
+            conexion.close();
+            
+            return (List<Object>)(Project)listaproyectos;
+            
+           }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null en caso de error 
+           }
     }
 
  
