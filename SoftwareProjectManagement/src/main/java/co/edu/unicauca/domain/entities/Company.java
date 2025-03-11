@@ -19,10 +19,11 @@ public class Company {
     private String apellido;
     private String sector;
     private String cargo;
+    private String estado;
     public Company() {
     }
 
-    public Company(int nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo) {
+    public Company(int nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo,String estado) {
         this.nit = nit;
         this.nombre = nombre;
         this.email = email;
@@ -31,6 +32,7 @@ public class Company {
         this.apellido = apellido;
         this.sector = sector;
         this.cargo = cargo;
+        this.estado= estado;
     }
 
     public String getCargo() {
@@ -95,6 +97,14 @@ public class Company {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }

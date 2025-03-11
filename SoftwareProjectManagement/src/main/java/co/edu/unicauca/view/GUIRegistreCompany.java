@@ -16,12 +16,12 @@ import javax.swing.JOptionPane;
  */
 public class GUIRegistreCompany extends javax.swing.JFrame {
 
-      CompanyService servicecompany;
+    CompanyService servicecompany;
+
     public GUIRegistreCompany(CompanyService company) {
-        this.servicecompany=company;
+        this.servicecompany = company;
         initComponents();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +38,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnvolver = new javax.swing.JButton();
-        txttelefono = new javax.swing.JTextField();
+        txtemail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
         txtnit = new javax.swing.JTextField();
@@ -52,7 +52,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         txtapellido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txtemail = new javax.swing.JTextField();
+        txttelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         Cargo = new javax.swing.JLabel();
         txtcargo = new javax.swing.JTextField();
@@ -87,11 +87,11 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(35, 38, 107));
         jLabel2.setText("Registrar Empresa");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 1, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(30, 32, 0, 0);
         jPanel2.add(jLabel2, gridBagConstraints);
 
         btnvolver.setBackground(new java.awt.Color(0, 0, 204));
@@ -110,19 +110,19 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(23, 51, 43, 0);
         jPanel2.add(btnvolver, gridBagConstraints);
 
-        txttelefono.addActionListener(new java.awt.event.ActionListener() {
+        txtemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttelefonoActionPerformed(evt);
+                txtemailActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipadx = 96;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 43, 0, 0);
-        jPanel2.add(txttelefono, gridBagConstraints);
+        jPanel2.add(txtemail, gridBagConstraints);
 
         jLabel3.setText("Nit");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -131,11 +131,17 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(45, 43, 0, 0);
         jPanel2.add(jLabel3, gridBagConstraints);
+
+        txtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombreActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipadx = 96;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 43, 0, 0);
         jPanel2.add(txtnombre, gridBagConstraints);
@@ -143,7 +149,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipadx = 96;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 43, 0, 0);
         jPanel2.add(txtnit, gridBagConstraints);
@@ -168,20 +174,20 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
 
         cbxsector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tegnologia", "Salud", "Education", "Otros" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(42, 16, 0, 44);
+        gridBagConstraints.insets = new java.awt.Insets(42, 16, 0, 0);
         jPanel2.add(cbxsector, gridBagConstraints);
 
         jLabel7.setText("Sector");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(45, 100, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(45, 51, 0, 0);
         jPanel2.add(jLabel7, gridBagConstraints);
 
         jPanel3.setBackground(new java.awt.Color(204, 255, 255));
@@ -229,11 +235,13 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(Cargo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtcargo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                            .addComponent(txttelefono)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtcargo, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                .addGap(3, 3, 3)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
@@ -253,7 +261,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
                     .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -263,14 +271,13 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 15;
         gridBagConstraints.gridheight = 6;
-        gridBagConstraints.ipadx = 11;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(22, 67, 0, 44);
+        gridBagConstraints.insets = new java.awt.Insets(22, 18, 0, 19);
         jPanel2.add(jPanel3, gridBagConstraints);
 
         btnregistrar.setBackground(new java.awt.Color(0, 0, 204));
@@ -282,11 +289,11 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(23, 132, 43, 0);
+        gridBagConstraints.insets = new java.awt.Insets(23, 83, 43, 0);
         jPanel2.add(btnregistrar, gridBagConstraints);
 
         getContentPane().add(jPanel2, new java.awt.GridBagConstraints());
@@ -302,9 +309,9 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombrecontactoActionPerformed
 
-    private void txttelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttelefonoActionPerformed
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txttelefonoActionPerformed
+    }//GEN-LAST:event_txtemailActionPerformed
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
         String nit = txtnit.getText().trim();
@@ -313,16 +320,16 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         String nombrecontacto = txtnombrecontacto.getText().trim();
         String apellido = txtapellido.getText().trim();
         String cargo = txtcargo.getText().trim();
-         String tefono = txttelefono.getText().trim();
+        String tefono = txttelefono.getText().trim();
         String sector = cbxsector.getSelectedItem().toString().trim();
-       boolean validar=validarFormulario(nit, nombre, email, nombrecontacto, apellido, cargo, tefono, sector);
-       if (validar){
-        Company empresa = new Company(WIDTH, nombre, email, sector, nombrecontacto, apellido, sector, cargo);
-       boolean resultado= servicecompany.registreCompany(empresa);
-       if (resultado) {
-                       Messages.showMessageDialog("Empresa Registrada correctamente", "Atención");
-        } 
-       }
+        boolean validar = validarFormulario(nit, nombre, email, nombrecontacto, apellido, cargo, tefono, sector);
+        if (validar) {
+            Company empresa = new Company(WIDTH, nombre, email, sector, nombrecontacto, apellido, sector, cargo, "HABILITADO");
+            boolean resultado = servicecompany.registreCompany(empresa);
+            if (resultado) {
+                Messages.showMessageDialog("Empresa Registrada correctamente", "Atención");
+            }
+        }
 
 
     }//GEN-LAST:event_btnregistrarActionPerformed
@@ -331,7 +338,11 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtapellidoActionPerformed
 
-    private  boolean validarFormulario(String nit, String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
+    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombreActionPerformed
+
+    private boolean validarFormulario(String nit, String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
         // Validar que los campos no estén vacíos
         if (nit.isEmpty()) {
             Messages.showMessageDialog("El campo NIT no puede estar vacío.", "Atención");
@@ -365,26 +376,8 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
             Messages.showMessageDialog("El campo Sector no puede estar vacío.", "Atención");
             return false;
         }
-
-        // Validar que el nombre y apellido no contengan números
-        if (contieneNumeros(nombre)) {
-            Messages.showMessageDialog("El campo Nombre no puede contener números.", "Atención");
-            return false;
-        }
-        if (contieneNumeros(apellido)) {
-            Messages.showMessageDialog("El campo Apellido no puede contener números.", "Atención");
-            return false;
-        }
-
-        // Validar que el email tenga un formato válido
-        if (!validarEmail(email)) {
-            Messages.showMessageDialog("El campo Email no tiene un formato válido.", "Atención");
-            return false;
-        }
-
-        // Validar que el teléfono solo contenga números
-        if (!esNumero(telefono)) {
-            Messages.showMessageDialog("El campo Teléfono solo puede contener números.", "Atención");
+        if (!nit.matches("\\d+")) {
+            Messages.showMessageDialog("El campo nit solo puede contener números.", "Atención");
             return false;
         }
 
@@ -392,20 +385,6 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         return true;
     }
 
-    private static boolean contieneNumeros(String texto) {
-        return texto.matches(".*\\d.*");
-    }
-
-    private  boolean validarEmail(String email) {
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    private  boolean esNumero(String texto) {
-        return texto.matches("\\d+");
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cargo;

@@ -165,7 +165,8 @@ public class GUILogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void RegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrarseMouseClicked
-      GUIRecordType instance= new GUIRecordType();
+      this.dispose();
+        GUIRecordType instance= new GUIRecordType();
        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
     }//GEN-LAST:event_RegistrarseMouseClicked

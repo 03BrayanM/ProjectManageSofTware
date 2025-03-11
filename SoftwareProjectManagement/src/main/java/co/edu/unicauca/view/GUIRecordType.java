@@ -31,6 +31,7 @@ public class GUIRecordType extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         lbltipoderegistro = new javax.swing.JLabel();
@@ -41,22 +42,49 @@ public class GUIRecordType extends javax.swing.JFrame {
         btnsiguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(450, 380));
+        setPreferredSize(new java.awt.Dimension(450, 380));
         setSize(new java.awt.Dimension(450, 380));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(242, 247, 249));
         jPanel1.setPreferredSize(new java.awt.Dimension(450, 380));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         lbltipoderegistro.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         lbltipoderegistro.setForeground(new java.awt.Color(35, 38, 107));
         lbltipoderegistro.setText("Tipo de Registro");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jPanel1.add(lbltipoderegistro, gridBagConstraints);
 
         lblenunciado.setBackground(new java.awt.Color(255, 255, 255));
         lblenunciado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblenunciado.setText("Por favor seleccione el tipo de resgitro deseado:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.ipadx = 32;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 60, 0, 23);
+        jPanel1.add(lblenunciado, gridBagConstraints);
 
         lbltiporegistro1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lbltiporegistro1.setForeground(new java.awt.Color(35, 38, 107));
         lbltiporegistro1.setText("Tipo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(33, 110, 0, 0);
+        jPanel1.add(lbltiporegistro1, gridBagConstraints);
 
         cbxtipo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbxtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Empresa" }));
@@ -65,6 +93,15 @@ public class GUIRecordType extends javax.swing.JFrame {
                 cbxtipoActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 87;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(33, 0, 0, 0);
+        jPanel1.add(cbxtipo, gridBagConstraints);
 
         btnvolver.setBackground(new java.awt.Color(191, 212, 228));
         btnvolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -75,6 +112,13 @@ public class GUIRecordType extends javax.swing.JFrame {
                 btnvolverActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(127, 120, 86, 0);
+        jPanel1.add(btnvolver, gridBagConstraints);
 
         btnsiguiente.setBackground(new java.awt.Color(13, 65, 133));
         btnsiguiente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -85,67 +129,21 @@ public class GUIRecordType extends javax.swing.JFrame {
                 btnsiguienteActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(127, 94, 86, 0);
+        jPanel1.add(btnsiguiente, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(lbltipoderegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(lblenunciado, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(lbltiporegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(cbxtipo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(btnvolver)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnsiguiente)))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lbltipoderegistro)
-                .addGap(31, 31, 31)
-                .addComponent(lblenunciado)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbltiporegistro1)
-                    .addComponent(cbxtipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(127, 127, 127)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnsiguiente)
-                    .addComponent(btnvolver))
-                .addContainerGap(86, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
-        String seleccionado = cbxtipo.getSelectedItem().toString();
+        String seleccionado = cbxtipo.getSelectedItem().toString();        
         if (seleccionado.equals("Estudiante")) {
             //  IRepository serviceRepository = Factory.getInstance().getRepository("company");
             IRepository studentRepository = Factory.getInstance().getRepository("student");
@@ -157,6 +155,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
             instance.setLocationRelativeTo(null); // Centrar en pantalla
+            this.dispose();
             instance.setVisible(true);
         } else {
             IRepository CompanyRepository = Factory.getInstance().getRepository("company");
@@ -168,6 +167,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
             instance.setLocationRelativeTo(null); // Centrar en pantalla
+            this.dispose();
              instance.setVisible(true);
         }
     }//GEN-LAST:event_btnsiguienteActionPerformed
