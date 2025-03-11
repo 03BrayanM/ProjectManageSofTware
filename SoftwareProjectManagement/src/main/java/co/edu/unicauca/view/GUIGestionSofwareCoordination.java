@@ -353,7 +353,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }
     for (Project p : proyectos) {
         // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-        LocalDate fechaEntrega = LocalDate.now().plusMonths(p.getTiempoMaximo());
+        LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
 
         model.addRow(new Object[]{
             p.getNombre(),

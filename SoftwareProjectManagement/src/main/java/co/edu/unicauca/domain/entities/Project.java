@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.unicauca.domain.entities;
 
 /**
@@ -9,14 +6,12 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
-    private int id;
     private String nitEmpresa;
-    private int codcor;
-    private String nombre;// titulo en la bd
+    private String nombre;
     private String resumen;
     private String descripcion;
     private String objetivo;
-    private int TiempoMaximo;
+    private String TiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
     private String estado;
@@ -26,10 +21,9 @@ public class Project {
         
     }
 
-    public Project(int id, String nit, int codcor, String nombre, String resumen, String descripcion, String objetivo, int tiempo, String presupuesto, String fecha, String estado, String nombreEmpresa) {
-        this.id = id;
+    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
+
         this.nitEmpresa = nit;
-        this.codcor = codcor;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -38,11 +32,9 @@ public class Project {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = fecha;
         this.estado = "Aceptado";
-        this.nombreEmpresa = nombreEmpresa;
     }
 
-  
-
+ 
   
 
     public String getNombre() {
@@ -77,14 +69,15 @@ public class Project {
         this.objetivo = objetivo;
     }
 
-
-    public int getTiempoMaximo() {
+    public String getTiempoMaximo() {
         return TiempoMaximo;
     }
 
-    public void setTiempoMaximo(int tiempo) {
-        this.TiempoMaximo = tiempo;
+    public void setTiempoMaximo(String TiempoMaximo) {
+        this.TiempoMaximo = TiempoMaximo;
     }
+
+  
 
     public String getPresupuesto() {
         return presupuesto;
@@ -110,15 +103,7 @@ public class Project {
         this.estado = estado;
     }
 
- 
-    public int getId() {
-        return id;
-    }
 
- 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     public String getNitEmpresa() {
@@ -127,14 +112,6 @@ public class Project {
 
     public void setNit(String nit) {
         this.nitEmpresa = nit;
-    }
-
-    public int getCodcor() {
-        return codcor;
-    }
-
-    public void setCodcor(int codcor) {
-        this.codcor = codcor;
     }
 
     /**
