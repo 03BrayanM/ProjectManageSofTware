@@ -288,6 +288,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProyectoActionPerformed
+          
         limpiarWarnings();
         String nombre = txtNameProyect.getText().trim();
         String resumen = txtOverView.getText().trim();
@@ -296,10 +297,12 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String tiempoMaximo = txtMaximumTime.getText().trim();
         String presupuesto = txtEstimatedBudge.getText().trim();
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
+        
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
         boolean validarEntero= validarNumero(tiempoMaximo);
         if (validacion && validarEntero) {
             Project project = new Project(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada, nit);
+
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
@@ -357,6 +360,18 @@ public class GUIPostularProject extends javax.swing.JDialog {
 
         return true;
 
+    }
+    private boolean validarNumero(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            return false; // Si es nulo o vacío, no es válido
+        }
+
+        try {
+            Integer.parseInt(numero.trim()); // Intenta convertir a entero
+            return true;
+        } catch (NumberFormatException e) {
+            return false; // Si ocurre una excepción, no es un número válido
+        }
     }
 
     private boolean validarNumero(String numero) {

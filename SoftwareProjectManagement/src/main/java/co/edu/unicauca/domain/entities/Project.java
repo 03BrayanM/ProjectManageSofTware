@@ -22,6 +22,7 @@ public class Project {
     }
 
     public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
+
         this.nitEmpresa = nit;
         this.nombre = nombre;
         this.resumen = resumen;
@@ -31,7 +32,6 @@ public class Project {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = fecha;
         this.estado = "Aceptado";
-        this.nombreEmpresa = nombreEmpresa;
     }
 
  
@@ -102,6 +102,7 @@ public class Project {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
 
 
 

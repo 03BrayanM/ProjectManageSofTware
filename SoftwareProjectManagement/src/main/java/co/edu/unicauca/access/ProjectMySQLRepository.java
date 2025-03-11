@@ -59,8 +59,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(2, project.getDescripcion());
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
-            stmt.setString(5, project.getTiempoMaximo());
-            stmt.setString(6, "HABILITADO");
+            stmt.setString(5, project.getTiempoMax          stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
             
             stmt.execute();
@@ -81,7 +80,41 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public List<Object> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       CalcularFecha calcular = new CalcularFecha();
+        List<Project> listaproyectos = new ArrayList<>();
+       Connection conexion = Conectionbd.conectar();
+           if (conexion == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null si la conexión falla
+           }
+           try{
+               // Llamada al procedimiento almacenado
+            String sql = "{CALL sp_ListarProyectosPostulados()}";
+            CallableStatement stmt = conexion.prepareCall(sql);
+            // Ejecutamos el procedimiento y obtenemos los resultados
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Project proyecto= new Project();
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("nombre"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setEstado(rs.getString("estado"));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+            
+                
+                listaproyectos.add(proyecto);
+            }
+            rs.close();
+            stmt.close();
+            conexion.close();
+            
+            return (List<Object>)(Project)listaproyectos;
+            
+           }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null en caso de error 
+           }
     }
 
 }
