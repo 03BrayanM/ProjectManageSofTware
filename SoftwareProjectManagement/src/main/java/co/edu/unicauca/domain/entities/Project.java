@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.unicauca.domain.entities;
 
 /**
@@ -10,7 +7,7 @@ package co.edu.unicauca.domain.entities;
  */
 public class Project {
     private String nitEmpresa;
-    private String nombre;// titulo en la bd
+    private String nombre;
     private String resumen;
     private String descripcion;
     private String objetivo;
@@ -24,7 +21,8 @@ public class Project {
         
     }
 
-    public Project( String nit, String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String estado, String nombreEmpresa) {
+    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
+
         this.nitEmpresa = nit;
         this.nombre = nombre;
         this.resumen = resumen;
@@ -34,11 +32,9 @@ public class Project {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = fecha;
         this.estado = "Aceptado";
-        this.nombreEmpresa = nombreEmpresa;
     }
 
-  
-
+ 
   
 
     public String getNombre() {
@@ -73,14 +69,15 @@ public class Project {
         this.objetivo = objetivo;
     }
 
-
     public String getTiempoMaximo() {
         return TiempoMaximo;
     }
 
-    public void setTiempoMaximo(String tiempo) {
-        this.TiempoMaximo = tiempo;
+    public void setTiempoMaximo(String TiempoMaximo) {
+        this.TiempoMaximo = TiempoMaximo;
     }
+
+  
 
     public String getPresupuesto() {
         return presupuesto;
@@ -106,7 +103,7 @@ public class Project {
         this.estado = estado;
     }
 
- 
+
 
 
     public String getNitEmpresa() {

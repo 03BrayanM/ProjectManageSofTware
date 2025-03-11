@@ -13,9 +13,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -24,24 +25,23 @@ import javax.swing.JOptionPane;
 public class ProjectMySQLRepository implements IProjectRepository {
 
     private Connection conn;
-    
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
+
     public ProjectMySQLRepository() {
         try {
-            // Ruta de la base de datos (ajústala según la ubicación real de tu archivo)
-            String url = "jdbc:mysql://localhost:3306/ingsoftware2";
-            this.conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public boolean update(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -49,31 +49,33 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public boolean save(Object entity) {
-       String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
-    if(!(entity instanceof Project)){
-         Messages.showMessageDialog("Error: El objeto no es de tipo Project", "Atención");
-    }
-    Project project= (Project) entity;  
-    try (CallableStatement stmt = conn.prepareCall(sql)) {
-        stmt.setString(1, project.getNitEmpresa());
-        stmt.setString(2, project.getNombre());
-        stmt.setString(3, project.getResumen());
-        stmt.setString(4, project.getDescripcion());
-        stmt.setString(5, project.getObjetivo());
-        stmt.setString(6, project.getTiempoMaximo());
-        stmt.setString(7, project.getPresupuesto());
-        stmt.setString(8, project.getFechaEntregadaEsperada());
-        stmt.setString(9, project.getFechaEntregadaEsperada());
+        String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
+        if (!(entity instanceof Project)) {
+            Messages.showMessageDialog("Error: El objeto no es de tipo Project", "Atención");
+        }
+        Project project = (Project) entity;
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, project.getNitEmpresa());
+            stmt.setString(2, project.getDescripcion());
+            stmt.setString(3, project.getNombre());
+            stmt.setString(4, project.getPresupuesto());
+            stmt.setString(5, project.getTiempoMax          stmt.setString(6, "HABILITADO");
+            stmt.setString(7, project.getFechaEntregadaEsperada());
+            
+            stmt.execute();
+            stmt.close();
+            return true;
 
-        
-        int rowsAffected = stmt.executeUpdate();
-        return rowsAffected > 0; // Retorna true si el procedimiento se ejecutó correctamente
+        } catch (SQLException e) {
+            Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al registrar el proyecto", e);
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        Messages.showMessageDialog("Error al registrar el proyecto", "Atención");
-        return false;
-    } 
+            Messages.showMessageDialog(
+                    "Error al registrar el proyecto.",
+                    "Atención"
+            );
+            return false;
+        }
+
     }
 
     @Override
@@ -114,7 +116,5 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return null; // Devuelve null en caso de error 
            }
     }
-
- 
 
 }
