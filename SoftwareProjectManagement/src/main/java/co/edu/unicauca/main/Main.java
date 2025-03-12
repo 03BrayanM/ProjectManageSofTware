@@ -22,11 +22,11 @@ public class Main {
         //StudentService servicestudent = new StudentService(studentRepository);
         ProjectService serviceProyect = new ProjectService(projectRepository);
         //GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
-       // GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
-        //instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //instance.setVisible(true);
-        GUIGestionSofwareCoordination instanceb= new GUIGestionSofwareCoordination(serviceProyect);
-        instanceb.setExtendedState(JFrame.NORMAL);
-        instanceb.setVisible(true);
+        GUILoginEmpresa instance = new GUILoginEmpresa(servicecompany,serviceProyect,"123456789");
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setVisible(true);
+        //GUIGestionSofwareCoordination instanceb= new GUIGestionSofwareCoordination(serviceProyect);
+       // instanceb.setExtendedState(JFrame.NORMAL);
+        //instanceb.setVisible(true);
  }
 }

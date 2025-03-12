@@ -30,7 +30,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
        agregarEventos();
        this.projectService=projectService;
        this.projectService.agregarObservador(this);
-       actualizarTablaP(projectService.obtenerProyectos());
+       //actualizarTablaP(projectService.obtenerProyectos());
        
     }
     
@@ -174,7 +174,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Titulo", "Empresa", "Fecha de Entrega", "Estado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
