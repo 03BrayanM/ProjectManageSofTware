@@ -84,9 +84,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public List<Object> list() {
-       CalcularFecha calcular = new CalcularFecha();
+        
         List<Project> listaproyectos = new ArrayList<>();
-       Connection conexion = Conectionbd.conectar();
+        Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
@@ -101,8 +101,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
             while(rs.next()){
                 Project proyecto= new Project();
                 proyecto.setNombre(rs.getString("titulo"));
-                proyecto.setNombreEmpresa(rs.getString("nombre"));
-                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                //proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
             
@@ -113,7 +113,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.close();
             conexion.close();
             
-            return (List<Object>)(Project)listaproyectos;
+            return (List<Object>)(List<?>)listaproyectos;
             
            }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);

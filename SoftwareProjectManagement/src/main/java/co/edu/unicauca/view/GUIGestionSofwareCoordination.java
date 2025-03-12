@@ -21,19 +21,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Brayan
  */
-public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver{
+public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
-     ProjectService projectService;
-    
+    ProjectService projectService;
+
     public GUIGestionSofwareCoordination(ProjectService projectService) {
-       initComponents();
-       agregarEventos();
-       this.projectService=projectService;
-       this.projectService.agregarObservador(this);
-       //actualizarTablaP(projectService.obtenerProyectos());
-       
+        initComponents();
+        agregarEventos();
+        this.projectService = projectService;
+        this.projectService.agregarObservador(this);
+        //actualizarTablaP(projectService.obtenerProyectos());
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,7 +176,15 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             new String [] {
                 "Titulo", "Empresa", "Fecha de Entrega", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         lblProyectosregistrados.setForeground(new java.awt.Color(0, 0, 0));
@@ -298,7 +306,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;
@@ -327,54 +334,61 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     private javax.swing.JLabel lblProyectosregistrados;
     private javax.swing.JTextField txtnombrecordinador;
     // End of variables declaration//GEN-END:variables
-    
-    
+
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
         actualizarTablaP(proyectos);
     }
+
     private void agregarEventos() {
-    lblProyectos.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            actualizarTablaP(projectService.obtenerProyectos());
-        }
-    });
-}
-    private void actualizarTablaP(List<Project> proyectos) {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Limpiar la tabla
-    model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
-
-    //List<Project> proyectos = projectService.obtenerProyectos();
-    if (proyectos == null || proyectos.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        return; // Salir del método para no procesar datos vacíos
-    }
-    for (Project p : proyectos) {
-        // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-        LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
-
-        model.addRow(new Object[]{
-            p.getNombre(),
-            p.getNombreEmpresa(),
-            fechaEntrega.toString(), // Convertimos la fecha a String
-            p.getEstado()
+        lblProyectos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actualizarTablaP(projectService.obtenerProyectos());
+            }
         });
     }
-}
 
-private void abrirGUICoordinador() {
-    // Obtener el repositorio de proyectos desde la fábrica
-    IRepository projectRepository = Factory.getInstance().getRepository("project");
+    private void actualizarTablaP(List<Project> proyectos) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+        model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
-    // Crear el servicio de proyectos con su repositorio
-    ProjectService projectService = new ProjectService(projectRepository);
+        //List<Project> proyectos = projectService.obtenerProyectos();
+        if (proyectos == null || proyectos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return; // Salir del método para no procesar datos vacíos
+        }
+        for (Project p : proyectos) {
+            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
+            int meses = 0;
+            try {
+                meses = Integer.parseInt(p.getTiempoMaximo());
+            } catch (NumberFormatException e) {
+                // Puedes asignar un valor predeterminado o registrar el error
+                meses = 0;
+            }
+            LocalDate fechaEntrega = LocalDate.now().plusMonths(meses);
+            model.addRow(new Object[]{
+                p.getNombre(),
+                p.getNombreEmpresa(),
+                fechaEntrega.toString(),
+                p.getEstado()
+            });
+        }
+    }
 
-    // Instanciar la GUI del coordinador y mostrarla
-    GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
-    instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    instance.setVisible(true);
-}
+    private void abrirGUICoordinador() {
+        // Obtener el repositorio de proyectos desde la fábrica
+        IRepository projectRepository = Factory.getInstance().getRepository("project");
+
+        // Crear el servicio de proyectos con su repositorio
+        ProjectService projectService = new ProjectService(projectRepository);
+
+        // Instanciar la GUI del coordinador y mostrarla
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setVisible(true);
+    }
 
 }

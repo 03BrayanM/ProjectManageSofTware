@@ -15,21 +15,22 @@ import java.util.List;
  * @author Yisus
  */
 public class ProjectService {
+
     private IRepository repository;
     private final List<IProjectObserver> observadores = new ArrayList<>();
-    
 
     public ProjectService(IRepository repository) {
         this.repository = repository;
     }
-     // Método para agregar observadores
+    // Método para agregar observadores
+
     public void agregarObservador(IProjectObserver observador) {
         observadores.add(observador);
     }
 
     // Método para notificar a los observadores
     private void notificarObservadores() {
-        List<Project> proyectos = (List<Project>)(Project)repository.list();
+        List<Project> proyectos = (List<Project>) (Project) repository.list();
         for (IProjectObserver obs : observadores) {
             obs.actualizarProyectos(proyectos);
         }
@@ -37,10 +38,18 @@ public class ProjectService {
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
-        return (List<Project>)(Project)repository.list();
+
+        List<Object> objetos = repository.list(); // Recupera la lista como List<Object>
+        List<Project> proyectos = new ArrayList<>(); // Lista para almacenar los proyectos
+        for (Object obj : objetos) {               // Convertimos cada Object en Project
+            if (obj instanceof Project) {              // Verifica que realmente sea un Project
+                proyectos.add((Project) obj);
+            }
+        }
+        return proyectos;
     }
-    
-    public boolean saveProject(Project project){
-      return repository.save(project);
+
+    public boolean saveProject(Project project) {
+        return repository.save(project);
     }
 }
