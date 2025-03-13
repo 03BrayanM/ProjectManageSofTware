@@ -25,18 +25,15 @@ import javax.swing.table.DefaultTableModel;
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
     ProjectService projectService;
+    User usuario;
 
-
-     ProjectService projectService;
-     User usuario;
-    
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
-       initComponents();
-       agregarEventos();
-       this.projectService=projectService;
-       this.projectService.agregarObservador(this);
-       this.usuario=usuario;
-       actualizarTablaP(projectService.obtenerProyectos());
+        initComponents();
+        agregarEventos();
+        this.projectService = projectService;
+        this.projectService.agregarObservador(this);
+        this.usuario = usuario;
+        actualizarTablaP(projectService.obtenerProyectos());
     }
 
     @SuppressWarnings("unchecked")
@@ -376,7 +373,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // Crear el servicio de proyectos con su repositorio
         ProjectService projectService = new ProjectService(projectRepository);
         // Instanciar la GUI del coordinador y mostrarla
-         GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService, usuario);
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
     }

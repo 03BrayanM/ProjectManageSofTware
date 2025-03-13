@@ -324,7 +324,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         String sector = cbxsector.getSelectedItem().toString().trim();
         boolean validar = validarFormulario(nit, nombre, email, nombrecontacto, apellido, cargo, tefono, sector);
         if (validar) {
-            Company empresa = new Company(WIDTH, nombre, email, sector, nombrecontacto, apellido, sector, cargo, "HABILITADO");
+            Company empresa = new Company(nit, nombre, email, sector, nombrecontacto, apellido, sector, cargo, "HABILITADO");
             boolean resultado = servicecompany.registreCompany(empresa);
             if (resultado) {
                 Messages.showMessageDialog("Empresa Registrada correctamente", "Atención");
