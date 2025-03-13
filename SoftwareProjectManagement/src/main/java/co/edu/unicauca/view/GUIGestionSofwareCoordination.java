@@ -26,8 +26,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
     ProjectService projectService;
 
-
-     ProjectService projectService;
      User usuario;
     
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
