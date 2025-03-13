@@ -377,6 +377,44 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             });
         }
     }
+    
+    private Project buscarProyectoPorNombre(String nombre) {
+    for (Project p : projectService.obtenerProyectos()) {
+        if (p.getNombre().equals(nombre)) {
+            return p;
+        }
+    }
+    return null;
+}
+   
+    private void detalles(){
+        jTable1.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int filaSeleccionada = jTable1.getSelectedRow(); // Obtener la fila seleccionada
+        if (filaSeleccionada != -1) {
+            // Obtener los valores de la fila seleccionada
+            String titulo = (String) jTable1.getValueAt(filaSeleccionada, 0);
+            String empresa = (String) jTable1.getValueAt(filaSeleccionada, 1);
+            String fechaEntrega = (String) jTable1.getValueAt(filaSeleccionada, 2);
+            String estado = (String) jTable1.getValueAt(filaSeleccionada, 3);
+
+            // Buscar el objeto Project en la lista
+            Project proyectoSeleccionado = buscarProyectoPorNombre(titulo);
+            
+            if (proyectoSeleccionado != null) {
+                // Abrir la nueva GUI con los datos del proyecto
+                
+               IRepository projectRepository = Factory.getInstance().getRepository("project");
+               ProjectService serviceProyect = new ProjectService(projectRepository);
+               GUIGestionSofwareCoordinationProject instance= new GUIGestionSofwareCoordinationProject(serviceProyect);
+               instance.setExtendedState(JFrame.NORMAL);
+               instance.setVisible(true);
+            }
+        }
+    }
+});
+    }
 
     private void abrirGUICoordinador() {
         // Obtener el repositorio de proyectos desde la fábrica
