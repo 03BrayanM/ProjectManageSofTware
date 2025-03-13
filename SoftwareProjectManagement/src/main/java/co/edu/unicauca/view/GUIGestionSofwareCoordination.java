@@ -30,7 +30,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         agregarEventos();
         this.projectService = projectService;
         this.projectService.agregarObservador(this);
-        //actualizarTablaP(projectService.obtenerProyectos());
+        configurarEventosTabla();
 
     }
 
@@ -168,10 +168,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Titulo", "Empresa", "Fecha de Entrega", "Estado"
@@ -354,13 +351,12 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         model.setRowCount(0); // Limpiar la tabla
         model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
-        //List<Project> proyectos = projectService.obtenerProyectos();
         if (proyectos == null || proyectos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
-            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
+
             int meses = 0;
             try {
                 meses = Integer.parseInt(p.getTiempoMaximo());
@@ -377,43 +373,47 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             });
         }
     }
-    
-    private Project buscarProyectoPorNombre(String nombre) {
-    for (Project p : projectService.obtenerProyectos()) {
-        if (p.getNombre().equals(nombre)) {
-            return p;
-        }
-    }
-    return null;
-}
-   
-    private void detalles(){
-        jTable1.addMouseListener(new MouseAdapter() {
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int filaSeleccionada = jTable1.getSelectedRow(); // Obtener la fila seleccionada
-        if (filaSeleccionada != -1) {
-            // Obtener los valores de la fila seleccionada
-            String titulo = (String) jTable1.getValueAt(filaSeleccionada, 0);
-            String empresa = (String) jTable1.getValueAt(filaSeleccionada, 1);
-            String fechaEntrega = (String) jTable1.getValueAt(filaSeleccionada, 2);
-            String estado = (String) jTable1.getValueAt(filaSeleccionada, 3);
 
-            // Buscar el objeto Project en la lista
-            Project proyectoSeleccionado = buscarProyectoPorNombre(titulo);
-            
+    private void configurarEventosTabla() {
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                manejarSeleccionProyecto();
+            }
+        });
+    }
+
+    private void manejarSeleccionProyecto() {
+
+        int filaSeleccionada = jTable1.getSelectedRow();
+        Project proyectoSeleccionado = null;
+        if (filaSeleccionada != -1) {
+            Object valorCelda = jTable1.getValueAt(filaSeleccionada, 0);
+            System.out.println("Tipo de valor en la celda: " + valorCelda.getClass().getName());
+            String titulo = "";
+
+            if (valorCelda instanceof Project) {
+                titulo = ((Project) valorCelda).getNombre(); // Extrae el nombre correctamente
+            } else if (valorCelda instanceof String) {
+                titulo = (String) valorCelda; // Si ya es un String, lo usa directamente
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: El valor seleccionado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Evita continuar si hay un error
+            }
+
+            Project proyectoBusqueda = new Project();
+            proyectoBusqueda.setNombre(titulo);
+            System.out.println("Buscando proyecto con nombre: " + titulo);
+            proyectoSeleccionado = (Project) projectService.buscarProyectoPorNombre(proyectoBusqueda);
+
             if (proyectoSeleccionado != null) {
-                // Abrir la nueva GUI con los datos del proyecto
-                
-               IRepository projectRepository = Factory.getInstance().getRepository("project");
-               ProjectService serviceProyect = new ProjectService(projectRepository);
-               GUIGestionSofwareCoordinationProject instance= new GUIGestionSofwareCoordinationProject(serviceProyect);
-               instance.setExtendedState(JFrame.NORMAL);
-               instance.setVisible(true);
+                System.out.println("Proyecto encontrado: " + proyectoSeleccionado.getNombre());
+                abrirGUICoordinadorProject(proyectoSeleccionado);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se encontro ningun proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-});
     }
 
     private void abrirGUICoordinador() {
@@ -425,7 +425,20 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         // Instanciar la GUI del coordinador y mostrarla
         GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
-        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setVisible(true);
+    }
+
+    private void abrirGUICoordinadorProject(Project p) {
+        // Obtener el repositorio de proyectos desde la fábrica
+        IRepository projectRepository = Factory.getInstance().getRepository("project");
+
+        // Crear el servicio de proyectos con su repositorio
+        ProjectService projectService = new ProjectService(projectRepository);
+
+        // Instanciar la GUI del coordinador y mostrarla
+        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p);
+        instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
 

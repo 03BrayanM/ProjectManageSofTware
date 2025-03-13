@@ -11,6 +11,7 @@ import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
            }
            try{
                // Llamada al procedimiento almacenado
-            String sql = "{CALL sp_ListarProyectosPostulados()}";
+            String sql = "{CALL ListarProyectosPostulados()}";
             CallableStatement stmt = conexion.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -119,6 +120,37 @@ public class ProjectMySQLRepository implements IProjectRepository {
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null en caso de error 
            }
+    }
+    
+
+    @Override
+    public Object buscarElemento(Object entity) {
+        Project  proyecto= null;
+        String sql="{CALL BuscarProyectoPorNombre(?) }";
+        
+        try(Connection conexion=Conectionbd.conectar();
+            CallableStatement stmt= conexion.prepareCall(sql)){
+            
+            stmt.setString(1,(String) entity);
+            ResultSet rs=stmt.executeQuery();
+            
+            if(rs.next()){
+                proyecto= new Project();
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+                proyecto.setEstado(rs.getString("estado"));
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setResumen(rs.getString("resumen"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return proyecto;
     }
 
 }

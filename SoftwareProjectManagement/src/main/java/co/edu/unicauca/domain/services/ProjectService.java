@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.domain.services;
 
+import co.edu.unicauca.access.ProjectMySQLRepository;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
@@ -19,6 +20,9 @@ public class ProjectService {
     private IRepository repository;
     private final List<IProjectObserver> observadores = new ArrayList<>();
 
+    public ProjectService(){
+        
+    }
     public ProjectService(IRepository repository) {
         this.repository = repository;
     }
@@ -51,4 +55,8 @@ public class ProjectService {
     public boolean saveProject(Project project) {
         return repository.save(project);
     }
+    
+   public Project buscarProyectoPorNombre(Project project){
+       return (Project) repository.buscarElemento(project.getNombre()); 
+   }
 }

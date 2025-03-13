@@ -4,8 +4,10 @@
  */
 package co.edu.unicauca.interfaces;
 
+import co.edu.unicauca.access.ProjectMySQLRepository;
 import co.edu.unicauca.domain.entities.Project;
 
 public interface IProjectRepository extends IRepository{
+   
     
 }
