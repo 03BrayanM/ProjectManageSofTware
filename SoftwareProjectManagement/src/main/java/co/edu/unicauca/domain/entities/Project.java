@@ -6,6 +6,7 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
+    private String nit;
     private String nitEmpresa;
     private String nombre;
     private String resumen;
@@ -22,7 +23,6 @@ public class Project {
     }
 
     public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
-
         this.nitEmpresa = nit;
         this.nombre = nombre;
         this.resumen = resumen;
@@ -126,5 +126,12 @@ public class Project {
      */
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
+    }
+
+    /**
+     * @return the nit
+     */
+    public String getNit() {
+        return nit;
     }
 }

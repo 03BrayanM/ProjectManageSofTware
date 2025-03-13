@@ -29,7 +29,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
-    private static final String password = "oracle"; // Cambia por tu contraseña
+    private static final String password = "root"; // Cambia por tu contraseña
 
     public ProjectMySQLRepository() {
         try {
@@ -61,11 +61,12 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(2, project.getDescripcion());
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
+
             stmt.setString(5, project.getTiempoMaximo());         
 
             stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
-            
+
             stmt.execute();
             stmt.close();
             return true;
@@ -88,25 +89,26 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
         Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
+
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
-           }
-           try{
-               // Llamada al procedimiento almacenado
+        }
+        try {
+            // Llamada al procedimiento almacenado
             String sql = "{CALL sp_ListarProyectosPostulados()}";
             CallableStatement stmt = conexion.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                Project proyecto= new Project();
+
+            while (rs.next()) {
+                Project proyecto = new Project();
+                proyecto.setNit(rs.getString("idProject"));
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 //proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-            
-                
+
                 listaproyectos.add(proyecto);
             }
             rs.close();
@@ -116,9 +118,38 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return (List<Object>)(List<?>)listaproyectos;
             
            }catch(SQLException e) {
+
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null en caso de error 
-           }
+        }
     }
 
+    public int buscarProyecto(String nombre) {
+        String codigo = null;
+        Connection conexion = Conectionbd.conectar();
+
+        if (conexion == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return -1; // Devuelve null si la conexión falla
+        }
+        try {
+            // Llamada al procedimiento almacenado
+            String sql = "{CALL ObtenerProyectoAceptadoPorTitulo(" + nombre + ")}";
+            CallableStatement stmt = conexion.prepareCall(sql);
+            // Ejecutamos el procedimiento y obtenemos los resultados
+            ResultSet rs = stmt.executeQuery();
+
+            codigo = rs.getString("nit");
+
+            rs.close();
+            stmt.close();
+            conexion.close();
+
+            return Integer.parseInt(codigo);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al Encontrar el Proyecto " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            return -1; // Devuelve null en caso de error 
+        }
+
+    }
 }
