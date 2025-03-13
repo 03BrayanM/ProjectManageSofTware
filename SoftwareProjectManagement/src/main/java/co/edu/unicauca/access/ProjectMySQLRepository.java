@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
@@ -66,7 +67,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(7, project.getTiempoMaximo());         
             stmt.setString(8,"RECIBIDO");
             stmt.setString(9, project.getFechaEntregadaEsperada());
-            
+          
             stmt.execute();
             stmt.close();
             return true;
@@ -88,7 +89,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
        Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+           Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");               
             return null; // Devuelve null si la conexión falla
            }
            try{
@@ -117,10 +118,17 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return new ArrayList<>(listaproyectos);
             
            }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+                Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");                           
             return null; // Devuelve null en caso de error 
            }
     }
+
+
+    @Override
+    public User found(String usename) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 
    
     @Override

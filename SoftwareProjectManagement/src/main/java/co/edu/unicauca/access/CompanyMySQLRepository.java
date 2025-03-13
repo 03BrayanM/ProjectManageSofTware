@@ -6,6 +6,8 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.domain.entities.Company;
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -53,7 +55,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
         return true; // Registro exitoso
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al registrar la empresa: " + e.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
+         Messages.showMessageDialog("Error al registrar la empresa", "Atención");        
         return false; // Fallo en el registro
     }
 }
@@ -75,6 +77,11 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
     @Override
     public List<Object> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

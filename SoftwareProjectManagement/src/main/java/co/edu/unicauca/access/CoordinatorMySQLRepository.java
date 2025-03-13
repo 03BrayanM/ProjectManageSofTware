@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.ICoordinatorRepository;
 import co.edu.unicauca.domain.entities.Coordination;
+import co.edu.unicauca.domain.entities.User;
 import java.util.List;
 
 /**
@@ -33,6 +34,11 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
 
     @Override
     public List<Object> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

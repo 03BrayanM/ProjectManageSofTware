@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.interfaces.IRepository;
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class pruebacompanyrepository  implements IRepository{
 
     @Override
     public List<Object> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
