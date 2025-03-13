@@ -6,6 +6,7 @@ package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
@@ -24,13 +25,15 @@ import javax.swing.table.DefaultTableModel;
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver{
 
      ProjectService projectService;
+     User usuario;
     
-    public GUIGestionSofwareCoordination(ProjectService projectService) {
+    public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
        initComponents();
        agregarEventos();
        this.projectService=projectService;
        this.projectService.agregarObservador(this);
-       actualizarTablaP(projectService.obtenerProyectos());
+       this.usuario=usuario;
+      
        
     }
     
@@ -372,7 +375,7 @@ private void abrirGUICoordinador() {
     ProjectService projectService = new ProjectService(projectRepository);
 
     // Instanciar la GUI del coordinador y mostrarla
-    GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+    GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
     instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
     instance.setVisible(true);
 }

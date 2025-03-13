@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IStudentRepository;
 import co.edu.unicauca.domain.entities.Student;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -65,6 +66,11 @@ public class StudentMySQLRepository implements IStudentRepository{
 
     @Override
     public List<Object> list() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

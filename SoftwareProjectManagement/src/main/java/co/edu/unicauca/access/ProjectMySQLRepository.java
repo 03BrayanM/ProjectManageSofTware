@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
@@ -87,7 +88,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
            }
            try{
                // Llamada al procedimiento almacenado
-            String sql = "{CALL sp_ListarProyectosPostulados()}";
+            String sql = "{CALL ListarProyectosPostulados()}";
             CallableStatement stmt = conexion.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -114,6 +115,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null en caso de error 
            }
+    }
+
+    @Override
+    public User found(String usename) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
  
