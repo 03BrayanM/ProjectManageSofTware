@@ -170,8 +170,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
    
     @Override
     public Project getProject(String id) {
-    Connection conexion = Conectionbd.conectar();
-    if (conexion == null) {
+    if (conn == null) {
         JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
         return null; // Retorna null si no hay conexión
     }
@@ -179,7 +178,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     Project proyecto = null;
     String sql = "{CALL ObtenerProyecto(?)}"; // Nombre del procedimiento almacenado
 
-    try (CallableStatement stmt = conexion.prepareCall(sql)) {
+    try (CallableStatement stmt = conn.prepareCall(sql)) {
         stmt.setString(1, id); // Asignamos el ID del proyecto
 
         try (ResultSet rs = stmt.executeQuery()) {
@@ -202,7 +201,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
-            conexion.close();
+            conn.close();
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
         }

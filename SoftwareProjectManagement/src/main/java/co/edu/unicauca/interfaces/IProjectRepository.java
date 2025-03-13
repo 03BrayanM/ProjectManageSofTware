@@ -9,6 +9,6 @@ import co.edu.unicauca.domain.entities.Project;
 
 public interface IProjectRepository extends IRepository{
 
-    public Project getProject(String id);
+    Project getProject(String id);
 
 }
