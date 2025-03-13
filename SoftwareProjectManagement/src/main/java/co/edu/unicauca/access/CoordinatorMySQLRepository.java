@@ -7,7 +7,7 @@ package co.edu.unicauca.access;
 import co.edu.unicauca.interfaces.ICoordinatorRepository;
 import co.edu.unicauca.domain.entities.Coordination;
 
-import co.edu.unicauca.domain.entities.User
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.infra.CalcularFecha;
 import java.sql.CallableStatement;

@@ -136,11 +136,4 @@ public class Project {
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
-
-    /**
-     * @return the nit
-     */
-    public String getNit() {
-        return nit;
-    }
 }

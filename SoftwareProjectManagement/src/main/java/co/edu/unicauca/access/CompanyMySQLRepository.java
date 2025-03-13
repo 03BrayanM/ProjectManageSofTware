@@ -134,7 +134,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
 
     public User found(String usename) {
-      
+      return null;
     }
 
     public Object buscarElemento(Object entity) {

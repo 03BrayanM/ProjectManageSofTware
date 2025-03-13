@@ -72,6 +72,7 @@ public class StudentMySQLRepository implements IStudentRepository {
     @Override
 
     public User found(String usename) {
+        return null;
     }
     public Object buscarElemento(Object entity) {
 

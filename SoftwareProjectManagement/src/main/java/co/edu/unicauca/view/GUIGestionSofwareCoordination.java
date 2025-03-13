@@ -35,6 +35,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         this.projectService.agregarObservador(this);
         this.usuario = usuario;
         actualizarTablaP(projectService.obtenerProyectos());
+        configurarEventosTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -440,7 +441,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         ProjectService projectService = new ProjectService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
