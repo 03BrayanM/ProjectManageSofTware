@@ -30,7 +30,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
-    private static final String password = "root"; // Cambia por tu contraseña
+    private static final String password = "oracle"; // Cambia por tu contraseña
 
     public ProjectMySQLRepository() {
         try {
