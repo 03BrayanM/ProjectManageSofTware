@@ -42,6 +42,7 @@ public class ProjectService {
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
+
         List<Object> objetos = repository.list(); // Recupera la lista como List<Object>
         List<Project> proyectos = new ArrayList<>(); // Lista para almacenar los proyectos
         for (Object obj : objetos) {               // Convertimos cada Object en Project
@@ -51,6 +52,12 @@ public class ProjectService {
         }
         return proyectos;
     }
+
+    public int obtenerProyecto(String nombre) {
+        return 1;
+        //return repository.buscarProyecto(nombre);
+    }
+
 
     public boolean saveProject(Project project) {
         return repository.save(project);

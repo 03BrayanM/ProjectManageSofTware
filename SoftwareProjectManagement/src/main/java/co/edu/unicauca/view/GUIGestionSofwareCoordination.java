@@ -26,13 +26,14 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     ProjectService projectService;
 
     public GUIGestionSofwareCoordination(ProjectService projectService) {
+
         initComponents();
         agregarEventos();
         this.projectService = projectService;
         this.projectService.agregarObservador(this);
         configurarEventosTabla();
-
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -213,6 +214,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         txtnombrecordinador.setBackground(new java.awt.Color(247, 247, 247));
         txtnombrecordinador.setBorder(null);
+        txtnombrecordinador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombrecordinadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -303,6 +309,12 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+
+    private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombrecordinadorActionPerformed
+
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;

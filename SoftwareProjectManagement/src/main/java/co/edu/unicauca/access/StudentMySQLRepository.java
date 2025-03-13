@@ -4,12 +4,15 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IStudentRepository;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,10 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author Brayan
  */
-public class StudentMySQLRepository implements IStudentRepository{
-
-
-    
+public class StudentMySQLRepository implements IStudentRepository {
 
     @Override
     public boolean delete(int id) {
@@ -33,7 +33,7 @@ public class StudentMySQLRepository implements IStudentRepository{
         Connection conexion = Conectionbd.conectar(); // Conexión a la BD
 
         if (conexion == null) {
-             Messages.showMessageDialog("Error de conexion", "Atención");
+            Messages.showMessageDialog("Error de conexion", "Atención");
             return false;
         }
 
