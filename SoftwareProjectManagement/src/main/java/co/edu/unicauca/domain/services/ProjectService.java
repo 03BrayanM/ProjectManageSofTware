@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.domain.services;
 
+import co.edu.unicauca.access.ProjectMySQLRepository;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IProjectRepository;
@@ -16,21 +17,26 @@ import java.util.List;
  * @author Yisus
  */
 public class ProjectService {
-    private IProjectRepository repository;
-    private final List<IProjectObserver> observadores = new ArrayList<>();
-    
 
+    private IProjectRepository repository;
+
+    private final List<IProjectObserver> observadores = new ArrayList<>();
+
+    public ProjectService(){
+        
+    }
     public ProjectService(IRepository repository) {
         this.repository = (IProjectRepository)repository;
     }
-     // Método para agregar observadores
+    // Método para agregar observadores
+
     public void agregarObservador(IProjectObserver observador) {
         observadores.add(observador);
     }
 
     // Método para notificar a los observadores
     private void notificarObservadores() {
-        List<Project> proyectos = (List<Project>)(Project)repository.list();
+        List<Project> proyectos = (List<Project>) (Project) repository.list();
         for (IProjectObserver obs : observadores) {
             obs.actualizarProyectos(proyectos);
         }
@@ -38,6 +44,7 @@ public class ProjectService {
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
+
         List<Object> objects = repository.list();
         List<Project> projects = new ArrayList<>();
         for (Object obj : objects) {
@@ -53,5 +60,10 @@ public class ProjectService {
     }
     public boolean saveProject(Project project){
       return repository.save(project);
+
     }
+    
+   public Project buscarProyectoPorNombre(Project project){
+       return (Project) repository.buscarElemento(project.getNombre()); 
+   }
 }
