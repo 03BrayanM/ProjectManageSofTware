@@ -21,18 +21,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Brayan
  */
-public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver{
+public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
-     ProjectService projectService;
-    
+    ProjectService projectService;
+
     public GUIGestionSofwareCoordination(ProjectService projectService) {
-       initComponents();
-       agregarEventos();
-       this.projectService=projectService;
-       this.projectService.agregarObservador(this);
-       actualizarTablaP(projectService.obtenerProyectos());
-    }
-    
+
+        initComponents();
+        agregarEventos();
+        this.projectService = projectService;
+        this.projectService.agregarObservador(this);
+        //actualizarTablaP(projectService.obtenerProyectos());
+
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -173,9 +175,17 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Titulo", "Empresa", "Fecha de Entrega", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         lblProyectosregistrados.setForeground(new java.awt.Color(0, 0, 0));
@@ -302,6 +312,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+
     private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombrecordinadorActionPerformed
@@ -335,54 +346,99 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     private javax.swing.JLabel lblProyectosregistrados;
     private javax.swing.JTextField txtnombrecordinador;
     // End of variables declaration//GEN-END:variables
-    
-    
+
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
         actualizarTablaP(proyectos);
     }
+
     private void agregarEventos() {
-    lblProyectos.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            actualizarTablaP(projectService.obtenerProyectos());
-        }
-    });
-}
-    private void actualizarTablaP(List<Project> proyectos) {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Limpiar la tabla
-    model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
-
-    //List<Project> proyectos = projectService.obtenerProyectos();
-    if (proyectos == null || proyectos.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        return; // Salir del método para no procesar datos vacíos
-    }
-    for (Project p : proyectos) {
-        // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-        LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
-
-        model.addRow(new Object[]{
-            p.getNombre(),
-            p.getNombreEmpresa(),
-            fechaEntrega.toString(), // Convertimos la fecha a String
-            p.getEstado()
+        lblProyectos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actualizarTablaP(projectService.obtenerProyectos());
+            }
         });
     }
+
+    private void actualizarTablaP(List<Project> proyectos) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+        model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
+
+        //List<Project> proyectos = projectService.obtenerProyectos();
+        if (proyectos == null || proyectos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return; // Salir del método para no procesar datos vacíos
+        }
+        for (Project p : proyectos) {
+            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
+            int meses = 0;
+            try {
+                meses = Integer.parseInt(p.getTiempoMaximo());
+            } catch (NumberFormatException e) {
+                // Puedes asignar un valor predeterminado o registrar el error
+                meses = 0;
+            }
+            LocalDate fechaEntrega = LocalDate.now().plusMonths(meses);
+            model.addRow(new Object[]{
+                p.getNombre(),
+                p.getNombreEmpresa(),
+                fechaEntrega.toString(),
+                p.getEstado()
+            });
+        }
+    }
+    
+    private Project buscarProyectoPorNombre(String nombre) {
+    for (Project p : projectService.obtenerProyectos()) {
+        if (p.getNombre().equals(nombre)) {
+            return p;
+        }
+    }
+    return null;
 }
+   
+    private void detalles(){
+        jTable1.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int filaSeleccionada = jTable1.getSelectedRow(); // Obtener la fila seleccionada
+        if (filaSeleccionada != -1) {
+            // Obtener los valores de la fila seleccionada
+            String titulo = (String) jTable1.getValueAt(filaSeleccionada, 0);
+            String empresa = (String) jTable1.getValueAt(filaSeleccionada, 1);
+            String fechaEntrega = (String) jTable1.getValueAt(filaSeleccionada, 2);
+            String estado = (String) jTable1.getValueAt(filaSeleccionada, 3);
 
-private void abrirGUICoordinador() {
-    // Obtener el repositorio de proyectos desde la fábrica
-    IRepository projectRepository = Factory.getInstance().getRepository("project");
+            // Buscar el objeto Project en la lista
+            Project proyectoSeleccionado = buscarProyectoPorNombre(titulo);
+            
+            if (proyectoSeleccionado != null) {
+                // Abrir la nueva GUI con los datos del proyecto
+                
+               IRepository projectRepository = Factory.getInstance().getRepository("project");
+               ProjectService serviceProyect = new ProjectService(projectRepository);
+               GUIGestionSofwareCoordinationProject instance= new GUIGestionSofwareCoordinationProject(serviceProyect);
+               instance.setExtendedState(JFrame.NORMAL);
+               instance.setVisible(true);
+            }
+        }
+    }
+});
+    }
 
-    // Crear el servicio de proyectos con su repositorio
-    ProjectService projectService = new ProjectService(projectRepository);
+    private void abrirGUICoordinador() {
+        // Obtener el repositorio de proyectos desde la fábrica
+        IRepository projectRepository = Factory.getInstance().getRepository("project");
 
-    // Instanciar la GUI del coordinador y mostrarla
-    GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
-    instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    instance.setVisible(true);
-}
+        // Crear el servicio de proyectos con su repositorio
+        ProjectService projectService = new ProjectService(projectRepository);
+
+        // Instanciar la GUI del coordinador y mostrarla
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setVisible(true);
+    }
 
 }
