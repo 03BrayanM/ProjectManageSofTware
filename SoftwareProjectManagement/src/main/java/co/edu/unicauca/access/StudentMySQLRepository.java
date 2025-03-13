@@ -4,12 +4,15 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IStudentRepository;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,10 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author Brayan
  */
-public class StudentMySQLRepository implements IStudentRepository{
-
-
-    
+public class StudentMySQLRepository implements IStudentRepository {
 
     @Override
     public boolean delete(int id) {
@@ -33,7 +33,7 @@ public class StudentMySQLRepository implements IStudentRepository{
         Connection conexion = Conectionbd.conectar(); // Conexión a la BD
 
         if (conexion == null) {
-             Messages.showMessageDialog("Error de conexion", "Atención");
+            Messages.showMessageDialog("Error de conexion", "Atención");
             return false;
         }
 
@@ -67,5 +67,40 @@ public class StudentMySQLRepository implements IStudentRepository{
     public List<Object> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    public Student buscarEstudiante(int password, int nombre) {
+        Connection conexion = Conectionbd.conectar();
+
+        if (conexion == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null si la conexión falla
+        }
+        try {
+            // Llamada al procedimiento almacenado
+            String sql = "{CALL ObtenerEstudiantePorUsuario(" + nombre + "," + password + ")}";
+            CallableStatement stmt = conexion.prepareCall(sql);
+            // Ejecutamos el procedimiento y obtenemos los resultados
+            ResultSet rs = stmt.executeQuery();
+
+            Student estudiante = new Student("", "", 0, "", "");
+
+            estudiante.setCodigo(Integer.parseInt(rs.getString("codEst")));
+
+            rs.close();
+            stmt.close();
+            conexion.close();
+
+            if (estudiante.getCodigo() != 0) {
+                return estudiante;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null en caso de error 
+        }
+    }
+
 }

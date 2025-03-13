@@ -31,7 +31,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
        this.projectService=projectService;
        this.projectService.agregarObservador(this);
        actualizarTablaP(projectService.obtenerProyectos());
-       
     }
     
     @SuppressWarnings("unchecked")
@@ -208,6 +207,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         txtnombrecordinador.setBackground(new java.awt.Color(247, 247, 247));
         txtnombrecordinador.setBorder(null);
+        txtnombrecordinador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombrecordinadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -297,6 +301,10 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombrecordinadorActionPerformed
 
   
 
