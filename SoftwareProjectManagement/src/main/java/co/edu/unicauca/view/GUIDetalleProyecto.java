@@ -5,17 +5,22 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Conectionbd;
+import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.interfaces.IRepository;
 import co.edu.unicauca.view.GUILoginEmpresa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,19 +29,15 @@ import javax.swing.JOptionPane;
  */
 public class GUIDetalleProyecto extends javax.swing.JFrame {
 
-    ProjectService projectService;
-    StudentService studentServices;
-    PostulationService postulationService;
-
+    private PostulationService postulaciones;
     private Project proyecto;
-    private int idUsuario;
+    private Student estudiante;
 
-    public GUIDetalleProyecto(Project proyecto_, int idUsuario_, ProjectService projectService_, StudentService studentServices_) {
+    public GUIDetalleProyecto(Project proyecto_, Student estudiante_, PostulationService postulaciones_) {
         initComponents();
-        this.studentServices = studentServices_;
-        this.projectService = projectService_;
         this.proyecto = proyecto_;
-        this.idUsuario = idUsuario_;
+        this.estudiante = estudiante_;
+        this.postulaciones = postulaciones_;
         inicializarDatos(proyecto);
     }
 
@@ -74,6 +75,7 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txtAreaObjetivos = new javax.swing.JTextArea();
         btnPostularse = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -316,6 +318,17 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(191, 212, 228));
+        btnVolver.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(35, 38, 107));
+        btnVolver.setText("Volver");
+        btnVolver.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(191, 212, 228), 2, true));
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -327,6 +340,8 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(125, 125, 125)
                 .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(176, 176, 176)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -336,7 +351,9 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
 
@@ -356,18 +373,27 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
+        Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
 
-        Postulation postulation = new Postulation(studentServices.obtenerEstudiante().getCodigo(), proyecto.getNit(), "Fecha");
-        System.out.println("Postulación creada: " + postulation);
+        if (proyecto.getNit() != null) {
 
-        boolean res = postulationService.savePostulation(postulation);
-        System.out.println("Resultado de la postulación: " + res);
+            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getNit(), fechaActual);
+            System.out.println("Postulación creada: " + postulation);
 
-        if (res) {
-            Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
+            boolean res = postulaciones.savePostulation(postulation);
+
+            if (res) {
+                Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
+                this.dispose();
+            } else {
+                Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
+                this.dispose();
+            }
         } else {
-            Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
+            Messages.showMessageDialog("El codigo de projecto es Nulo", "Atención");
         }
+
+        this.dispose();
     }
 
     private void inicializarDatos(Project proyecto) {
@@ -385,9 +411,16 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnPostularseActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+    private void iniciar(ProjectService project, StudentService student, PostulationService postulation) {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPostularse;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

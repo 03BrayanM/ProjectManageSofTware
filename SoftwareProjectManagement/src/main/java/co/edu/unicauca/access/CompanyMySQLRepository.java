@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.domain.entities.Company;
+import co.edu.unicauca.domain.entities.User;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,45 +20,44 @@ import javax.swing.JOptionPane;
 public class CompanyMySQLRepository implements ICompanyRepository {
 
     @Override
-   public boolean save(Object usuario) {
-    Company empresa = (Company) usuario;
-    Connection conexion = Conectionbd.conectar(); // Llamamos a la conexión existente
+    public boolean save(Object usuario) {
+        Company empresa = (Company) usuario;
+        Connection conexion = Conectionbd.conectar(); // Llamamos a la conexión existente
 
-    if (conexion == null) {
-        JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
-        return false;
+        if (conexion == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            // Llamada al procedimiento almacenado con 9 parámetros
+            String sql = "{CALL sp_registrar_empresa(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+            CallableStatement stmt = conexion.prepareCall(sql);
+
+            // Pasamos los 9 parámetros correctamente
+            stmt.setInt(1, empresa.getNit());
+            stmt.setString(2, empresa.getNombre());
+            stmt.setString(3, empresa.getEmail());
+            stmt.setString(4, empresa.getTelefono());
+            stmt.setString(5, empresa.getNombrecontaccto());
+            stmt.setString(6, empresa.getApellido());
+            stmt.setString(7, empresa.getSector());
+            stmt.setString(8, empresa.getCargo());
+            stmt.setString(9, empresa.getEstado()); // Corregido el índice
+
+            // Ejecutamos el procedimiento
+            stmt.execute();
+
+            // Cerramos recursos
+            stmt.close();
+            conexion.close();
+
+            return true; // Registro exitoso
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar la empresa: " + e.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
+            return false; // Fallo en el registro
+        }
     }
-
-    try {
-        // Llamada al procedimiento almacenado con 9 parámetros
-        String sql = "{CALL sp_registrar_empresa(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-        CallableStatement stmt = conexion.prepareCall(sql);
-
-        // Pasamos los 9 parámetros correctamente
-        stmt.setInt(1, empresa.getNit());
-        stmt.setString(2, empresa.getNombre());
-        stmt.setString(3, empresa.getEmail());
-        stmt.setString(4, empresa.getTelefono());
-        stmt.setString(5, empresa.getNombrecontaccto());
-        stmt.setString(6, empresa.getApellido());
-        stmt.setString(7, empresa.getSector());
-        stmt.setString(8, empresa.getCargo());
-        stmt.setString(9, empresa.getEstado()); // Corregido el índice
-
-        // Ejecutamos el procedimiento
-        stmt.execute();
-
-        // Cerramos recursos
-        stmt.close();
-        conexion.close();
-
-        return true; // Registro exitoso
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al registrar la empresa: " + e.getMessage(), "Error de Registro", JOptionPane.ERROR_MESSAGE);
-        return false; // Fallo en el registro
-    }
-}
-
 
     public boolean update(Company entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -77,5 +77,10 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     public List<Object> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

@@ -1,4 +1,3 @@
-
 package co.edu.unicauca.domain.entities;
 
 /**
@@ -6,6 +5,7 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
+
     private String nit;
     private String nitEmpresa;
     private String nombre;
@@ -17,13 +17,14 @@ public class Project {
     private String FechaEntregadaEsperada;
     private String estado;
     private String nombreEmpresa;
-    
-    public Project(){
-        
+
+    public Project() {
+
     }
 
-    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
-        this.nitEmpresa = nit;
+    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String nit_, String nitEmpresa_) {
+        this.nit = nit_;
+        this.nitEmpresa = nitEmpresa_;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -34,8 +35,18 @@ public class Project {
         this.estado = "Aceptado";
     }
 
- 
-  
+    public Project(Project pro) {
+        setNit(pro.getNit());
+        setNitEmpresa(pro.getNitEmpresa());
+        setNombre(pro.getNombre());
+        setDescripcion(pro.getDescripcion());
+        setObjetivo(pro.getObjetivo());
+        setTiempoMaximo(pro.getTiempoMaximo());
+        setFechaEntregadaEsperada(pro.getFechaEntregadaEsperada());
+        setEstado(pro.getEstado());
+        setNombreEmpresa(pro.getNombreEmpresa());
+
+    }
 
     public String getNombre() {
         return nombre;
@@ -77,8 +88,6 @@ public class Project {
         this.TiempoMaximo = TiempoMaximo;
     }
 
-  
-
     public String getPresupuesto() {
         return presupuesto;
     }
@@ -103,15 +112,20 @@ public class Project {
         this.estado = estado;
     }
 
-
-
-
     public String getNitEmpresa() {
         return nitEmpresa;
     }
 
-    public void setNit(String nit) {
+    public void setNitEmpresa(String nit) {
         this.nitEmpresa = nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getNit() {
+        return nit;
     }
 
     /**
@@ -128,10 +142,4 @@ public class Project {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    /**
-     * @return the nit
-     */
-    public String getNit() {
-        return nit;
-    }
 }

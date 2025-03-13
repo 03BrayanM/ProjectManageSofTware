@@ -4,16 +4,20 @@ public class Student {
 
     private String nombre;
     private String cedula;
-    private int codigo;
+    private String codigo;
     private String email;
     private String telefono;
 
-    public Student(String nombre, String cedula, int codigo, String email, String telefono) {
+    public Student(String nombre, String cedula, String codigo, String email, String telefono) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.codigo = codigo;
         this.email = email;
         this.telefono = telefono;
+    }
+
+    public Student() {
+
     }
 
     public String getNombre() {
@@ -32,11 +36,11 @@ public class Student {
         this.cedula = cedula;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

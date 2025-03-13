@@ -301,7 +301,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
         boolean validarEntero= validarNumero(tiempoMaximo);
         if (validacion && validarEntero) {
-            Project project = new Project(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada, nit);
+            Project project = new Project(nit,nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada, nit);
 
             if (projectService.saveProject(project)) {
                 if (listener != null) {

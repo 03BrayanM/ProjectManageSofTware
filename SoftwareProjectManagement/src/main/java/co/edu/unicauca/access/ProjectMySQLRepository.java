@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
@@ -99,6 +100,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
 
+            if (!rs.isBeforeFirst()) { // Si no hay filas en el resultado
+                JOptionPane.showMessageDialog(null, "No se encontraron proyectos.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+
             while (rs.next()) {
                 Project proyecto = new Project();
                 proyecto.setNit(rs.getString("idProject"));
@@ -114,7 +120,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-            conexion.close();
 
             return (List<Object>) (List<?>) listaproyectos;
 
@@ -125,32 +130,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
         }
     }
 
-    public int buscarProyecto(String nombre) {
-        String codigo = null;
-        Connection conexion = Conectionbd.conectar();
-
-        if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
-            return -1; // Devuelve null si la conexión falla
-        }
-        try {
-            // Llamada al procedimiento almacenado
-            String sql = "{CALL ObtenerProyectoAceptadoPorTitulo(" + nombre + ")}";
-            CallableStatement stmt = conexion.prepareCall(sql);
-            // Ejecutamos el procedimiento y obtenemos los resultados
-            ResultSet rs = stmt.executeQuery();
-
-            codigo = rs.getString("nit");
-
-            rs.close();
-            stmt.close();
-            conexion.close();
-
-            return Integer.parseInt(codigo);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al Encontrar el Proyecto " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
-            return -1; // Devuelve null en caso de error 
-        }
-
+    @Override
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

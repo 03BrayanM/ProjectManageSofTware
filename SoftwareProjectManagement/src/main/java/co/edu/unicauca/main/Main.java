@@ -1,6 +1,7 @@
 package co.edu.unicauca.main;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
@@ -16,9 +17,14 @@ import javax.swing.JFrame;
 public class Main {
 
     public static void main(String[] args) {
+
+        User usuario = new User("Mera", "clave123", "mera1@mail.com", "ESTUDIANTE", "HABILITADO");
+
         IRepository projectRepository = Factory.getInstance().getRepository("project");
         ProjectService serviceProyect = new ProjectService(projectRepository);
-        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(serviceProyect);
+        IRepository studentRepository = Factory.getInstance().getRepository("student");
+        StudentService serviceStudent = new StudentService(studentRepository);
+        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(serviceProyect, usuario, serviceStudent);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
