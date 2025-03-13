@@ -65,9 +65,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtpresupuesto = new javax.swing.JTextField();
         txtPresupuesto = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        btnaceptar = new javax.swing.JButton();
-        btnrechazar = new javax.swing.JButton();
+        btnguardarCambios = new javax.swing.JButton();
         txtestado = new javax.swing.JTextField();
+        cbxestados = new javax.swing.JComboBox<>();
+        txtmodificarestado = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -257,7 +258,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Presupuesto");
+        jLabel6.setText("Presupuesto:");
 
         txtnombre.setEditable(false);
         txtnombre.setBackground(new java.awt.Color(228, 228, 228));
@@ -355,21 +356,25 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel14.setText("Estado");
+        jLabel14.setText("Estado Actual:");
 
-        btnaceptar.setBackground(new java.awt.Color(9, 33, 103));
-        btnaceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnaceptar.setText("Aceptar");
-
-        btnrechazar.setBackground(new java.awt.Color(9, 33, 103));
-        btnrechazar.setForeground(new java.awt.Color(255, 255, 255));
-        btnrechazar.setText("Rechazar");
+        btnguardarCambios.setBackground(new java.awt.Color(9, 33, 103));
+        btnguardarCambios.setForeground(new java.awt.Color(255, 255, 255));
+        btnguardarCambios.setText("Guardar Cambios");
 
         txtestado.setEditable(false);
         txtestado.setBackground(new java.awt.Color(228, 228, 228));
         txtestado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtestado.setForeground(new java.awt.Color(0, 0, 0));
         txtestado.setBorder(null);
+
+        cbxestados.setBackground(new java.awt.Color(255, 255, 255));
+        cbxestados.setForeground(new java.awt.Color(0, 0, 0));
+        cbxestados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptado", "Rechazado", "En Ejecucion", "Terminado" }));
+
+        txtmodificarestado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtmodificarestado.setForeground(new java.awt.Color(0, 0, 0));
+        txtmodificarestado.setText("Cambiar Estado:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -380,21 +385,23 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                     .addComponent(txtInformacion)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 17, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnaceptar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnrechazar)
-                                .addGap(20, 20, 20)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(txtmodificarestado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxestados, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnguardarCambios)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -408,9 +415,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(btnaceptar)
-                    .addComponent(btnrechazar)
-                    .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnguardarCambios)
+                    .addComponent(txtestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxestados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmodificarestado))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -552,7 +560,7 @@ private void llenarCampos(Project proyecto) {
     txtobjetivos.setText(proyecto.getObjetivo());
     txtresumen.setText(proyecto.getResumen());
     txtdescripcion.setText(proyecto.getDescripcion());
-    txtestado.setText(proyecto.getEstado());
+    txtestado.setText(proyecto.getEstadoActual().toString());
 }
     /**
      * @param args the command line arguments
@@ -561,8 +569,8 @@ private void llenarCampos(Project proyecto) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarEstudiante;
-    private javax.swing.JButton btnaceptar;
-    private javax.swing.JButton btnrechazar;
+    private javax.swing.JButton btnguardarCambios;
+    private javax.swing.JComboBox<String> cbxestados;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -594,6 +602,7 @@ private void llenarCampos(Project proyecto) {
     private javax.swing.JTextField txtempresa;
     private javax.swing.JTextField txtestado;
     private javax.swing.JTextField txtfecha;
+    private javax.swing.JLabel txtmodificarestado;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnombrecordinador;
     private javax.swing.JTextField txtobjetivos;

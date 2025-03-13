@@ -12,6 +12,7 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.Component;
@@ -46,7 +47,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         initComponents();
         servicestudent=service;
         this.projectService = projectService;
-        this.projectService.agregarObservador(this);
+        Subject.getInstance().agregarObservador(this);
         this.usuario=usuario;
         actualizarTablaP(projectService.obtenerProyectos());
       
