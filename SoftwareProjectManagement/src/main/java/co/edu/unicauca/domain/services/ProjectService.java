@@ -6,6 +6,7 @@ package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IProjectObserver;
+import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.interfaces.IRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,12 @@ import java.util.List;
  * @author Yisus
  */
 public class ProjectService {
-    private IRepository repository;
+    private IProjectRepository repository;
     private final List<IProjectObserver> observadores = new ArrayList<>();
     
 
     public ProjectService(IRepository repository) {
-        this.repository = repository;
+        this.repository = (IProjectRepository)repository;
     }
      // Método para agregar observadores
     public void agregarObservador(IProjectObserver observador) {
@@ -37,9 +38,19 @@ public class ProjectService {
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
-        return (List<Project>)(Project)repository.list();
+        List<Object> objects = repository.list();
+        List<Project> projects = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Project) {
+                projects.add((Project) obj); 
+            }
+        }
+        // Devuelves la lista de Project como List<Object>
+        return new ArrayList<>(projects);
     }
-    
+    public Project consultarProyecto(String id){
+        return this.repository.getProject(id);
+    }
     public boolean saveProject(Project project){
       return repository.save(project);
     }
