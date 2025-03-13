@@ -77,13 +77,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Empresas");
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Estudiantes");
 
-        lblProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblProyectos.setText("Proyectos");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -118,11 +115,9 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtnombrecordinador.setBorder(null);
         txtnombrecordinador.setFocusable(false);
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Opciones");
 
         btnRegistrarEstudiante.setBackground(new java.awt.Color(223, 224, 226));
-        btnRegistrarEstudiante.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarEstudiante.setText("Registrar Estudiante");
         btnRegistrarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,7 +126,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         });
 
         jButton3.setBackground(new java.awt.Color(223, 224, 226));
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Registrar Empresa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,11 +134,9 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         });
 
         jButton4.setBackground(new java.awt.Color(223, 224, 226));
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
         jButton4.setText("Gestionar proyecto");
 
         jButton5.setBackground(new java.awt.Color(223, 224, 226));
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Salir");
 
         jPanel1.setBackground(new java.awt.Color(247, 247, 247));
@@ -159,29 +151,23 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(228, 228, 228));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Resumen:");
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Objetivos:");
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Descripcion:");
 
         txtobjetivos.setBackground(new java.awt.Color(228, 228, 228));
-        txtobjetivos.setForeground(new java.awt.Color(0, 0, 0));
         txtobjetivos.setBorder(null);
         txtobjetivos.setEnabled(false);
 
         txtresumen.setBackground(new java.awt.Color(228, 228, 228));
-        txtresumen.setForeground(new java.awt.Color(0, 0, 0));
         txtresumen.setBorder(null);
         txtresumen.setEnabled(false);
 
         txtdescripcion.setBackground(new java.awt.Color(228, 228, 228));
-        txtdescripcion.setForeground(new java.awt.Color(0, 0, 0));
         txtdescripcion.setBorder(null);
         txtdescripcion.setEnabled(false);
 
@@ -227,42 +213,33 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(228, 228, 228));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Nombre:");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Empresa:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tiempo:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Fecha:");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Presupuesto");
 
         txtnombre.setBackground(new java.awt.Color(228, 228, 228));
-        txtnombre.setForeground(new java.awt.Color(0, 0, 0));
         txtnombre.setBorder(null);
         txtnombre.setEnabled(false);
 
         txtempresa.setBackground(new java.awt.Color(228, 228, 228));
-        txtempresa.setForeground(new java.awt.Color(0, 0, 0));
         txtempresa.setBorder(null);
         txtempresa.setEnabled(false);
 
         txtfecha.setBackground(new java.awt.Color(228, 228, 228));
-        txtfecha.setForeground(new java.awt.Color(0, 0, 0));
         txtfecha.setBorder(null);
         txtfecha.setEnabled(false);
 
         txttiempo.setBackground(new java.awt.Color(228, 228, 228));
-        txttiempo.setForeground(new java.awt.Color(0, 0, 0));
         txttiempo.setBorder(null);
         txttiempo.setEnabled(false);
 
@@ -320,7 +297,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         );
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Estado");
 
         btnaceptar.setBackground(new java.awt.Color(9, 33, 103));
@@ -332,7 +308,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         btnrechazar.setText("Rechazar");
 
         txtpresupuesto.setBackground(new java.awt.Color(228, 228, 228));
-        txtpresupuesto.setForeground(new java.awt.Color(0, 0, 0));
         txtpresupuesto.setBorder(null);
         txtpresupuesto.setEnabled(false);
 
@@ -382,7 +357,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(247, 247, 247));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Comentarios del proyecto");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -403,7 +377,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         );
 
         txtnombre1.setBackground(new java.awt.Color(228, 228, 228));
-        txtnombre1.setForeground(new java.awt.Color(0, 0, 0));
         txtnombre1.setBorder(null);
         txtnombre1.setEnabled(false);
 
