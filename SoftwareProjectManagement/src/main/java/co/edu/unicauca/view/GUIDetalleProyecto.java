@@ -31,8 +31,9 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
     private Project proyecto;
     private int idUsuario;
 
-    public GUIDetalleProyecto(Project proyecto_, int idUsuario_, ProjectService projectService_) {
+    public GUIDetalleProyecto(Project proyecto_, int idUsuario_, ProjectService projectService_, StudentService studentServices_) {
         initComponents();
+        this.studentServices = studentServices_;
         this.projectService = projectService_;
         this.proyecto = proyecto_;
         this.idUsuario = idUsuario_;
@@ -356,18 +357,16 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
 
-        int codigo = 0;
-        if (projectService.obtenerProyecto(proyecto.getNombre()) != (-1)) {
-            codigo = projectService.obtenerProyecto(proyecto.getNombre());
-        } else {
-            Messages.showMessageDialog("Ocurrio un Error al intentar Postularse", "Atención");
-        }
-        Postulation postulation = new Postulation(studentServices.obtenerEstudiante().getCodigo(), codigo, "Fecha");
+        Postulation postulation = new Postulation(studentServices.obtenerEstudiante().getCodigo(), proyecto.getNit(), "Fecha");
+        System.out.println("Postulación creada: " + postulation);
+
         boolean res = postulationService.savePostulation(postulation);
+        System.out.println("Resultado de la postulación: " + res);
+
         if (res) {
             Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
         } else {
-            Messages.showMessageDialog("Ocurrio un Error al intentar Postularse", "Atención");
+            Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
         }
     }
 

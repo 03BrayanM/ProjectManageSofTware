@@ -115,7 +115,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -265,33 +265,34 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
             return this;
         }
     }
-    
+
     class ButtonEditor extends DefaultCellEditor {
-    private JButton button;
-    private List<Project> proyectos;
-    private int selectedRow;
 
-    public ButtonEditor(JCheckBox checkBox, List<Project> proyectos) {
-        super(checkBox);
-        this.proyectos = proyectos;
-        button = new JButton("Ver Detalles");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-                Project proyectoSeleccionado = proyectos.get(selectedRow);
-                GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado,0,null);
-                detalleVentana.setVisible(true);
-            }
-        });
-    }
+        private JButton button;
+        private List<Project> proyectos;
+        private int selectedRow;
 
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        selectedRow = row;
-        return button;
+        public ButtonEditor(JCheckBox checkBox, List<Project> proyectos) {
+            super(checkBox);
+            this.proyectos = proyectos;
+            button = new JButton("Ver Detalles");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                    Project proyectoSeleccionado = proyectos.get(selectedRow);
+                    GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado, 0, null, null);
+                    detalleVentana.setVisible(true);
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            selectedRow = row;
+            return button;
+        }
     }
-}
 
     private void agregarEventos() {
         lblProyectos.addMouseListener(new MouseAdapter() {

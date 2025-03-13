@@ -143,7 +143,7 @@ public class GUIRecordType extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsiguienteActionPerformed
-        String seleccionado = cbxtipo.getSelectedItem().toString();        
+        String seleccionado = cbxtipo.getSelectedItem().toString();
         if (seleccionado.equals("Estudiante")) {
             //  IRepository serviceRepository = Factory.getInstance().getRepository("company");
             IRepository studentRepository = Factory.getInstance().getRepository("student");
@@ -168,13 +168,13 @@ public class GUIRecordType extends javax.swing.JFrame {
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
             instance.setLocationRelativeTo(null); // Centrar en pantalla
             this.dispose();
-             instance.setVisible(true);
+            instance.setVisible(true);
         }
     }//GEN-LAST:event_btnsiguienteActionPerformed
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
         this.dispose();
-        GUILogin instance = new GUILogin();
+        GUILogin instance = new GUILogin(null, null);
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
         // TODO add your handling code here:

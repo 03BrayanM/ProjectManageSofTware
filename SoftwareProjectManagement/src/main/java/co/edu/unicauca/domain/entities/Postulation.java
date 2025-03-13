@@ -10,10 +10,10 @@ package co.edu.unicauca.domain.entities;
  */
 public class Postulation {
     private int codStudent;
-    private int codProject;
+    private String codProject;
     private String fecha; 
     
-    public Postulation(int codStudent_,int codProject_,String fecha_){
+    public Postulation(int codStudent_,String codProject_,String fecha_){
     this.codStudent= codStudent_;
     this.codProject=codProject_;
     this.fecha=fecha_; 
@@ -38,14 +38,14 @@ public class Postulation {
     /**
      * @return the codProject
      */
-    public int getCodProject() {
+    public String getCodProject() {
         return codProject;
     }
 
     /**
      * @param codProject the codProject to set
      */
-    public void setCodProject(int codProject) {
+    public void setCodProject(String codProject) {
         this.codProject = codProject;
     }
 

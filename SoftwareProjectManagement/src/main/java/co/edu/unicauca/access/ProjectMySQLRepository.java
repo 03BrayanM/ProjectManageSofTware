@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Brayan
@@ -62,7 +61,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
 
-            stmt.setString(5, project.getTiempoMaximo());         
+            stmt.setString(5, project.getTiempoMaximo());
 
             stmt.setString(6, "HABILITADO");
             stmt.setString(7, project.getFechaEntregadaEsperada());
@@ -85,17 +84,17 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public List<Object> list() {
-        
+
         List<Project> listaproyectos = new ArrayList<>();
         Connection conexion = Conectionbd.conectar();
-           if (conexion == null) {
+        if (conexion == null) {
 
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
         }
         try {
             // Llamada al procedimiento almacenado
-            String sql = "{CALL sp_ListarProyectosPostulados()}";
+            String sql = "{CALL ListarProyectosPostulados()}";
             CallableStatement stmt = conexion.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -104,8 +103,10 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 Project proyecto = new Project();
                 proyecto.setNit(rs.getString("idProject"));
                 proyecto.setNombre(rs.getString("titulo"));
-                proyecto.setNombreEmpresa(rs.getString("empresa"));
-                //proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setNombreEmpresa(rs.getString("nit"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
 
@@ -114,10 +115,10 @@ public class ProjectMySQLRepository implements IProjectRepository {
             rs.close();
             stmt.close();
             conexion.close();
-            
-            return (List<Object>)(List<?>)listaproyectos;
-            
-           }catch(SQLException e) {
+
+            return (List<Object>) (List<?>) listaproyectos;
+
+        } catch (SQLException e) {
 
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null en caso de error 

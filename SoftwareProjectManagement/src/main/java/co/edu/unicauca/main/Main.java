@@ -22,8 +22,8 @@ public class Main {
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
-}
-/*public static void main(String[] args) {
+
+    /*public static void main(String[] args) {
      
      
         //IRepository serviceRepository = Factory.getInstance().getRepository("company");
@@ -41,6 +41,5 @@ public class Main {
           GUIGestionSofwareCoordination instanceb= new GUIGestionSofwareCoordination(serviceProyect);
           instanceb.setExtendedState(JFrame.NORMAL);
           instanceb.setVisible(true);
- }
+     */
 }
-

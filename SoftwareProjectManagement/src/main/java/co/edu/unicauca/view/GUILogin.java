@@ -13,11 +13,12 @@ import javax.swing.JFrame;
  */
 public class GUILogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUILogin
-     */
+    private String usuario;
+    private String password;
 
-    public GUILogin() {
+    public GUILogin(String usuario_, String password_) {
+        this.usuario = usuario_;
+        this.password = password_;
         initComponents();
     }
 
@@ -159,20 +160,18 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String usuario= txtusuario.toString();
-       String contraseña= txtcontraseña.toString();
-       
+        String usuario = txtusuario.toString();
+        String contraseña = txtcontraseña.toString();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void RegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrarseMouseClicked
-      this.dispose();
-        GUIRecordType instance= new GUIRecordType();
-       instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.dispose();
+        GUIRecordType instance = new GUIRecordType();
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setVisible(true);
     }//GEN-LAST:event_RegistrarseMouseClicked
 
-  
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Registrarse;
@@ -189,4 +188,5 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtcontraseña;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
+
 }
