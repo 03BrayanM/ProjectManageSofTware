@@ -12,6 +12,7 @@ import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(8,"RECIBIDO");
             stmt.setString(9, project.getFechaEntregadaEsperada());
           
+
             stmt.execute();
             stmt.close();
             return true;
@@ -85,11 +87,12 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public List<Object> list() {
-       CalcularFecha calcular = new CalcularFecha();
+        
         List<Project> listaproyectos = new ArrayList<>();
-       Connection conexion = Conectionbd.conectar();
+        Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");               
+
             return null; // Devuelve null si la conexión falla
            }
            try{
@@ -109,18 +112,52 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
                 
                 
+
                 listaproyectos.add(proyecto);
             }
             rs.close();
             stmt.close();
             conexion.close();
             
-            return new ArrayList<>(listaproyectos);
+            return (List<Object>)(List<?>)listaproyectos;
             
            }catch(SQLException e) {
-                Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");                           
+             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");  
+          
+
             return null; // Devuelve null en caso de error 
-           }
+        }
+    }
+    
+
+    @Override
+    public Object buscarElemento(Object entity) {
+        Project  proyecto= null;
+        String sql="{CALL BuscarProyectoPorNombre(?) }";
+        
+        try(Connection conexion=Conectionbd.conectar();
+            CallableStatement stmt= conexion.prepareCall(sql)){
+            
+            stmt.setString(1,(String) entity);
+            ResultSet rs=stmt.executeQuery();
+            
+            if(rs.next()){
+                proyecto= new Project();
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+                proyecto.setEstado(rs.getString("estado"));
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setResumen(rs.getString("resumen"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return proyecto;
     }
 
 
