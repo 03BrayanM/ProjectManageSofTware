@@ -6,7 +6,8 @@ package co.edu.unicauca.domain.entities;
  * @author Brayan
  */
 public class Project {
-    private String nit;
+
+    private String id;
     private String nitEmpresa;
     private String nombre;
     private String resumen;
@@ -32,6 +33,14 @@ public class Project {
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = fecha;
         this.estado = "Aceptado";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
  

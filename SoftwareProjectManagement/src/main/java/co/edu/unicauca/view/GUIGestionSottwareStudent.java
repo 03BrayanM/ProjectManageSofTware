@@ -4,6 +4,10 @@
  */
 package co.edu.unicauca.view;
 
+
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.CompanyService;
+import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
@@ -27,19 +31,26 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+
 /**
  *
  * @author Yisus
  */
 public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IProjectObserver {
 
-    ProjectService projectService;
 
-    public GUIGestionSottwareStudent(ProjectService projectService) {
+     StudentService servicestudent;
+    ProjectService projectService;
+     User usuario;
+    public GUIGestionSottwareStudent(ProjectService projectService,User usuario) {
         initComponents();
+        servicestudent=service;
         this.projectService = projectService;
         this.projectService.agregarObservador(this);
+        this.usuario=usuario;
         actualizarTablaP(projectService.obtenerProyectos());
+      
+
     }
 
     /**
@@ -240,6 +251,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
+
 
             model.addRow(new Object[]{
                 p.getNombre(),

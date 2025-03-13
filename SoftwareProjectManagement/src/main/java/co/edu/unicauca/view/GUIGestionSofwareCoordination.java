@@ -6,6 +6,7 @@ package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
@@ -23,17 +24,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
+
     ProjectService projectService;
 
-    public GUIGestionSofwareCoordination(ProjectService projectService) {
-
-        initComponents();
-        agregarEventos();
-        this.projectService = projectService;
-        this.projectService.agregarObservador(this);
-        configurarEventosTabla();
+     User usuario;
+    
+    public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
+       initComponents();
+       agregarEventos();
+       this.projectService=projectService;
+       this.projectService.agregarObservador(this);
+       this.usuario=usuario;
+       actualizarTablaP(projectService.obtenerProyectos());
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -310,6 +313,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
+
     private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombrecordinadorActionPerformed
@@ -355,6 +359,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             public void mouseClicked(MouseEvent e) {
                 actualizarTablaP(projectService.obtenerProyectos());
             }
+
         });
     }
 

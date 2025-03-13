@@ -6,6 +6,8 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.ICoordinatorRepository;
 import co.edu.unicauca.domain.entities.Coordination;
+
+import co.edu.unicauca.domain.entities.User
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.infra.CalcularFecha;
 import java.sql.CallableStatement;
@@ -13,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -79,6 +82,11 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
 
     @Override
     public Object buscarElemento(Object entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -6,6 +6,7 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
@@ -52,7 +53,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public boolean save(Object entity) {
-        String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
+        String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
         if (!(entity instanceof Project)) {
             Messages.showMessageDialog("Error: El objeto no es de tipo Project", "Atención");
         }
@@ -62,11 +63,12 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(2, project.getDescripcion());
             stmt.setString(3, project.getNombre());
             stmt.setString(4, project.getPresupuesto());
-
-            stmt.setString(5, project.getTiempoMaximo());         
-
-            stmt.setString(6, "HABILITADO");
-            stmt.setString(7, project.getFechaEntregadaEsperada());
+            stmt.setString(5, project.getObjetivo());
+            stmt.setString(6, project.getResumen());
+            stmt.setString(7, project.getTiempoMaximo());         
+            stmt.setString(8,"RECIBIDO");
+            stmt.setString(9, project.getFechaEntregadaEsperada());
+          
 
             stmt.execute();
             stmt.close();
@@ -74,7 +76,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al registrar el proyecto", e);
-            e.printStackTrace();
             Messages.showMessageDialog(
                     "Error al registrar el proyecto.",
                     "Atención"
@@ -90,8 +91,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
         Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
+           Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");               
 
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
            }
            try{
@@ -100,15 +101,17 @@ public class ProjectMySQLRepository implements IProjectRepository {
             CallableStatement stmt = conexion.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Project proyecto = new Project();
-                proyecto.setNit(rs.getString("idProject"));
+            
+            while(rs.next()){
+                Project proyecto= new Project();
+                proyecto.setId(rs.getString("idProject"));
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
-                //proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                
+                
 
                 listaproyectos.add(proyecto);
             }
@@ -119,8 +122,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return (List<Object>)(List<?>)listaproyectos;
             
            }catch(SQLException e) {
+             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");  
+          
 
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null en caso de error 
         }
     }
@@ -156,32 +160,55 @@ public class ProjectMySQLRepository implements IProjectRepository {
         return proyecto;
     }
 
-    public int buscarProyecto(String nombre) {
-        String codigo = null;
-        Connection conexion = Conectionbd.conectar();
 
-        if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
-            return -1; // Devuelve null si la conexión falla
-        }
-        try {
-            // Llamada al procedimiento almacenado
-            String sql = "{CALL ObtenerProyectoAceptadoPorTitulo(" + nombre + ")}";
-            CallableStatement stmt = conexion.prepareCall(sql);
-            // Ejecutamos el procedimiento y obtenemos los resultados
-            ResultSet rs = stmt.executeQuery();
-
-            codigo = rs.getString("nit");
-
-            rs.close();
-            stmt.close();
-            conexion.close();
-
-            return Integer.parseInt(codigo);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al Encontrar el Proyecto " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
-            return -1; // Devuelve null en caso de error 
-        }
-
+    @Override
+    public User found(String usename) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+
+   
+    @Override
+    public Project getProject(String id) {
+    Connection conexion = Conectionbd.conectar();
+    if (conexion == null) {
+        JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+        return null; // Retorna null si no hay conexión
+    }
+
+    Project proyecto = null;
+    String sql = "{CALL ObtenerProyecto(?)}"; // Nombre del procedimiento almacenado
+
+    try (CallableStatement stmt = conexion.prepareCall(sql)) {
+        stmt.setString(1, id); // Asignamos el ID del proyecto
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                proyecto = new Project();
+                proyecto.setId(rs.getString("idProject"));
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setEstado(rs.getString("estado"));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setResumen(rs.getString("resumen"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+            }
+        }
+    } catch (SQLException e) {
+        Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
+        JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            conexion.close();
+        } catch (SQLException e) {
+            Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
+        }
+    }
+    return proyecto;
+}
+
+
 }

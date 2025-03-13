@@ -4,11 +4,13 @@
  */
 package co.edu.unicauca.interfaces;
 
-import co.edu.unicauca.access.ProjectMySQLRepository;
-import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
+import javax.swing.JFrame;
 
-public interface IProjectRepository extends IRepository{
-
-    public Project getProject(String id);
-
+/**
+ *
+ * @author Brayan
+ */
+public interface IFrameFactory {
+    JFrame createFrame(User user);
 }

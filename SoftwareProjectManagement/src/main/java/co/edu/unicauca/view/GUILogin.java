@@ -5,6 +5,10 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.UserService;
+import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.interfaces.IFrameFactory;
 import javax.swing.JFrame;
 
 /**
@@ -13,11 +17,12 @@ import javax.swing.JFrame;
  */
 public class GUILogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUILogin
-     */
+    private UserService Service;
+    private IFrameFactory frameFactory;
 
-    public GUILogin() {
+    public GUILogin(UserService service ,IFrameFactory frame ) {       
+        this.Service=service;
+        this.frameFactory=frame;
         initComponents();
     }
 
@@ -32,7 +37,7 @@ public class GUILogin extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel3 = new javax.swing.JPanel();
-        txtusuario = new javax.swing.JTextField();
+        txtcontrasenia = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txtcontraseña = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -47,7 +52,6 @@ public class GUILogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(39, 246, 249));
-        setPreferredSize(new java.awt.Dimension(450, 380));
         setSize(new java.awt.Dimension(450, 380));
         getContentPane().setLayout(null);
 
@@ -67,9 +71,9 @@ public class GUILogin extends javax.swing.JFrame {
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 0, 0);
 
-        txtusuario.setName(""); // NOI18N
-        getContentPane().add(txtusuario);
-        txtusuario.setBounds(140, 230, 184, 22);
+        txtcontrasenia.setName(""); // NOI18N
+        getContentPane().add(txtcontrasenia);
+        txtcontrasenia.setBounds(140, 230, 184, 22);
 
         jButton1.setBackground(new java.awt.Color(0, 0, 204));
         jButton1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -159,20 +163,28 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String usuario= txtusuario.toString();
-       String contraseña= txtcontraseña.toString();
-       
+        String contrasenia = txtcontrasenia.getText().trim();
+        String usuario = txtcontraseña.getText().trim();
+        User result = Service.login(usuario, contrasenia);
+        if (result != null) {
+
+            JFrame instance = frameFactory.createFrame(result);
+            instance.setExtendedState(JFrame.NORMAL);
+            instance.setVisible(true);
+            this.dispose();
+
+        } else {
+            Messages.showMessageDialog("Credenciales inválidas", "Atención");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void RegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrarseMouseClicked
-      this.dispose();
-        GUIRecordType instance= new GUIRecordType();
-       instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.dispose();
+        GUIRecordType instance = new GUIRecordType();
+        instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }//GEN-LAST:event_RegistrarseMouseClicked
 
-  
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Registrarse;
@@ -186,7 +198,7 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txtcontrasenia;
     private javax.swing.JTextField txtcontraseña;
-    private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
 }

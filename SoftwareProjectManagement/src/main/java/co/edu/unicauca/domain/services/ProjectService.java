@@ -7,6 +7,7 @@ package co.edu.unicauca.domain.services;
 import co.edu.unicauca.access.ProjectMySQLRepository;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.IProjectObserver;
+import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.interfaces.IRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,15 @@ import java.util.List;
  */
 public class ProjectService {
 
-    private IRepository repository;
+    private IProjectRepository repository;
+
     private final List<IProjectObserver> observadores = new ArrayList<>();
 
     public ProjectService(){
         
     }
     public ProjectService(IRepository repository) {
-        this.repository = repository;
+        this.repository = (IProjectRepository)repository;
     }
     // Método para agregar observadores
 
@@ -43,24 +45,22 @@ public class ProjectService {
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
 
-        List<Object> objetos = repository.list(); // Recupera la lista como List<Object>
-        List<Project> proyectos = new ArrayList<>(); // Lista para almacenar los proyectos
-        for (Object obj : objetos) {               // Convertimos cada Object en Project
-            if (obj instanceof Project) {              // Verifica que realmente sea un Project
-                proyectos.add((Project) obj);
+        List<Object> objects = repository.list();
+        List<Project> projects = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Project) {
+                projects.add((Project) obj); 
             }
         }
-        return proyectos;
+        // Devuelves la lista de Project como List<Object>
+        return new ArrayList<>(projects);
     }
-
-    public int obtenerProyecto(String nombre) {
-        return 1;
-        //return repository.buscarProyecto(nombre);
+    public Project consultarProyecto(String id){
+        return this.repository.getProject(id);
     }
+    public boolean saveProject(Project project){
+      return repository.save(project);
 
-
-    public boolean saveProject(Project project) {
-        return repository.save(project);
     }
     
    public Project buscarProyectoPorNombre(Project project){

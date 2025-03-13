@@ -4,6 +4,7 @@
  */
 package co.edu.unicauca.access;
 
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.interfaces.IRepository;
 import java.util.List;
 
@@ -34,7 +35,12 @@ public class pruebacompanyrepository  implements IRepository{
     }
 
     @Override
+
+    public User found(String usename) {
+    }
+
     public Object buscarElemento(Object entity) {
+
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
