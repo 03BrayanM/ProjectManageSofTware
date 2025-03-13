@@ -16,7 +16,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -25,24 +27,23 @@ import javax.swing.JOptionPane;
 public class ProjectMySQLRepository implements IProjectRepository {
 
     private Connection conn;
-    
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
+
     public ProjectMySQLRepository() {
         try {
-            // Ruta de la base de datos (ajústala según la ubicación real de tu archivo)
-            String url = "jdbc:mysql://localhost:3306/ingsoftware2";
-            this.conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public boolean update(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -50,31 +51,34 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public boolean save(Object entity) {
-       String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
-    if(!(entity instanceof Project)){
-         Messages.showMessageDialog("Error: El objeto no es de tipo Project", "Atención");
-    }
-    Project project= (Project) entity;  
-    try (CallableStatement stmt = conn.prepareCall(sql)) {
-        stmt.setString(1, project.getNitEmpresa());
-        stmt.setString(2, project.getNombre());
-        stmt.setString(3, project.getResumen());
-        stmt.setString(4, project.getDescripcion());
-        stmt.setString(5, project.getObjetivo());
-        stmt.setInt(6, project.getTiempoMaximo());
-        stmt.setString(7, project.getPresupuesto());
-        stmt.setString(8, project.getFechaEntregadaEsperada());
-        stmt.setString(9, project.getFechaEntregadaEsperada());
+        String sql = "{CALL registrarProyecto(?, ?, ?, ?, ?, ?, ?)}"; // Llamada al procedimiento almacenado
+        if (!(entity instanceof Project)) {
+            Messages.showMessageDialog("Error: El objeto no es de tipo Project", "Atención");
+        }
+        Project project = (Project) entity;
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, project.getNitEmpresa());
+            stmt.setString(2, project.getDescripcion());
+            stmt.setString(3, project.getNombre());
+            stmt.setString(4, project.getPresupuesto());
+            stmt.setString(5, project.getTiempoMaximo());
+            stmt.setString(6, "HABILITADO");
+            stmt.setString(7, project.getFechaEntregadaEsperada());
+            
+            stmt.execute();
+            stmt.close();
+            return true;
 
-        
-        int rowsAffected = stmt.executeUpdate();
-        return rowsAffected > 0; // Retorna true si el procedimiento se ejecutó correctamente
+        } catch (SQLException e) {
+            Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al registrar el proyecto", e);
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-        Messages.showMessageDialog("Error al registrar el proyecto", "Atención");
-        return false;
-    } 
+            Messages.showMessageDialog(
+                    "Error al registrar el proyecto.",
+                    "Atención"
+            );
+            return false;
+        }
+
     }
 
     @Override
@@ -83,7 +87,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
        Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+           Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");               
             return null; // Devuelve null si la conexión falla
            }
            try{
@@ -95,12 +99,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             
             while(rs.next()){
                 Project proyecto= new Project();
-                proyecto.setId(rs.getInt("idProject"));
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("nombre"));
-                proyecto.setTiempoMaximo(rs.getInt("tiempoEst"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setEstado(rs.getString("estado"));
-                proyecto.setFechaEntregadaEsperada(calcular.calcular(proyecto.getTiempoMaximo()));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
             
                 
                 listaproyectos.add(proyecto);
@@ -112,7 +115,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return (List<Object>)(Project)listaproyectos;
             
            }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+                Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");                           
             return null; // Devuelve null en caso de error 
            }
     }
@@ -122,6 +125,5 @@ public class ProjectMySQLRepository implements IProjectRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
- 
 
 }
