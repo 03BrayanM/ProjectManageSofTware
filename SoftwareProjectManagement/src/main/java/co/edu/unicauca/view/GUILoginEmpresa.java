@@ -1,9 +1,11 @@
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.IFrameEventListener;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.infra.ButtonEditor;
-
+import co.edu.unicauca.interfaces.IFrameFactory;
+import co.edu.unicauca.interfaces.IRepository;
+import javax.swing.JFrame;
 
 /**
  *
@@ -31,9 +35,9 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         this.companyService = companyService;
         this.projectService = projectService;
         headersTable();
-        this.user =user;
+        this.user = user;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -275,20 +279,28 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user,companyService);
+
+        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user, companyService);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        IRepository userRepository = Factory.getInstance().getRepository("usuario");
+        UserService service = new UserService(userRepository);
+        IFrameFactory frameFactory = new FrameFactory();
+        GUILogin instance = new GUILogin(service, frameFactory);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+        instance.setLocationRelativeTo(null); // Centrar en pantalla
+        instance.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
-    private void actualizarTabla(){
+    private void actualizarTabla() {
 
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla
@@ -300,33 +312,33 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         }
         for (Project p : proyectos) {
             // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-            LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
+
 
             model.addRow(new Object[]{
-                p.getId(),
                 p.getNombre(),
                 p.getNombreEmpresa(),
-                fechaEntrega.toString(), // Convertimos la fecha a String
-                p.getEstado(),
+                p.getFechaEntregadaEsperada(),
+                p.getEstado().toString(), // Convertimos la fecha a String
                 "ver"
             });
-        } 
+        }
         tblProyectos.revalidate();
         tblProyectos.repaint();
         ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
     }
-     /**
+
+    /**
      * Fija las columnas
      */
     private void headersTable() {
         tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Título", "Empresa", "Fecha Entrega","Estado","Acción"
+                    "Título", "Empresa", "Fecha Entrega", "Estado", "Acción"
                 }
         ));
         tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
-        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,this,this,projectService));
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos, this, this, projectService));
 
     }
     /**
@@ -356,9 +368,9 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
     private java.awt.Label label1;
     private javax.swing.JTable tblProyectos;
     // End of variables declaration//GEN-END:variables
-    
+
     @Override
     public void onEventTriggered() {
-       actualizarTabla();
+        actualizarTabla();
     }
 }

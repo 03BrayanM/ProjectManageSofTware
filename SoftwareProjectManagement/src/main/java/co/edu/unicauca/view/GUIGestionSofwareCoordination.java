@@ -8,7 +8,9 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.Subject;
+import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.event.MouseAdapter;
@@ -25,12 +27,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
-
     ProjectService projectService;
     User usuario;
 
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
-        
+
         initComponents();
         agregarEventos();
         this.projectService = projectService;
@@ -39,7 +40,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         actualizarTablaP(projectService.obtenerProyectos());
         configurarEventosTabla();
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -106,7 +106,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jPanel5.setBackground(new java.awt.Color(247, 247, 247));
 
         jButton1.setBackground(new java.awt.Color(223, 224, 226));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Registrar Estudiante");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,16 +114,18 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         });
 
         btnRegistrarEmpresa.setBackground(new java.awt.Color(223, 224, 226));
-        btnRegistrarEmpresa.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarEmpresa.setText("Registrar Empresa");
 
         btnGestionarProyecto.setBackground(new java.awt.Color(223, 224, 226));
-        btnGestionarProyecto.setForeground(new java.awt.Color(0, 0, 0));
         btnGestionarProyecto.setText("Gestionar proyecto");
 
         btnSalir.setBackground(new java.awt.Color(223, 224, 226));
-        btnSalir.setForeground(new java.awt.Color(0, 0, 0));
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 204));
@@ -133,13 +134,10 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Empresas");
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Estudiantes");
 
-        lblProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblProyectos.setText("Proyectos");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -166,13 +164,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 .addContainerGap())
         );
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Opciones");
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -191,7 +187,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         });
         jScrollPane1.setViewportView(jTable1);
 
-        lblProyectosregistrados.setForeground(new java.awt.Color(0, 0, 0));
         lblProyectosregistrados.setText("Proyectos registrados");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -316,12 +311,22 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
-
     private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombrecordinadorActionPerformed
 
-  
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+        IRepository userRepository = Factory.getInstance().getRepository("usuario");
+        UserService service = new UserService(userRepository);
+        IFrameFactory frameFactory = new FrameFactory();
+        GUILogin instance = new GUILogin(service, frameFactory);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+        instance.setLocationRelativeTo(null); // Centrar en pantalla
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;
@@ -444,7 +449,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         ProjectService projectService = new ProjectService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService, usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
@@ -457,7 +462,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         ProjectService projectService = new ProjectService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);

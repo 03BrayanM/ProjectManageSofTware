@@ -4,7 +4,7 @@
  */
 package co.edu.unicauca.view;
 
-import co.edu.unicauca.access.Conectionbd;
+
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.PostulationService;
