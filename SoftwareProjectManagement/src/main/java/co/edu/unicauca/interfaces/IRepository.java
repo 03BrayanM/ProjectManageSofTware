@@ -12,6 +12,6 @@ public interface IRepository {
     boolean delete(int id);
 
     List<Object> list();
-
-    Object found(String usename);
+    User found(String usename);
+    Object buscarElemento(Object entity);
 }

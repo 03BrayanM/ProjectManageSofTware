@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package co.edu.unicauca.view;
-
-import co.edu.unicauca.access.Conectionbd;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
@@ -374,7 +372,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
         Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
-
         if (proyecto.getNit() != null) {
 
             Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getNit(), fechaActual);

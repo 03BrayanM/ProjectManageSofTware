@@ -7,6 +7,8 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.domain.services.UserService;
+import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
 import javax.swing.JFrame;
 
@@ -152,7 +154,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             StudentService servicestudent = new StudentService(studentRepository);
 
             GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
-            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.setExtendedState(JFrame.NORMAL);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
             instance.setLocationRelativeTo(null); // Centrar en pantalla
             this.dispose();
@@ -164,7 +166,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             CompanyService servicecompany = new CompanyService(CompanyRepository);
 
             GUIRegistreCompany instance = new GUIRegistreCompany(servicecompany);
-            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.setExtendedState(JFrame.NORMAL);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
             instance.setLocationRelativeTo(null); // Centrar en pantalla
             this.dispose();
@@ -174,8 +176,11 @@ public class GUIRecordType extends javax.swing.JFrame {
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
         this.dispose();
-        GUILogin instance = new GUILogin(null, null);
-        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        IRepository userRepository = Factory.getInstance().getRepository("usuario");
+        UserService service = new UserService(userRepository);
+        IFrameFactory frameFactory = new FrameFactory();
+
+        GUILogin instance = new GUILogin(service, frameFactory);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnvolverActionPerformed

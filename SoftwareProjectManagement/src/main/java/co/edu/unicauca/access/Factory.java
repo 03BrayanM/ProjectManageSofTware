@@ -16,6 +16,8 @@ public class Factory {
         dictionary.put("project", new ProjectMySQLRepository());
         dictionary.put("postulation", new PostulationMySQLRepository());
 
+        dictionary.put("usuario", new UserMySQLRepository());
+        
     }
 
     public static Factory getInstance() {

@@ -1,11 +1,15 @@
 package co.edu.unicauca.domain.entities;
 
+import co.edu.unicauca.domain.states.RecibidoState;
+import co.edu.unicauca.interfaces.ProjectState;
+import java.util.List;
+
 /**
  *
  * @author Brayan
  */
 public class Project {
-
+    private String id;
     private String nit;
     private String nitEmpresa;
     private String nombre;
@@ -15,11 +19,12 @@ public class Project {
     private String TiempoMaximo;
     private String presupuesto;
     private String FechaEntregadaEsperada;
-    private String estado;
+    private ProjectState estado;
     private String nombreEmpresa;
-
     public Project() {
-
+   }
+    public Project(){
+        this.estado = new RecibidoState(); // Estado inicial del proyecto
     }
 
     public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String nit_, String nitEmpresa_) {
@@ -32,7 +37,15 @@ public class Project {
         this.TiempoMaximo = tiempo;
         this.presupuesto = presupuesto;
         this.FechaEntregadaEsperada = fecha;
-        this.estado = "Aceptado";
+        this.estado = new RecibidoState(); // Estado inicial
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Project(Project pro) {
@@ -104,11 +117,11 @@ public class Project {
         this.FechaEntregadaEsperada = fecha;
     }
 
-    public String getEstado() {
+    public ProjectState getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(ProjectState estado) {
         this.estado = estado;
     }
 
@@ -141,5 +154,13 @@ public class Project {
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
-
+public void cambiarEstado(String nuevoEstado) {
+        this.estado = this.estado.cambiarEstado(nuevoEstado);
+    }
+       public List<String> obtenerOpcionesEstado() {
+        return this.estado.obtenerOpcionesEstado();
+    }
+         public String getEstadoActual() {
+            return estado.toString(); // Devuelve el nombre del estado actual
+    }
 }

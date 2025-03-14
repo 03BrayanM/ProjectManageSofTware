@@ -1,27 +1,41 @@
-
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.IFrameEventListener;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import co.edu.unicauca.infra.renderButton;
+import co.edu.unicauca.infra.ButtonEditor;
+import co.edu.unicauca.interfaces.IFrameFactory;
+import co.edu.unicauca.interfaces.IRepository;
+import javax.swing.JFrame;
 
 /**
  *
  * @author everson
  */
-public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventListener{
+public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventListener {
 
     /**
      * Creates new form GUIGestionSofware
      */
     private CompanyService companyService;
     private ProjectService projectService;
-    private String nit;
-    public GUILoginEmpresa(CompanyService companyService,ProjectService projectService,String nit){
+    private User user;
+
+    public GUILoginEmpresa(CompanyService companyService, ProjectService projectService, User user) {
         initComponents();
-        this.nit=nit;
         this.companyService = companyService;
         this.projectService = projectService;
+        headersTable();
+        this.user = user;
     }
 
     /**
@@ -48,9 +62,8 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         jButton4 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblProyectos = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         label1 = new java.awt.Label();
@@ -155,61 +168,28 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         jPanel6.setBackground(new java.awt.Color(242, 247, 249));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Duracion", "Fecha de Registro", "Estado"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getAccessibleContext().setAccessibleName("TableProyectosDeEmpresa");
-        jTable1.getAccessibleContext().setAccessibleDescription("");
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel1.setText("Proyectos Registrados");
+        jScrollPane2.setViewportView(tblProyectos);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
         );
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -248,7 +228,7 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(109, 109, 109)
                 .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +261,7 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTextField1.getAccessibleContext().setAccessibleName("txtNombreUsuario");
@@ -299,29 +279,76 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GUIPostularProject instance = new GUIPostularProject(null, projectService, this,nit);
+
+        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user, companyService);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        IRepository userRepository = Factory.getInstance().getRepository("usuario");
+        UserService service = new UserService(userRepository);
+        IFrameFactory frameFactory = new FrameFactory();
+        GUILogin instance = new GUILogin(service, frameFactory);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+        instance.setLocationRelativeTo(null); // Centrar en pantalla
+        instance.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
+    private void actualizarTabla() {
 
+        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+
+        List<Project> proyectos = projectService.obtenerProyectos();
+        if (proyectos == null || proyectos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return; // Salir del método para no procesar datos vacíos
+        }
+        for (Project p : proyectos) {
+            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
+
+
+            model.addRow(new Object[]{
+                p.getNombre(),
+                p.getNombreEmpresa(),
+                p.getFechaEntregadaEsperada(),
+                p.getEstado().toString(), // Convertimos la fecha a String
+                "ver"
+            });
+        }
+        tblProyectos.revalidate();
+        tblProyectos.repaint();
+        ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
+    }
+
+    /**
+     * Fija las columnas
+     */
+    private void headersTable() {
+        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Título", "Empresa", "Fecha Entrega", "Estado", "Acción"
+                }
+        ));
+        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos, this, this, projectService));
+
+    }
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -336,14 +363,14 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
+    private javax.swing.JTable tblProyectos;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void onEventTriggered() {
-        
+        actualizarTabla();
     }
 }

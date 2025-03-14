@@ -1,6 +1,9 @@
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.domain.entities.Company;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
@@ -20,12 +23,14 @@ public class GUIPostularProject extends javax.swing.JDialog {
      */
     private IFrameEventListener listener;
     private ProjectService projectService;
-    private String nit;
+    private CompanyService companyService;
+    private User user;
 
-    public GUIPostularProject(JFrame parent, ProjectService projectService, IFrameEventListener listener, String nit) {
+    public GUIPostularProject(JFrame parent, ProjectService projectService, IFrameEventListener listener, User user,CompanyService companyService) {
         super(parent, "Nueva projecto", true);
-        this.nit = nit;
+        this.user = user;
         this.projectService = projectService;
+        this.companyService = companyService;
         this.listener = listener;
         initComponents();
         setSize(800, 700);
@@ -301,8 +306,9 @@ public class GUIPostularProject extends javax.swing.JDialog {
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
         boolean validarEntero= validarNumero(tiempoMaximo);
         if (validacion && validarEntero) {
-            Project project = new Project(nit,nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada, nit);
-
+            Company compania=companyService.obtenerCompanyPorUser(user.getUsuario());
+         
+            Project project = new Project(nit,nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada,compania.getNit());
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame

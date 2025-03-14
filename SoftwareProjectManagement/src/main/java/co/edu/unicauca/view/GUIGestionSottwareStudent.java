@@ -4,12 +4,17 @@
  */
 package co.edu.unicauca.view;
 
+
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.CompanyService;
+import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.Component;
@@ -31,12 +36,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+
 /**
  *
  * @author Yisus
  */
 public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IProjectObserver {
-
     StudentService studentService;
     ProjectService projectService;
 
@@ -51,6 +56,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         txtUsuarioMostrar.setText(usuario.getUsuario());
         jTable1.setAutoCreateRowSorter(true);
         actualizarTablaP(projectService.obtenerProyectos());
+      
+
     }
 
     /**
@@ -358,10 +365,10 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         IRepository projectRepository = Factory.getInstance().getRepository("project");
 
         // Crear el servicio de proyectos con su repositorio
-        ProjectService projectService = new ProjectService(projectRepository);
+        StudentService studentService = new StudentService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(projectService, null, null);
+        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(studentService,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }

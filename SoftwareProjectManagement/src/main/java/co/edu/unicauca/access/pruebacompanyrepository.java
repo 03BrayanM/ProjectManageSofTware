@@ -35,8 +35,12 @@ public class pruebacompanyrepository implements IRepository {
     }
 
     @Override
-    public User found(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User found(String usename) {
+        return null;
     }
 
+    public Object buscarElemento(Object entity) {
+
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
