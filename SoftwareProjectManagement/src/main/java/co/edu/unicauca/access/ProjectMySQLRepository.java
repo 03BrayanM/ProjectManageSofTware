@@ -88,12 +88,13 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     }
 
-     @Override
+    @Override
     public List<Object> list() {
-        CalcularFecha calcular = new CalcularFecha();
+
         List<Project> listaproyectos = new ArrayList<>();
         if (conn == null) {
             Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+
             return null; // Devuelve null si la conexión falla
         }
         try {
@@ -109,35 +110,36 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
 
                 listaproyectos.add(proyecto);
             }
             rs.close();
             stmt.close();
-
-            return new ArrayList<>(listaproyectos);
+            return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");
+
             return null; // Devuelve null en caso de error 
         }
     }
 
     @Override
     public Object buscarElemento(Object entity) {
-        Project  proyecto= null;
-        String sql="{CALL BuscarProyectoPorNombre(?) }";
-        
-        try(Connection conexion=Conectionbd.conectar();
-            CallableStatement stmt= conexion.prepareCall(sql)){
-            
-            stmt.setString(1,(String) entity);
-            ResultSet rs=stmt.executeQuery();
-            
-            if(rs.next()){
-                proyecto= new Project();
+        Project proyecto = null;
+        String sql = "{CALL BuscarProyectoPorNombre(?) }";
+
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+
+            stmt.setString(1, (String) entity);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                proyecto = new Project();
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
@@ -149,9 +151,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setObjetivo(rs.getString("objetivo"));
                 proyecto.setResumen(rs.getString("resumen"));
                 proyecto.setDescripcion(rs.getString("descripcion"));
-                
+
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return proyecto;
@@ -166,53 +168,50 @@ public class ProjectMySQLRepository implements IProjectRepository {
     public Project getProject(String id) {
         if (conn == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
-            return null; // Retorna null si no hay conexión
+            return null;
         }
 
         Project proyecto = null;
-        String sql = "{CALL ObtenerProyecto(?)}"; // Nombre del procedimiento almacenado
-
+        String sql = "{CALL ObtenerProyecto(?)}"; // Procedimiento almacenado
 
         try (CallableStatement stmt = conn.prepareCall(sql)) {
-            stmt.setString(1, id); // Asignamos el ID del proyecto
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                proyecto = new Project();
-                proyecto.setId(rs.getString("idProject"));
-                proyecto.setNombre(rs.getString("titulo"));
-                proyecto.setNombreEmpresa(rs.getString("empresa"));
-                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                //proyecto.setEstado(rs.getString("estado"));
-                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
-                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
-                proyecto.setEstado(estado); // Asigna el estado al proyecto
-                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-                proyecto.setDescripcion(rs.getString("descripcion"));
-                proyecto.setObjetivo(rs.getString("objetivo"));
-                proyecto.setResumen(rs.getString("resumen"));
-                proyecto.setPresupuesto(rs.getString("presupuesto"));
+            stmt.setString(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    proyecto = new Project();
+                    proyecto.setId(rs.getString("idProject"));
+                    proyecto.setNombre(rs.getString("titulo"));
+                    proyecto.setNombreEmpresa(rs.getString("empresa"));
+                    proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+
+                    // Conversión de estado
+                    String estadoBD = rs.getString("estado");
+                    ProjectState estado = obtenerEstadoDesdeBD(estadoBD);
+                    proyecto.setEstado(estado);
+
+                    // Manejo de fecha correctamente
+                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+
+                    proyecto.setDescripcion(rs.getString("descripcion"));
+                    proyecto.setObjetivo(rs.getString("objetivo"));
+                    proyecto.setResumen(rs.getString("resumen"));
+                    proyecto.setPresupuesto(rs.getString("presupuesto"));
+                }
             }
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
             JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
-            }
         }
+
         return proyecto;
     }
 
-    return proyecto;
-}
-
- private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
+    private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD) {
             case "ACEPTADO":
                 return new AceptadoState();
-            case "EJECUCION":
+            case "EN EJECUCION":
                 return new EnEjecucionState();
             case "RECHAZADO":
                 return (ProjectState) new RechazadoState();

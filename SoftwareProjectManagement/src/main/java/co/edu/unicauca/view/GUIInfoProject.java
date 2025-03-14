@@ -96,10 +96,13 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel8.setText("Resumen:");
 
+        lbObjetivos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbObjetivos.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbResumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbResumen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbDescripcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbDescripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -161,14 +164,19 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setText("Presupuesto:");
 
+        lbPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbPresupuesto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbNombreProject.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbNombreProject.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbnombreEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbnombreEmpresa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbTiempo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbTiempo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);

@@ -18,6 +18,7 @@ import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +33,18 @@ import javax.swing.JOptionPane;
 public class CoordinatorMySQLRepository implements ICoordinatorRepository{
 
    
+    private Connection conn;
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
+
+    public CoordinatorMySQLRepository() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean delete(int id) {
@@ -49,17 +62,15 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
     }
 
     public List<Object> list() {
-       CalcularFecha calcular = new CalcularFecha();
         List<Project> listaproyectos = new ArrayList<>();
-       Connection conexion = Conectionbd.conectar();
-           if (conexion == null) {
+           if (conn == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
            }
            try{
                // Llamada al procedimiento almacenado
             String sql = "{CALL sp_ListarProyectosPostulados()}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
             
@@ -78,8 +89,6 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
             }
             rs.close();
             stmt.close();
-            conexion.close();
-            
             return (List<Object>)(Project)listaproyectos;
             
            }catch(SQLException e) {

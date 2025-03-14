@@ -26,7 +26,7 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUIInfoProject instance = new GUIInfoProject(parent, listener,(String)table.getValueAt(row, 0),projectService);
+                GUIInfoProject instance = new GUIInfoProject(parent, listener,(String)table.getValueAt(row, 5),projectService);
                 instance.setVisible(true);     
                 fireEditingStopped(); // Terminar edición del botón
             }
