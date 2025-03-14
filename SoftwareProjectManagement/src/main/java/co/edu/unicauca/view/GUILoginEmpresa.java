@@ -1,6 +1,7 @@
 package co.edu.unicauca.view;
 
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
@@ -23,14 +24,14 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
      */
     private CompanyService companyService;
     private ProjectService projectService;
-    private String nit;
+    private User user;
 
-    public GUILoginEmpresa(CompanyService companyService, ProjectService projectService, String nit) {
+    public GUILoginEmpresa(CompanyService companyService, ProjectService projectService, User user) {
         initComponents();
-         this.companyService = companyService;
+        this.companyService = companyService;
         this.projectService = projectService;
         headersTable();
-        this.nit = nit;
+        this.user =user;
     }
     
     /**
@@ -274,7 +275,8 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GUIPostularProject instance = new GUIPostularProject(null, projectService, this, nit);
+        
+        GUIPostularProject instance = new GUIPostularProject(null, projectService, this, user,companyService);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

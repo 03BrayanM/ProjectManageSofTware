@@ -8,6 +8,7 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.event.MouseAdapter;
@@ -26,16 +27,16 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
 
     ProjectService projectService;
+    User usuario;
 
-     User usuario;
-    
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
-       initComponents();
-       agregarEventos();
-       this.projectService=projectService;
-       this.projectService.agregarObservador(this);
-       this.usuario=usuario;
-       actualizarTablaP(projectService.obtenerProyectos());
+        initComponents();
+        agregarEventos();
+        this.projectService = projectService;
+        Subject.getInstance().agregarObservador(this);
+        this.usuario = usuario;
+        actualizarTablaP(projectService.obtenerProyectos());
+        configurarEventosTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -441,7 +442,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         ProjectService projectService = new ProjectService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService);
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
@@ -454,6 +455,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         ProjectService projectService = new ProjectService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
+
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);

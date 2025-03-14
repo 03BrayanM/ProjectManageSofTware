@@ -7,9 +7,15 @@ package co.edu.unicauca.access;
 import co.edu.unicauca.interfaces.ICoordinatorRepository;
 import co.edu.unicauca.domain.entities.Coordination;
 
-import co.edu.unicauca.domain.entities.User
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.states.AceptadoState;
+import co.edu.unicauca.domain.states.EnEjecucionState;
+import co.edu.unicauca.domain.states.RechazadoState;
+import co.edu.unicauca.domain.states.RecibidoState;
+import co.edu.unicauca.domain.states.CerradoState;
 import co.edu.unicauca.infra.CalcularFecha;
+import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -62,7 +68,9 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("nombre"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); 
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
             
                 
@@ -90,6 +98,21 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-   
-    
+    private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
+        switch (estadoBD.trim().toUpperCase()) {
+            case "ACEPTADO":
+                return new AceptadoState();
+            case "EJECUCION":
+                return new EnEjecucionState();
+            case "RECHAZADO":
+                return (ProjectState) new RechazadoState();
+            case "RECIBIDO":
+                return new RecibidoState();
+            case "CERRADO":
+                return new CerradoState();
+            default:
+                throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
+        }
+    }
+  
 }

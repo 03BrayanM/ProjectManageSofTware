@@ -25,17 +25,19 @@ public class FrameFactory implements IFrameFactory {
 
         switch (user.getRol()) {
             case "ESTUDIANTE":
-                IRepository repository1 = Factory.getInstance().getRepository("student");// Podria ir SQLITE
+                IRepository repository1 = Factory.getInstance().getRepository("student");
                 StudentService service = new StudentService(repository1);
                 return new GUIGestionSottwareStudent(service,user);
             case "COORDINADOR":
-                IRepository repository2 = Factory.getInstance().getRepository("project");// Podria ir SQLITE
+                IRepository repository2 = Factory.getInstance().getRepository("project");
                 ProjectService projectService = new ProjectService(repository2);
                 return new GUIGestionSofwareCoordination(projectService, user);
             case "EMPRESA":
-                IRepository repository3 = Factory.getInstance().getRepository("company");// Podria ir SQLITE
+                IRepository repository3 = Factory.getInstance().getRepository("company");
+                IRepository repository4 = Factory.getInstance().getRepository("project");
                 CompanyService companyService = new CompanyService(repository3);
-                return new GUIGestionSoftwareEmpresa();
+                ProjectService projectService1 = new ProjectService(repository4);
+                return new GUILoginEmpresa(companyService, projectService1, user);
            
             // Agrega otros roles según necesites
             default:

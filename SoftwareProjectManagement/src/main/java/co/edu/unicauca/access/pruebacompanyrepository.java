@@ -37,6 +37,7 @@ public class pruebacompanyrepository  implements IRepository{
     @Override
 
     public User found(String usename) {
+        return null;
     }
 
     public Object buscarElemento(Object entity) {

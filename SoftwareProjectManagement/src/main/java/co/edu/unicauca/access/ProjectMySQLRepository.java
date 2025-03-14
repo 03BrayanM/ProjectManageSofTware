@@ -7,8 +7,14 @@ package co.edu.unicauca.access;
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.states.AceptadoState;
+import co.edu.unicauca.domain.states.EnEjecucionState;
+import co.edu.unicauca.domain.states.RechazadoState;
+import co.edu.unicauca.domain.states.RecibidoState;
+import co.edu.unicauca.domain.states.CerradoState;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -108,7 +114,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
                 
                 
@@ -148,7 +156,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 proyecto.setPresupuesto(rs.getString("presupuesto"));
-                proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
                 proyecto.setObjetivo(rs.getString("objetivo"));
                 proyecto.setResumen(rs.getString("resumen"));
                 proyecto.setDescripcion(rs.getString("descripcion"));
@@ -170,8 +180,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
    
     @Override
     public Project getProject(String id) {
-    Connection conexion = Conectionbd.conectar();
-    if (conexion == null) {
+    if (conn == null) {
         JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
         return null; // Retorna null si no hay conexión
     }
@@ -179,7 +188,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     Project proyecto = null;
     String sql = "{CALL ObtenerProyecto(?)}"; // Nombre del procedimiento almacenado
 
-    try (CallableStatement stmt = conexion.prepareCall(sql)) {
+    try (CallableStatement stmt = conn.prepareCall(sql)) {
         stmt.setString(1, id); // Asignamos el ID del proyecto
 
         try (ResultSet rs = stmt.executeQuery()) {
@@ -189,7 +198,10 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                proyecto.setEstado(rs.getString("estado"));
+                //proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
                 proyecto.setDescripcion(rs.getString("descripcion"));
                 proyecto.setObjetivo(rs.getString("objetivo"));
@@ -202,7 +214,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
-            conexion.close();
+            conn.close();
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
         }
@@ -210,5 +222,20 @@ public class ProjectMySQLRepository implements IProjectRepository {
     return proyecto;
 }
 
-
+ private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
+        switch (estadoBD) {
+            case "ACEPTADO":
+                return new AceptadoState();
+            case "EJECUCION":
+                return new EnEjecucionState();
+            case "RECHAZADO":
+                return (ProjectState) new RechazadoState();
+            case "RECIBIDO":
+                return new RecibidoState();
+            case "CERRADO":
+                return new CerradoState();
+            default:
+                throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
+        }
+    }
 }

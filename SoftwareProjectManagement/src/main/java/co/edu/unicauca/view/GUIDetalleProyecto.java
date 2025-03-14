@@ -356,7 +356,7 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
 
-        int codigo = 0;
+       /* int codigo = 0;
         if (projectService.obtenerProyecto(proyecto.getNombre()) != (-1)) {
             codigo = projectService.obtenerProyecto(proyecto.getNombre());
         } else {
@@ -368,7 +368,7 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
             Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
         } else {
             Messages.showMessageDialog("Ocurrio un Error al intentar Postularse", "Atención");
-        }
+        }*/
     }
 
     private void inicializarDatos(Project proyecto) {

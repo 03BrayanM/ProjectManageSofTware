@@ -6,6 +6,7 @@ package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.access.ProjectMySQLRepository;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.interfaces.IRepository;
@@ -16,11 +17,11 @@ import java.util.List;
  *
  * @author Yisus
  */
-public class ProjectService {
+public class ProjectService extends Subject {
 
     private IProjectRepository repository;
 
-    private final List<IProjectObserver> observadores = new ArrayList<>();
+  
 
     public ProjectService(){
         
@@ -30,17 +31,7 @@ public class ProjectService {
     }
     // Método para agregar observadores
 
-    public void agregarObservador(IProjectObserver observador) {
-        observadores.add(observador);
-    }
-
-    // Método para notificar a los observadores
-    private void notificarObservadores() {
-        List<Project> proyectos = (List<Project>) (Project) repository.list();
-        for (IProjectObserver obs : observadores) {
-            obs.actualizarProyectos(proyectos);
-        }
-    }
+    
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
@@ -52,6 +43,7 @@ public class ProjectService {
                 projects.add((Project) obj); 
             }
         }
+        notificarObservadores(projects);
         // Devuelves la lista de Project como List<Object>
         return new ArrayList<>(projects);
     }

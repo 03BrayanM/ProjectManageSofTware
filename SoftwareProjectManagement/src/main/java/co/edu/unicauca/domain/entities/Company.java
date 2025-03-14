@@ -11,7 +11,7 @@ package co.edu.unicauca.domain.entities;
  */
 public class Company {
 
-    private int nit;
+    private String nit;
     private String nombre;
     private String email;
     private String telefono;
@@ -23,7 +23,7 @@ public class Company {
     public Company() {
     }
 
-    public Company(int nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo,String estado) {
+    public Company(String nit, String nombre, String email, String telefono, String nombrecontaccto, String apellido, String sector, String cargo,String estado) {
         this.nit = nit;
         this.nombre = nombre;
         this.email = email;
@@ -43,7 +43,7 @@ public class Company {
         this.cargo = cargo;
     }
 
-    public int getNit() {
+    public String getNit() {
         return nit;
     }
 
@@ -71,7 +71,7 @@ public class Company {
         return sector;
     }
 
-    public void setNit(int nit) {
+    public void setNit(String nit) {
         this.nit = nit;
     }
 
