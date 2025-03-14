@@ -27,7 +27,7 @@ public class FrameFactory implements IFrameFactory {
             case "ESTUDIANTE":
                 IRepository repository1 = Factory.getInstance().getRepository("student");
                 StudentService service = new StudentService(repository1);
-                return new GUIGestionSottwareStudent(service,user);
+                return new GUIGestionSottwareStudent(service, user);
             case "COORDINADOR":
                 IRepository repository2 = Factory.getInstance().getRepository("project");
                 ProjectService projectService = new ProjectService(repository2);
@@ -38,7 +38,7 @@ public class FrameFactory implements IFrameFactory {
                 CompanyService companyService = new CompanyService(repository3);
                 ProjectService projectService1 = new ProjectService(repository4);
                 return new GUILoginEmpresa(companyService, projectService1, user);
-           
+
             // Agrega otros roles según necesites
             default:
                 return null;

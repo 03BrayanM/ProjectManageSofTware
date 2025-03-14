@@ -28,6 +28,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     User usuario;
 
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
+        
         initComponents();
         agregarEventos();
         this.projectService = projectService;
@@ -35,6 +36,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         this.usuario = usuario;
         actualizarTablaP(projectService.obtenerProyectos());
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

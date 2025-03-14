@@ -41,9 +41,8 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
     public boolean save(Object usuario) {
         Company empresa = (Company) usuario;
-        Connection conexion = Conectionbd.conectar(); // Llamamos a la conexión existente
 
-        if (conexion == null) {
+        if (conn == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -51,7 +50,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         try {
             // Llamada al procedimiento almacenado con 9 parámetros
             String sql = "{CALL sp_registrar_empresa(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
 
             // Pasamos los 9 parámetros correctamente
             stmt.setString(1, empresa.getNit());
@@ -69,7 +68,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
             // Cerramos recursos
             stmt.close();
-            conexion.close();
+            conn.close();
 
             return true; // Registro exitoso
         } catch (SQLException e) {
@@ -91,9 +90,8 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
     public List<Object> list() {
         List<Company> listaEmpresas = new ArrayList<>();
-        Connection conexion = Conectionbd.conectar();
 
-        if (conexion == null) {
+        if (conn == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null; // Devuelve null si la conexión falla
         }
@@ -101,7 +99,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_listar_empresas()}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
 
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -122,7 +120,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             // Cerramos recursos
             rs.close();
             stmt.close();
-            conexion.close();
+            conn.close();
 
             return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
         } catch (SQLException e) {

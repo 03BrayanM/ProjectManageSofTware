@@ -8,6 +8,7 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.interfaces.IRepository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +20,20 @@ import javax.swing.JOptionPane;
  */
 public class UserMySQLRepository implements IRepository  {
 
+    
+    
+    private Connection conn;
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
+
+    public UserMySQLRepository() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public boolean save(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -41,9 +56,8 @@ public class UserMySQLRepository implements IRepository  {
 
     @Override
     public User found(String username) {
-               Connection conexion = Conectionbd.conectar(); // Llamamos a la conexión existente
 
-        if (conexion == null) {
+        if (conn == null) {
              JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -53,7 +67,7 @@ public class UserMySQLRepository implements IRepository  {
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_obtener_usuario(?)}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
             stmt.setString(1, username); // Establecemos el parámetro userName
 
             // Ejecutamos el procedimiento almacenado
@@ -76,8 +90,8 @@ public class UserMySQLRepository implements IRepository  {
             JOptionPane.showMessageDialog(null, "Error al ejecutar el procedimiento almacenado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (conexion != null) {
-                    conexion.close();
+                if (conn != null) {
+                    conn.close();
                 }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

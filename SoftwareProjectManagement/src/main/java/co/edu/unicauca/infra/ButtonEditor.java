@@ -44,21 +44,4 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
         return "Ver";
     }
 
-    // Método para mostrar los detalles del proyecto en una ventana nueva
-    private void mostrarDetalles(String titulo, String empresa, String fechaEntrega, String estado) {
-        JFrame frame = new JFrame("Detalles del Proyecto");
-        frame.setSize(300, 200);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
-        
-        panel.add(new JLabel("Título: " + titulo));
-        panel.add(new JLabel("Empresa: " + empresa));
-        panel.add(new JLabel("Fecha de Entrega: " + fechaEntrega));
-        panel.add(new JLabel("Estado: " + estado));
-
-        frame.add(panel);
-        frame.setVisible(true);
-    }
 }
