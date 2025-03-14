@@ -9,6 +9,7 @@ import co.edu.unicauca.domain.entities.Coordination;
 
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.states.AceptadoState;
 import co.edu.unicauca.domain.states.EnEjecucionState;
 import co.edu.unicauca.domain.states.RechazadoState;
@@ -98,6 +99,10 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
             JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
             return null;
            }
+    }
+        @Override
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

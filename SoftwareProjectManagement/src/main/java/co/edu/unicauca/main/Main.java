@@ -1,6 +1,7 @@
 package co.edu.unicauca.main;
 
 import co.edu.unicauca.access.Factory;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 
@@ -33,6 +34,3 @@ public class Main {
 
  }
 }
-
-    
-

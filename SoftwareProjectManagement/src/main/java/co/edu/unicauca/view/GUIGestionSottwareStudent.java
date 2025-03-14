@@ -10,6 +10,8 @@ import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Subject;
@@ -21,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -28,6 +31,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -38,17 +42,19 @@ import javax.swing.table.TableColumn;
  * @author Yisus
  */
 public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IProjectObserver {
-
-
-     StudentService servicestudent;
+    StudentService studentService;
     ProjectService projectService;
-     User usuario;
-    public GUIGestionSottwareStudent(StudentService service,User usuario) {
+
+    private User usuario;
+
+    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_) {
         initComponents();
-        servicestudent=service;
+        usuario = usuario_;
+        this.studentService = studentService_;
         this.projectService = projectService;
-        Subject.getInstance().agregarObservador(this);
-        this.usuario=usuario;
+        this.projectService.agregarObservador(this);
+        txtUsuarioMostrar.setText(usuario.getUsuario());
+        jTable1.setAutoCreateRowSorter(true);
         actualizarTablaP(projectService.obtenerProyectos());
       
 
@@ -66,7 +72,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtUsuarioMostrar = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         lblProyectos = new javax.swing.JLabel();
         lblMisProyectos = new javax.swing.JLabel();
@@ -87,9 +93,10 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         jLabel13.setForeground(new java.awt.Color(0, 0, 204));
         jLabel13.setText("Estudiante");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        txtUsuarioMostrar.setEditable(false);
+        txtUsuarioMostrar.setBackground(new java.awt.Color(242, 247, 249));
+        txtUsuarioMostrar.setForeground(new java.awt.Color(0, 0, 0));
+        txtUsuarioMostrar.setBorder(null);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -127,7 +134,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -178,6 +185,11 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         btnsalir.setBackground(new java.awt.Color(223, 224, 226));
         btnsalir.setForeground(new java.awt.Color(52, 52, 52));
         btnsalir.setText("Salir");
+        btnsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,24 +197,28 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnsalir)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtUsuarioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnsalir)
+                            .addComponent(jLabel13))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblTitulo)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblTitulo)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +226,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuarioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -222,7 +238,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnsalir))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,19 +257,21 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnsalirActionPerformed
+
     private void actualizarTablaP(List<Project> proyectos) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0); // Limpiar la tabla
         model.setColumnIdentifiers(new String[]{"Nombre", "Duracion", "Fecha de Registro", "Ver Detalles"}); // Definir columnas
 
-        //List<Project> proyectos = projectService.obtenerProyectos();
         if (proyectos == null || proyectos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return; // Salir del método para no procesar datos vacíos
         }
+
         for (Project p : proyectos) {
-
-
             model.addRow(new Object[]{
                 p.getNombre(),
                 p.getTiempoMaximo(),
@@ -261,50 +279,77 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
                 "Ver Detalles"
             });
         }
-        TableColumn detallesColumn = jTable1.getColumnModel().getColumn(3);
-        detallesColumn.setCellRenderer(new ButtonRenderer());
-        detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), proyectos));
+
+        // Asegurar que hay filas antes de asignar editor y renderer
+        if (jTable1.getRowCount() > 0) {
+            TableColumn detallesColumn = jTable1.getColumnModel().getColumn(3);
+            detallesColumn.setCellRenderer(new ButtonRenderer());
+
+            // Pasar una copia de la lista para evitar problemas de referencia
+            detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), new ArrayList<>(proyectos), jTable1));
+        }
     }
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
-            setText("Ver Detalles");
+            super("Ver Detalles"); // Texto del botón en la celda
             setOpaque(true);
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setBackground(table.getSelectionBackground());
+            } else {
+                setBackground(UIManager.getColor("Button.background"));
+            }
             return this;
         }
     }
-    
+
     class ButtonEditor extends DefaultCellEditor {
-    private JButton button;
-    private List<Project> proyectos;
-    private int selectedRow;
 
-    public ButtonEditor(JCheckBox checkBox, List<Project> proyectos) {
-        super(checkBox);
-        this.proyectos = proyectos;
-        button = new JButton("Ver Detalles");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-                Project proyectoSeleccionado = proyectos.get(selectedRow);
-                GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado,0,null);
-                detalleVentana.setVisible(true);
-            }
-        });
-    }
+        private JButton button;
+        private List<Project> proyectos;
+        private int selectedRow;
+        private JTable table;
 
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        selectedRow = row;
-        return button;
+        public ButtonEditor(JCheckBox checkBox, List<Project> proyectos, JTable table) {
+            super(checkBox);
+            this.proyectos = proyectos;
+            this.table = table;
+            button = new JButton("Ver Detalles");
+
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+
+                    // Convertir la fila de la vista a la fila del modelo
+                    int modelRow = table.convertRowIndexToModel(selectedRow);
+
+                    if (modelRow >= 0 && modelRow < proyectos.size()) {
+                        Project proyectoSeleccionado = new Project((Project) proyectos.get(modelRow));
+
+                        IRepository postulationRepository = Factory.getInstance().getRepository("postulation");
+                        PostulationService postulationes = new PostulationService(postulationRepository);
+
+                        GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado, studentService.obtenerEstudiante(usuario.getUsuario()), postulationes);
+                        detalleVentana.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error: Índice fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            selectedRow = row;
+            return button;
+        }
     }
-}
 
     private void agregarEventos() {
         lblProyectos.addMouseListener(new MouseAdapter() {
@@ -336,10 +381,10 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblMisProyectos;
     private javax.swing.JLabel lblProyectos;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtUsuarioMostrar;
     // End of variables declaration//GEN-END:variables
 
     @Override

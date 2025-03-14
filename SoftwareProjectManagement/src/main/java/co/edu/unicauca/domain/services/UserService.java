@@ -21,8 +21,7 @@ public class UserService {
     }
 
     public User login(String username, String password) {
-        User user = userRepository.found(username);        
-
+        User user = (User)userRepository.found(username);        
         if (user == null) {
           
             return null;

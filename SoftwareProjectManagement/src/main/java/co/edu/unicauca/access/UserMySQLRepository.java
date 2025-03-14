@@ -19,9 +19,6 @@ import javax.swing.JOptionPane;
  * @author Brayan
  */
 public class UserMySQLRepository implements IRepository  {
-
-    
-    
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
@@ -56,7 +53,6 @@ public class UserMySQLRepository implements IRepository  {
 
     @Override
     public User found(String username) {
-
         if (conn == null) {
              JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             return null;
@@ -97,15 +93,11 @@ public class UserMySQLRepository implements IRepository  {
                 JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
-        return usuario;
-    
+        return usuario;    
     }
 
     @Override
     public Object buscarElemento(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
+    }  
 }

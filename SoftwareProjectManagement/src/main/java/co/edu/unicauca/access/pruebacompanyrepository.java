@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Brayan
  */
-public class pruebacompanyrepository  implements IRepository{
+public class pruebacompanyrepository implements IRepository {
 
     @Override
     public boolean save(Object entity) {
@@ -35,7 +35,6 @@ public class pruebacompanyrepository  implements IRepository{
     }
 
     @Override
-
     public User found(String usename) {
         return null;
     }
@@ -44,5 +43,4 @@ public class pruebacompanyrepository  implements IRepository{
 
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }

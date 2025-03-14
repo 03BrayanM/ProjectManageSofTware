@@ -94,8 +94,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
            if (conn == null) {
            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");               
-
             return null; // Devuelve null si la conexión falla
+
            }
            try{
                // Llamada al procedimiento almacenado
@@ -121,14 +121,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-            
-            
+                      
             return (List<Object>)(List<?>)listaproyectos;
             
            }catch(SQLException e) {
-             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");  
-          
-
+             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");          
             return null; // Devuelve null en caso de error 
         }
     }
@@ -164,6 +161,9 @@ public class ProjectMySQLRepository implements IProjectRepository {
     }
 
     @Override
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+}
     public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

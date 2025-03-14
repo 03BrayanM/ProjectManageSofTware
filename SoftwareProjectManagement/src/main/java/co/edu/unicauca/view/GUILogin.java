@@ -16,7 +16,6 @@ import javax.swing.JFrame;
  * @author Brayan
  */
 public class GUILogin extends javax.swing.JFrame {
-
     private UserService Service;
     private IFrameFactory frameFactory;
 
@@ -201,4 +200,5 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtcontrasenia;
     private javax.swing.JTextField txtcontraseña;
     // End of variables declaration//GEN-END:variables
+
 }

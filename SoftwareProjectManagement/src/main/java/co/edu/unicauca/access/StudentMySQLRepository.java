@@ -58,7 +58,7 @@ public class StudentMySQLRepository implements IStudentRepository{
             String sql = "{CALL RegistrarEstudiante(?, ?, ?, ?, ?)}";
             CallableStatement stmt = conn.prepareCall(sql);
 
-            stmt.setInt(1, estudiante.getCodigo());
+            stmt.setString(1, estudiante.getCodigo());
             stmt.setString(2, estudiante.getNombre());
             stmt.setString(3, estudiante.getCedula());
             stmt.setString(4, estudiante.getEmail());
@@ -86,6 +86,34 @@ public class StudentMySQLRepository implements IStudentRepository{
     }
 
     @Override
+    public Student found(String nombre) {       
+        Student estudiante = new Student();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            return null; // Devuelve null si la conexión falla
+        }
+        try {
+            // Llamada al procedimiento almacenado
+            String sql = "{CALL BuscarEstudiante(?)}";
+            CallableStatement stmt = conn.prepareCall(sql);
+
+            stmt.setString(1, nombre);
+
+            // Ejecutamos el procedimiento y obtenemos los resultados
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                estudiante.setNombre(rs.getString("userName"));
+                estudiante.setCodigo(rs.getString("codEst"));
+                estudiante.setCedula(rs.getString("cedula"));
+                estudiante.setTelefono(rs.getString("telefono"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el Usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+            rs.close();
+            stmt.close();            
+            return estudiante;
+
 
     public User found(String usename) {
         return null;

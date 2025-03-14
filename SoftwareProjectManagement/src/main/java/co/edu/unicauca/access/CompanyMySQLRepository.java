@@ -141,6 +141,10 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     }
 
     @Override
+
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     public Company getCompanyWithUser(String username) {
         if (conn == null) {
             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
@@ -173,6 +177,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         }
         return company;
+
     }
 
 }

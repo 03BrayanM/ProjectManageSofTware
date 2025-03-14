@@ -308,8 +308,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
         if (validacion && validarEntero) {
             Company compania=companyService.obtenerCompanyPorUser(user.getUsuario());
          
-            Project project = new Project(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada,compania.getNit());
-
+            Project project = new Project(nit,nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada,compania.getNit());
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
