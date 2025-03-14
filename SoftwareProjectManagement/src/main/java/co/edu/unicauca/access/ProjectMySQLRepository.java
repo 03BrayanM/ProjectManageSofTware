@@ -7,11 +7,18 @@ package co.edu.unicauca.access;
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.states.AceptadoState;
+import co.edu.unicauca.domain.states.EnEjecucionState;
+import co.edu.unicauca.domain.states.RechazadoState;
+import co.edu.unicauca.domain.states.RecibidoState;
+import co.edu.unicauca.domain.states.CerradoState;
 import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,7 +73,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
             stmt.setString(7, project.getTiempoMaximo());
             stmt.setString(8, "RECIBIDO");
             stmt.setString(9, project.getFechaEntregadaEsperada());
-
             stmt.execute();
             stmt.close();
             return true;
@@ -82,7 +88,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     }
 
-    @Override
+     @Override
     public List<Object> list() {
         CalcularFecha calcular = new CalcularFecha();
         List<Project> listaproyectos = new ArrayList<>();
@@ -120,6 +126,38 @@ public class ProjectMySQLRepository implements IProjectRepository {
     }
 
     @Override
+    public Object buscarElemento(Object entity) {
+        Project  proyecto= null;
+        String sql="{CALL BuscarProyectoPorNombre(?) }";
+        
+        try(Connection conexion=Conectionbd.conectar();
+            CallableStatement stmt= conexion.prepareCall(sql)){
+            
+            stmt.setString(1,(String) entity);
+            ResultSet rs=stmt.executeQuery();
+            
+            if(rs.next()){
+                proyecto= new Project();
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setResumen(rs.getString("resumen"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return proyecto;
+    }
+
+    @Override
     public User found(String usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -134,23 +172,25 @@ public class ProjectMySQLRepository implements IProjectRepository {
         Project proyecto = null;
         String sql = "{CALL ObtenerProyecto(?)}"; // Nombre del procedimiento almacenado
 
+
         try (CallableStatement stmt = conn.prepareCall(sql)) {
             stmt.setString(1, id); // Asignamos el ID del proyecto
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    proyecto = new Project();
-                    proyecto.setId(rs.getString("idProject"));
-                    proyecto.setNombre(rs.getString("titulo"));
-                    proyecto.setNombreEmpresa(rs.getString("empresa"));
-                    proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                    proyecto.setEstado(rs.getString("estado"));
-                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-                    proyecto.setDescripcion(rs.getString("descripcion"));
-                    proyecto.setObjetivo(rs.getString("objetivo"));
-                    proyecto.setResumen(rs.getString("resumen"));
-                    proyecto.setPresupuesto(rs.getString("presupuesto"));
-                }
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                proyecto = new Project();
+                proyecto.setId(rs.getString("idProject"));
+                proyecto.setNombre(rs.getString("titulo"));
+                proyecto.setNombreEmpresa(rs.getString("empresa"));
+                proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                //proyecto.setEstado(rs.getString("estado"));
+                String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                proyecto.setEstado(estado); // Asigna el estado al proyecto
+                proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setResumen(rs.getString("resumen"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
             }
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
@@ -165,4 +205,23 @@ public class ProjectMySQLRepository implements IProjectRepository {
         return proyecto;
     }
 
+    return proyecto;
+}
+
+ private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
+        switch (estadoBD) {
+            case "ACEPTADO":
+                return new AceptadoState();
+            case "EJECUCION":
+                return new EnEjecucionState();
+            case "RECHAZADO":
+                return (ProjectState) new RechazadoState();
+            case "RECIBIDO":
+                return new RecibidoState();
+            case "CERRADO":
+                return new CerradoState();
+            default:
+                throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
+        }
+    }
 }

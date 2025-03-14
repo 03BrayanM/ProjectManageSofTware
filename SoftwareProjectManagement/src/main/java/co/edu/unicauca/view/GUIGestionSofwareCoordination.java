@@ -8,6 +8,7 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.event.MouseAdapter;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements IProjectObserver {
 
+
     ProjectService projectService;
     User usuario;
 
@@ -32,9 +34,10 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         initComponents();
         agregarEventos();
         this.projectService = projectService;
-        this.projectService.agregarObservador(this);
+        Subject.getInstance().agregarObservador(this);
         this.usuario = usuario;
         actualizarTablaP(projectService.obtenerProyectos());
+        configurarEventosTabla();
     }
     
 
@@ -172,15 +175,20 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Titulo", "Empresa", "Fecha de Entrega", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         lblProyectosregistrados.setForeground(new java.awt.Color(0, 0, 0));
@@ -212,6 +220,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         txtnombrecordinador.setBackground(new java.awt.Color(247, 247, 247));
         txtnombrecordinador.setBorder(null);
+        txtnombrecordinador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombrecordinadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -303,6 +316,13 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
+
+    private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombrecordinadorActionPerformed
+
+  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;
     private javax.swing.JButton btnRegistrarEmpresa;
@@ -342,6 +362,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             public void mouseClicked(MouseEvent e) {
                 actualizarTablaP(projectService.obtenerProyectos());
             }
+
         });
     }
 
@@ -350,21 +371,68 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         model.setRowCount(0); // Limpiar la tabla
         model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
-        //List<Project> proyectos = projectService.obtenerProyectos();
         if (proyectos == null || proyectos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
-            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-            LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
 
+            int meses = 0;
+            try {
+                meses = Integer.parseInt(p.getTiempoMaximo());
+            } catch (NumberFormatException e) {
+                // Puedes asignar un valor predeterminado o registrar el error
+                meses = 0;
+            }
+            LocalDate fechaEntrega = LocalDate.now().plusMonths(meses);
             model.addRow(new Object[]{
                 p.getNombre(),
                 p.getNombreEmpresa(),
-                fechaEntrega.toString(), // Convertimos la fecha a String
+                fechaEntrega.toString(),
                 p.getEstado()
             });
+        }
+    }
+
+    private void configurarEventosTabla() {
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                manejarSeleccionProyecto();
+            }
+        });
+    }
+
+    private void manejarSeleccionProyecto() {
+
+        int filaSeleccionada = jTable1.getSelectedRow();
+        Project proyectoSeleccionado = null;
+        if (filaSeleccionada != -1) {
+            Object valorCelda = jTable1.getValueAt(filaSeleccionada, 0);
+            System.out.println("Tipo de valor en la celda: " + valorCelda.getClass().getName());
+            String titulo = "";
+
+            if (valorCelda instanceof Project) {
+                titulo = ((Project) valorCelda).getNombre(); // Extrae el nombre correctamente
+            } else if (valorCelda instanceof String) {
+                titulo = (String) valorCelda; // Si ya es un String, lo usa directamente
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: El valor seleccionado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Evita continuar si hay un error
+            }
+
+            Project proyectoBusqueda = new Project();
+            proyectoBusqueda.setNombre(titulo);
+            System.out.println("Buscando proyecto con nombre: " + titulo);
+            proyectoSeleccionado = (Project) projectService.buscarProyectoPorNombre(proyectoBusqueda);
+
+            if (proyectoSeleccionado != null) {
+                System.out.println("Proyecto encontrado: " + proyectoSeleccionado.getNombre());
+                abrirGUICoordinadorProject(proyectoSeleccionado);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: No se encontro ningun proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -374,9 +442,24 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         // Crear el servicio de proyectos con su repositorio
         ProjectService projectService = new ProjectService(projectRepository);
+
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService, usuario);
-        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setVisible(true);
+    }
+
+    private void abrirGUICoordinadorProject(Project p) {
+        // Obtener el repositorio de proyectos desde la fábrica
+        IRepository projectRepository = Factory.getInstance().getRepository("project");
+
+        // Crear el servicio de proyectos con su repositorio
+        ProjectService projectService = new ProjectService(projectRepository);
+
+        // Instanciar la GUI del coordinador y mostrarla
+
+        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p);
+        instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
 

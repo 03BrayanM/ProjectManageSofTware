@@ -102,5 +102,10 @@ public class UserMySQLRepository implements IRepository  {
     
     }
 
+    @Override
+    public Object buscarElemento(Object entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
 }

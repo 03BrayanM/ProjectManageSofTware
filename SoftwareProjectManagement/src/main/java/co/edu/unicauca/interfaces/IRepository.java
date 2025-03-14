@@ -9,5 +9,9 @@ public interface IRepository {
     boolean update(Object entity);
     boolean delete(int id);
     List<Object> list();
+
     User found(String usename);
+
+    Object buscarElemento(Object entity);
+
 }
