@@ -11,6 +11,7 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +22,22 @@ import javax.swing.JOptionPane;
  *
  * @author Brayan
  */
-public class StudentMySQLRepository implements IStudentRepository {
+
+public class StudentMySQLRepository implements IStudentRepository{
+
+    private Connection conn;
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
+
+    public StudentMySQLRepository() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public boolean delete(int id) {
@@ -31,16 +47,16 @@ public class StudentMySQLRepository implements IStudentRepository {
     @Override
     public boolean save(Object usuario) {
         Student estudiante = (Student) usuario;
-        Connection conexion = Conectionbd.conectar(); // Conexión a la BD
 
-        if (conexion == null) {
-            Messages.showMessageDialog("Error de conexion", "Atención");
+
+        if (conn == null) {
+             Messages.showMessageDialog("Error de conn", "Atención");
             return false;
         }
 
         try {
             String sql = "{CALL RegistrarEstudiante(?, ?, ?, ?, ?)}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
 
             stmt.setInt(1, estudiante.getCodigo());
             stmt.setString(2, estudiante.getNombre());
@@ -50,7 +66,7 @@ public class StudentMySQLRepository implements IStudentRepository {
 
             stmt.execute();
             stmt.close();
-            conexion.close();
+            conn.close();
 
             return true;  // Registro exitoso
         } catch (SQLException e) {
