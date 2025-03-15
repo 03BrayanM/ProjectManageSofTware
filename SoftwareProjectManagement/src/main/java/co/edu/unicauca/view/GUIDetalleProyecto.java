@@ -1,31 +1,39 @@
-
 package co.edu.unicauca.view;
+
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
 import java.sql.Timestamp;
+import javax.swing.JFrame;
 
 /**
  *
  * @author RoLoNeGaTiVo
  */
-public class GUIDetalleProyecto extends javax.swing.JFrame {
+public class GUIDetalleProyecto extends javax.swing.JDialog{
 
     private PostulationService postulaciones;
+    private StudentService serviceStudent;
     private Project proyecto;
-    private Student estudiante;
+    private String codEst;
+    private IFrameEventListener listener;
 
-    public GUIDetalleProyecto(Project proyecto_, Student estudiante_, PostulationService postulaciones_) {
+    public GUIDetalleProyecto(JFrame parent, IFrameEventListener listener,Project proyecto_, String username, PostulationService postulaciones_,StudentService serviceStudent) {
+        super(parent, "Datos", true); 
         initComponents();
         this.proyecto = proyecto_;
-        this.estudiante = estudiante_;
+        this.listener = listener;
+        this.serviceStudent =serviceStudent;
+        this.codEst = codEst;
         this.postulaciones = postulaciones_;
         inicializarDatos(proyecto);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,7 +71,7 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         btnPostularse = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(9, 33, 103));
 
@@ -82,7 +90,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(313, 322));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
         txtNombre.setEditable(false);
@@ -343,16 +350,16 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
-        Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
-        if (proyecto.getNit() != null) {
 
-            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getNit(), fechaActual);
-            System.out.println("Postulación creada: " + postulation);
+        if (proyecto.getNit() != null) {
+            Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
+            Postulation postulation = new Postulation(codEst, proyecto.getNit(), fechaActual);
 
             boolean res = postulaciones.savePostulation(postulation);
 
             if (res) {
                 Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
+                listener.onEventTriggered();
                 this.dispose();
             } else {
                 Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");

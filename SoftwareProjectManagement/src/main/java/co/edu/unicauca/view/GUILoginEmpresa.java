@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.infra.ButtonEditor;
+import co.edu.unicauca.infra.ButtonEditorFactory;
 
 
 /**
@@ -328,8 +329,8 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
         tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
 
-        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
-        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,this,this,projectService));
+        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton("postular"));
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(ButtonEditorFactory.createButtonEditor("ver", tblProyectos, this, this, projectService));
 
     }
     /**

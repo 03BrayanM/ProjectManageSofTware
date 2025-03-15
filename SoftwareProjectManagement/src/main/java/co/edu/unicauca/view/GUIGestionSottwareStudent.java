@@ -10,7 +10,10 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
+import co.edu.unicauca.infra.ButtonEditorFactory;
+import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.Component;
@@ -35,22 +38,23 @@ import javax.swing.table.TableColumn;
  *
  * @author Yisus
  */
-public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IProjectObserver {
+public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFrameEventListener {
 
     StudentService studentService;
     ProjectService projectService;
-
+    PostulationService postulationService;
     private User usuario;
 
-    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_) {
+    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_,PostulationService postulationService) {
         initComponents();
         this.usuario = usuario_;
         this.studentService = studentService_;
         this.projectService = projectService;
-        this.projectService.agregarObservador(this);
+        this.postulationService = postulationService;
+
         txtUsuarioMostrar.setText(usuario.getUsuario());
         tblProyectos.setAutoCreateRowSorter(true);
-        actualizarProyectos(projectService.obtenerProyectos());
+        actualizarProyectos();
 
     }
 
@@ -252,88 +256,20 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         System.exit(0);
     }//GEN-LAST:event_btnsalirActionPerformed
 
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-
-        public ButtonRenderer() {
-            super("Ver Detalles"); // Texto del botón en la celda
-            setOpaque(true);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setBackground(table.getSelectionBackground());
-            } else {
-                setBackground(UIManager.getColor("Button.background"));
-            }
-            return this;
-        }
-    }
-
-    class ButtonEditor extends DefaultCellEditor {
-
-        private JButton button;
-        private List<Project> proyectos;
-        private int selectedRow;
-        private JTable table;
-
-        public ButtonEditor(JCheckBox checkBox, List<Project> proyectos, JTable table) {
-            super(checkBox);
-            this.proyectos = proyectos;
-            this.table = table;
-            button = new JButton("Ver Detalles");
-
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
-
-                    // Convertir la fila de la vista a la fila del modelo
-                    int modelRow = table.convertRowIndexToModel(selectedRow);
-
-                    if (modelRow >= 0 && modelRow < proyectos.size()) {
-                        Project proyectoSeleccionado = new Project((Project) proyectos.get(modelRow));
-
-                        IRepository postulationRepository = Factory.getInstance().getRepository("postulation");
-                        PostulationService postulationes = new PostulationService(postulationRepository);
-
-                        GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado, studentService.obtenerEstudiante(usuario.getUsuario()), postulationes);
-                        detalleVentana.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error: Índice fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            selectedRow = row;
-            return button;
-        }
+    @Override
+    public void onEventTriggered() {
+        actualizarProyectos();
     }
 
     private void agregarEventos() {
         lblProyectos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                actualizarProyectos(projectService.obtenerProyectos());
+                actualizarProyectos();
             }
         });
     }
 
-    private void abrirGUIStudent() {
-        // Obtener el repositorio de proyectos desde la fábrica
-        IRepository projectRepository = Factory.getInstance().getRepository("project");
-
-        // Crear el servicio de proyectos con su repositorio
-        StudentService studentService = new StudentService(projectRepository);
-
-        // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(projectService, usuario, studentService);
-        instance.setExtendedState(JFrame.NORMAL);
-        instance.setVisible(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnsalir;
@@ -349,38 +285,47 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
     private javax.swing.JTextField txtUsuarioMostrar;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void actualizarProyectos(List<Project> proyectos) {
+    public void actualizarProyectos() {
+        List<Project> proyectos = projectService.obtenerProyectos();
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla  
-        model.setColumnIdentifiers(new String[]{"Nombre", "Duracion", "Fecha de Registro", "Ver Detalles"});
+        model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles","escondido"});
 
         if (proyectos == null || proyectos.isEmpty()) {
             Messages.showMessageDialog("No existen proyectos registrados.", "Información");
             return; // Salir del método para no procesar datos vacíos
         }
+        int i = 1;
         for (Project p : proyectos) {
-            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
 
             model.addRow(new Object[]{
-                p.getNombre(),
-                p.getNombreEmpresa(),
+                i,
                 p.getFechaEntregadaEsperada(),
-                p.getEstado().toString(), // Convertimos la fecha a String
-                "Ver mas"
+                p.getNombreEmpresa(),
+                p.getNombre(),
+                p.getResumen(),
+                "Ver mas",
+                p
             });
+
+            if (tblProyectos.getRowCount() > 0) {
+                TableColumn detallesColumn = tblProyectos.getColumnModel().getColumn(5);
+                detallesColumn.setCellRenderer(new renderButton("postular"));
+
+                tblProyectos.getColumnModel().getColumn(6).setMinWidth(0);
+                tblProyectos.getColumnModel().getColumn(6).setMaxWidth(0);
+                tblProyectos.getColumnModel().getColumn(6).setPreferredWidth(0);
+                        
+                
+
+                // Pasar una copia de la lista para evitar problemas de referencia
+                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar",tblProyectos,this, this,usuario.getUsuario(),studentService,postulationService));
+      
+            }
+            tblProyectos.revalidate();
+            tblProyectos.repaint();
+            ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
         }
 
-        if (tblProyectos.getRowCount() > 0) {
-            TableColumn detallesColumn = tblProyectos.getColumnModel().getColumn(3);
-            detallesColumn.setCellRenderer(new ButtonRenderer());
-
-            // Pasar una copia de la lista para evitar problemas de referencia
-            detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), new ArrayList<>(proyectos), tblProyectos));
-        }
-        tblProyectos.revalidate();
-        tblProyectos.repaint();
-        ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
     }
-
 }
