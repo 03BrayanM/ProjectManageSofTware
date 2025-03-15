@@ -6,7 +6,6 @@ package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.interfaces.IRepository;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,22 +20,8 @@ public class UserService {
     }
 
     public User login(String username, String password) {
-        User user = userRepository.found(username);        
-
-        if (user == null) {
-          
-            return null;
-        }
-        if(verifyPassword(password, user.getContrasenia())) {
-            return user;
-        } else {
-            return null;
-            
-        }
+        User user = (User)userRepository.found(username);                
+        return user;
     }
 
-    private boolean verifyPassword(String rawPassword, String Passwordbd) {
-        // Lógica para comparar hash
-        return rawPassword.equals(Passwordbd);
-    }
 }

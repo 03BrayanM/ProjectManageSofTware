@@ -1,18 +1,13 @@
 
 package co.edu.unicauca.view;
-
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
-import co.edu.unicauca.view.GUILoginEmpresa;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.sql.Timestamp;
 
 /**
  *
@@ -20,18 +15,15 @@ import javax.swing.JOptionPane;
  */
 public class GUIDetalleProyecto extends javax.swing.JFrame {
 
-    ProjectService projectService;
-    StudentService studentServices;
-    PostulationService postulationService;
-
+    private PostulationService postulaciones;
     private Project proyecto;
-    private int idUsuario;
+    private Student estudiante;
 
-    public GUIDetalleProyecto(Project proyecto_, int idUsuario_, ProjectService projectService_) {
+    public GUIDetalleProyecto(Project proyecto_, Student estudiante_, PostulationService postulaciones_) {
         initComponents();
-        this.projectService = projectService_;
         this.proyecto = proyecto_;
-        this.idUsuario = idUsuario_;
+        this.estudiante = estudiante_;
+        this.postulaciones = postulaciones_;
         inicializarDatos(proyecto);
     }
 
@@ -69,6 +61,7 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txtAreaObjetivos = new javax.swing.JTextArea();
         btnPostularse = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,7 +88,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtNombre.setEditable(false);
         txtNombre.setBackground(new java.awt.Color(242, 247, 249));
         txtNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setBorder(null);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,23 +96,19 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Empresa:");
 
         txtEmpresa.setEditable(false);
         txtEmpresa.setBackground(new java.awt.Color(242, 247, 249));
         txtEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtEmpresa.setForeground(new java.awt.Color(0, 0, 0));
         txtEmpresa.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Fecha:");
 
         txtFecha.setEditable(false);
         txtFecha.setBackground(new java.awt.Color(242, 247, 249));
         txtFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtFecha.setForeground(new java.awt.Color(0, 0, 0));
         txtFecha.setBorder(null);
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,23 +117,19 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Tiempo Maximo");
 
         txtTiempoMaximo.setEditable(false);
         txtTiempoMaximo.setBackground(new java.awt.Color(242, 247, 249));
         txtTiempoMaximo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtTiempoMaximo.setForeground(new java.awt.Color(0, 0, 0));
         txtTiempoMaximo.setBorder(null);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Presupuesto:");
 
         txtPresupuesto.setEditable(false);
         txtPresupuesto.setBackground(new java.awt.Color(242, 247, 249));
         txtPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtPresupuesto.setForeground(new java.awt.Color(0, 0, 0));
         txtPresupuesto.setBorder(null);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -214,30 +198,25 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Objetivos:");
 
         jLabel8.setBackground(new java.awt.Color(153, 153, 153));
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Resumen");
 
         jScrollPane2.setBackground(new java.awt.Color(242, 247, 249));
         jScrollPane2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jScrollPane2.setForeground(new java.awt.Color(0, 0, 0));
 
         txtAreaResumen.setEditable(false);
         txtAreaResumen.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaResumen.setColumns(20);
         txtAreaResumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaResumen.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaResumen.setRows(5);
         jScrollPane2.setViewportView(txtAreaResumen);
         txtAreaResumen.getAccessibleContext().setAccessibleName("txtAreaResumen");
 
         jLabel9.setBackground(new java.awt.Color(242, 247, 249));
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Descripcion:");
 
         jScrollPane3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -246,7 +225,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtAreaDescripcion.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaDescripcion.setColumns(20);
         txtAreaDescripcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtAreaDescripcion);
         txtAreaDescripcion.getAccessibleContext().setAccessibleName("txtAreaDescripcion");
@@ -257,7 +235,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtAreaObjetivos.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaObjetivos.setColumns(20);
         txtAreaObjetivos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaObjetivos.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaObjetivos.setRows(5);
         jScrollPane4.setViewportView(txtAreaObjetivos);
 
@@ -311,6 +288,17 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(191, 212, 228));
+        btnVolver.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(35, 38, 107));
+        btnVolver.setText("Volver");
+        btnVolver.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(191, 212, 228), 2, true));
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -322,6 +310,8 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(125, 125, 125)
                 .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(176, 176, 176)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -331,7 +321,9 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPostularse, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
 
@@ -351,20 +343,26 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
+        Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
+        if (proyecto.getNit() != null) {
 
-       /* int codigo = 0;
-        if (projectService.obtenerProyecto(proyecto.getNombre()) != (-1)) {
-            codigo = projectService.obtenerProyecto(proyecto.getNombre());
+            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getNit(), fechaActual);
+            System.out.println("Postulación creada: " + postulation);
+
+            boolean res = postulaciones.savePostulation(postulation);
+
+            if (res) {
+                Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
+                this.dispose();
+            } else {
+                Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
+                this.dispose();
+            }
         } else {
-            Messages.showMessageDialog("Ocurrio un Error al intentar Postularse", "Atención");
+            Messages.showMessageDialog("El codigo de projecto es Nulo", "Atención");
         }
-        Postulation postulation = new Postulation(studentServices.obtenerEstudiante().getCodigo(), codigo, "Fecha");
-        boolean res = postulationService.savePostulation(postulation);
-        if (res) {
-            Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
-        } else {
-            Messages.showMessageDialog("Ocurrio un Error al intentar Postularse", "Atención");
-        }*/
+
+        this.dispose();
     }
 
     private void inicializarDatos(Project proyecto) {
@@ -382,9 +380,16 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnPostularseActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+    private void iniciar(ProjectService project, StudentService student, PostulationService postulation) {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPostularse;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

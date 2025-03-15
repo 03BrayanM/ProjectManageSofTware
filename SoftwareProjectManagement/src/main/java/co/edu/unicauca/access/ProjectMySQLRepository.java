@@ -12,13 +12,11 @@ import co.edu.unicauca.domain.states.EnEjecucionState;
 import co.edu.unicauca.domain.states.RechazadoState;
 import co.edu.unicauca.domain.states.RecibidoState;
 import co.edu.unicauca.domain.states.CerradoState;
-import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -96,6 +94,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
 
             return null; // Devuelve null si la conexión falla
+
         }
         try {
             // Llamada al procedimiento almacenado
@@ -119,11 +118,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
+            
             return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
-            Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");
-
+            Messages.showMessageDialog("Error al listar proyectos:", "Error de Consulta");
             return null; // Devuelve null en caso de error 
         }
     }
@@ -160,14 +159,14 @@ public class ProjectMySQLRepository implements IProjectRepository {
     }
 
     @Override
-    public User found(String usename) {
+    public User found(String username) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Project getProject(String id) {
         if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
             return null;
         }
 
@@ -192,7 +191,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
                     // Manejo de fecha correctamente
                     proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-
                     proyecto.setDescripcion(rs.getString("descripcion"));
                     proyecto.setObjetivo(rs.getString("objetivo"));
                     proyecto.setResumen(rs.getString("resumen"));
@@ -201,7 +199,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
-            JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("\"Error al obtener el proyecto:", "Error");
         }
 
         return proyecto;

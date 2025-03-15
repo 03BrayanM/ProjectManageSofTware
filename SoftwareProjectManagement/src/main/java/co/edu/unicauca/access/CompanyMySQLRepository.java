@@ -43,7 +43,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         Company empresa = (Company) usuario;
 
         if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");           
             return false;
         }
 
@@ -92,7 +92,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         List<Company> listaEmpresas = new ArrayList<>();
 
         if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");            
             return null; // Devuelve null si la conexión falla
         }
 
@@ -124,7 +124,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
             return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");            
             return null; // Devuelve null en caso de error
         }
     }
@@ -132,7 +132,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
 
     public User found(String usename) {
-      return null;
+        return null;
     }
 
     public Object buscarElemento(Object entity) {
@@ -140,10 +140,9 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
     public Company getCompanyWithUser(String username) {
         if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Retorna null si no hay conexión
         }
 
@@ -164,7 +163,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         } catch (SQLException e) {
             Logger.getLogger(CompanyMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
-            JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error al obtener el proyecto: .", "Error al obtener el proyecto");
         } finally {
             try {
                 conn.close();
@@ -173,6 +172,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         }
         return company;
+
     }
 
 }
