@@ -41,17 +41,16 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
     public boolean save(Object usuario) {
         Company empresa = (Company) usuario;
-        Connection conexion = Conectionbd.conectar(); // Llamamos a la conexión existente
 
-        if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+        if (conn == null) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");           
             return false;
         }
 
         try {
             // Llamada al procedimiento almacenado con 9 parámetros
             String sql = "{CALL sp_registrar_empresa(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
 
             // Pasamos los 9 parámetros correctamente
             stmt.setString(1, empresa.getNit());
@@ -69,7 +68,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
             // Cerramos recursos
             stmt.close();
-            conexion.close();
+            conn.close();
 
             return true; // Registro exitoso
         } catch (SQLException e) {
@@ -91,17 +90,16 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
     public List<Object> list() {
         List<Company> listaEmpresas = new ArrayList<>();
-        Connection conexion = Conectionbd.conectar();
 
-        if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+        if (conn == null) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");            
             return null; // Devuelve null si la conexión falla
         }
 
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_listar_empresas()}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
 
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -122,11 +120,11 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             // Cerramos recursos
             rs.close();
             stmt.close();
-            conexion.close();
+            conn.close();
 
             return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");            
             return null; // Devuelve null en caso de error
         }
     }
@@ -134,7 +132,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     @Override
 
     public User found(String usename) {
-      return null;
+        return null;
     }
 
     public Object buscarElemento(Object entity) {
@@ -142,10 +140,9 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
     public Company getCompanyWithUser(String username) {
         if (conn == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Retorna null si no hay conexión
         }
 
@@ -166,7 +163,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         } catch (SQLException e) {
             Logger.getLogger(CompanyMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
-            JOptionPane.showMessageDialog(null, "Error al obtener el proyecto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error al obtener el proyecto: .", "Error al obtener el proyecto");
         } finally {
             try {
                 conn.close();
@@ -175,6 +172,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         }
         return company;
+
     }
 
 }

@@ -5,32 +5,41 @@
 package co.edu.unicauca.access;
 
 import co.edu.unicauca.interfaces.ICoordinatorRepository;
-import co.edu.unicauca.domain.entities.Coordination;
-
-import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.states.AceptadoState;
 import co.edu.unicauca.domain.states.EnEjecucionState;
 import co.edu.unicauca.domain.states.RechazadoState;
 import co.edu.unicauca.domain.states.RecibidoState;
 import co.edu.unicauca.domain.states.CerradoState;
+import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Brayan
  */
-public class CoordinatorMySQLRepository implements ICoordinatorRepository{
+public class CoordinatorMySQLRepository implements ICoordinatorRepository {
+    private Connection conn;
+    private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
+    private static final String user = "root"; // Cambia si usas otro usuario
+    private static final String password = "oracle"; // Cambia por tu contraseña
 
-   
+    public CoordinatorMySQLRepository() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean delete(int id) {
@@ -48,43 +57,47 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
     }
 
     public List<Object> list() {
-       
+
         List<Project> listaproyectos = new ArrayList<>();
-       Connection conexion = Conectionbd.conectar();
-           if (conexion == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+
+        if (conn == null) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de conexion");
             return null; // Devuelve null si la conexión falla
-           }
-           try{
-               // Llamada al procedimiento almacenado
+        }
+        try {
+            // Llamada al procedimiento almacenado
             String sql = "{CALL sp_ListarProyectosPostulados()}";
-            CallableStatement stmt = conexion.prepareCall(sql);
+            CallableStatement stmt = conn.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                Project proyecto= new Project();
+
+            while (rs.next()) {
+                Project proyecto = new Project();
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("nombre"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
                 String estadoBD = rs.getString("estado"); // Obtiene el estado como String
                 ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
-                proyecto.setEstado(estado); 
+                proyecto.setEstado(estado);
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-            
-                
+
                 listaproyectos.add(proyecto);
             }
             rs.close();
             stmt.close();
-            conexion.close();
-            
-            return (List<Object>)(Project)listaproyectos;
-            
-           }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al listar empresas: " + e.getMessage(), "Error de Consulta", JOptionPane.ERROR_MESSAGE);
+
+            return (List<Object>) (Project) listaproyectos;
+
+        } catch (SQLException e) {
+            Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");
+
             return null;
-           }
+        }
+    }
+
+    @Override
+    public User found(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -92,16 +105,11 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public User found(String usename) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD.trim().toUpperCase()) {
             case "ACEPTADO":
                 return new AceptadoState();
-            case "EJECUCION":
+            case "EN EJECUCION":
                 return new EnEjecucionState();
             case "RECHAZADO":
                 return (ProjectState) new RechazadoState();
@@ -113,5 +121,5 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
                 throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
         }
     }
-  
+
 }

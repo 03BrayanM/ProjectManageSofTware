@@ -259,7 +259,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String nombre = txtnombre.getText().trim();
         String cedula = txtcedula.getText().trim();
-        int codigo = Integer.parseInt(txtcodigo.getText().trim());
+        String codigo = txtcodigo.getText().trim();
         String email = txtemail.getText().trim();
         String telefono = txttelefono.getText().trim();
         boolean validar = validarFormulario(nombre, cedula, codigo, email, telefono);
@@ -283,7 +283,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodigoActionPerformed
-    private boolean validarFormulario(String nombre, String cedula, int codigo, String email, String telefono) {
+    private boolean validarFormulario(String nombre, String cedula, String codigo, String email, String telefono) {
         // Validar que el nombre no esté vacío y no contenga números
         if (nombre.isEmpty()) {
             Messages.showMessageDialog("El campo Nombre no puede estar vacío.", "Atención");
@@ -305,7 +305,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
         }
 
         // Validar que el código sea un número positivo
-        if (codigo <= 0) {
+        if (codigo != null || codigo != " ") {
             Messages.showMessageDialog("El campo Código debe ser un número positivo.", "Atención");
             return false;
         }

@@ -22,8 +22,8 @@ public class PostulationService {
     public PostulationService(IRepository repository) {
         this.repository = repository;
     }
-    
-     public boolean savePostulation(Postulation postulation) {
-        return repository.save(postulation);
+
+    public boolean savePostulation(Postulation postulation) {
+        return repository.save((Postulation) postulation);
     }
 }

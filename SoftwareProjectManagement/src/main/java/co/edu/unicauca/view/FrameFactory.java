@@ -9,7 +9,6 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
-import co.edu.unicauca.interfaces.ICompanyRepository;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
 import javax.swing.JFrame;
@@ -25,9 +24,11 @@ public class FrameFactory implements IFrameFactory {
 
         switch (user.getRol()) {
             case "ESTUDIANTE":
-                IRepository repository1 = Factory.getInstance().getRepository("student");
-                StudentService service = new StudentService(repository1);
-                return new GUIGestionSottwareStudent(service,user);
+                IRepository repositorys = Factory.getInstance().getRepository("student");
+                IRepository repositoryp = Factory.getInstance().getRepository("project");
+                ProjectService projectServi = new ProjectService(repositoryp);
+                StudentService service = new StudentService(repositorys);
+                return new GUIGestionSottwareStudent(projectServi, user, service);
             case "COORDINADOR":
                 IRepository repository2 = Factory.getInstance().getRepository("project");
                 ProjectService projectService = new ProjectService(repository2);
@@ -37,8 +38,8 @@ public class FrameFactory implements IFrameFactory {
                 IRepository repository4 = Factory.getInstance().getRepository("project");
                 CompanyService companyService = new CompanyService(repository3);
                 ProjectService projectService1 = new ProjectService(repository4);
-                return new GUILoginEmpresa(companyService, projectService1, user);
-           
+                return new GUIGestionSoftwareEmpresa(companyService, projectService1, user);
+
             // Agrega otros roles según necesites
             default:
                 return null;

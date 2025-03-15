@@ -7,6 +7,7 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
+import co.edu.unicauca.infra.Messages;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -22,9 +23,10 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private String idProject;
     private IFrameEventListener listener;
     private ProjectService projectService;
-    public GUIInfoProject(JFrame parent, IFrameEventListener listener, String idProject,ProjectService projectService){
+
+    public GUIInfoProject(JFrame parent, IFrameEventListener listener, String idProject, ProjectService projectService) {
         super(parent, "Datos", true);
-        this.projectService=projectService;
+        this.projectService = projectService;
         this.listener = listener;
         this.idProject = idProject;
         initComponents();
@@ -96,10 +98,13 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel8.setText("Resumen:");
 
+        lbObjetivos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbObjetivos.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbResumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbResumen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbDescripcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbDescripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -161,14 +166,19 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setText("Presupuesto:");
 
+        lbPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbPresupuesto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbNombreProject.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbNombreProject.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbnombreEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbnombreEmpresa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        lbTiempo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lbTiempo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -283,7 +293,7 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private void llenarGUI() {
         Project project = projectService.consultarProyecto(idProject);
         if (project == null) {
-            JOptionPane.showMessageDialog(this, "El proyecto no está disponible.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("El proyecto no está disponible.", "Error");
             return;
         }
         lbNombreProject.setText(project.getNombre());

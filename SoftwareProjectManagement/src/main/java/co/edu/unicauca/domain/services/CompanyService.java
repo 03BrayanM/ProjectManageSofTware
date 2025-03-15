@@ -1,7 +1,6 @@
 package co.edu.unicauca.domain.services;
 
 import co.edu.unicauca.domain.entities.Company;
-import co.edu.unicauca.access.Conectionbd;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.ICompanyRepository;

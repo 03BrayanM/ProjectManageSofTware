@@ -276,7 +276,7 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        GUIPostularProject instance = new GUIPostularProject(null, projectService, this, user,companyService);
+        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user,companyService);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -299,16 +299,14 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
-            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-            LocalDate fechaEntrega = LocalDate.now().plusMonths(Integer.parseInt(p.getTiempoMaximo()));
-
+          
             model.addRow(new Object[]{
-                p.getId(),
                 p.getNombre(),
                 p.getNombreEmpresa(),
-                fechaEntrega.toString(), // Convertimos la fecha a String
-                p.getEstado(),
-                "ver"
+                p.getFechaEntregadaEsperada(),
+                p.getEstado().toString(),
+                "ver",
+                p.getId(),
             });
         } 
         tblProyectos.revalidate();
@@ -322,11 +320,16 @@ public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventLi
         tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Título", "Empresa", "Fecha Entrega","Estado","Acción"
+                    "Título", "Empresa", "Fecha Entrega","Estado","Acción","oculto"
                 }
         ));
+        // Ocultar la columna del objeto Project
+        tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
+
         tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
-        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,null,this,projectService));
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,this,this,projectService));
 
     }
     /**

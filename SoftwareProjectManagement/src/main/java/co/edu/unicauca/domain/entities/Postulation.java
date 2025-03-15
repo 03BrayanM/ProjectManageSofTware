@@ -4,62 +4,63 @@
  */
 package co.edu.unicauca.domain.entities;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author RoLoNeGaTiVo
  */
 public class Postulation {
-    private int codStudent;
-    private int codProject;
-    private String fecha; 
-    
-    public Postulation(int codStudent_,int codProject_,String fecha_){
-    this.codStudent= codStudent_;
-    this.codProject=codProject_;
-    this.fecha=fecha_; 
+
+    private String codStudent;
+    private String codProject;
+    private Timestamp fecha;
+
+    public Postulation(String codStudent_,String codProject_, Timestamp fecha_) {
+        this.codStudent = codStudent_;
+        this.codProject = codProject_;
+        this.fecha = fecha_;
     }
-
-
 
     /**
      * @return the codStudent
      */
-    public int getCodStudent() {
+    public String getCodStudent() {
         return codStudent;
     }
 
     /**
      * @param codStudent the codStudent to set
      */
-    public void setCodStudent(int codStudent) {
+    public void setCodStudent(String codStudent) {
         this.codStudent = codStudent;
     }
 
     /**
      * @return the codProject
      */
-    public int getCodProject() {
+    public String getCodProject() {
         return codProject;
     }
 
     /**
      * @param codProject the codProject to set
      */
-    public void setCodProject(int codProject) {
+    public void setCodProject(String codProject) {
         this.codProject = codProject;
     }
 
     /**
      * @return the fecha
      */
-    public String getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
     /**
      * @param fecha the fecha to set
      */
-    public void setFecha(String fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 }

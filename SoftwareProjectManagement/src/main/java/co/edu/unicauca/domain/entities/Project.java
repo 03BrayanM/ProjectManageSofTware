@@ -1,4 +1,3 @@
-
 package co.edu.unicauca.domain.entities;
 
 import co.edu.unicauca.domain.states.RecibidoState;
@@ -10,8 +9,8 @@ import java.util.List;
  * @author Brayan
  */
 public class Project {
-
     private String id;
+    private String nit;
     private String nitEmpresa;
     private String nombre;
     private String resumen;
@@ -22,13 +21,13 @@ public class Project {
     private String FechaEntregadaEsperada;
     private ProjectState estado;
     private String nombreEmpresa;
-    
     public Project(){
         this.estado = new RecibidoState(); // Estado inicial del proyecto
     }
 
-    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha,String nit) {
-        this.nitEmpresa = nit;
+    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String nit_, String nitEmpresa_) {
+        this.nit = nit_;
+        this.nitEmpresa = nitEmpresa_;
         this.nombre = nombre;
         this.resumen = resumen;
         this.descripcion = descripcion;
@@ -47,8 +46,18 @@ public class Project {
         this.id = id;
     }
 
- 
-  
+    public Project(Project pro) {
+        setNit(pro.getNit());
+        setNitEmpresa(pro.getNitEmpresa());
+        setNombre(pro.getNombre());
+        setDescripcion(pro.getDescripcion());
+        setObjetivo(pro.getObjetivo());
+        setTiempoMaximo(pro.getTiempoMaximo());
+        setFechaEntregadaEsperada(pro.getFechaEntregadaEsperada());
+        setEstado(pro.getEstado());
+        setNombreEmpresa(pro.getNombreEmpresa());
+
+    }
 
     public String getNombre() {
         return nombre;
@@ -90,8 +99,6 @@ public class Project {
         this.TiempoMaximo = TiempoMaximo;
     }
 
-  
-
     public String getPresupuesto() {
         return presupuesto;
     }
@@ -116,15 +123,20 @@ public class Project {
         this.estado = estado;
     }
 
-
-
-
     public String getNitEmpresa() {
         return nitEmpresa;
     }
 
-    public void setNit(String nit) {
+    public void setNitEmpresa(String nit) {
         this.nitEmpresa = nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getNit() {
+        return nit;
     }
 
     /**
@@ -140,8 +152,7 @@ public class Project {
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
-    
-     public void cambiarEstado(String nuevoEstado) {
+public void cambiarEstado(String nuevoEstado) {
         this.estado = this.estado.cambiarEstado(nuevoEstado);
     }
        public List<String> obtenerOpcionesEstado() {
@@ -150,6 +161,4 @@ public class Project {
          public String getEstadoActual() {
             return estado.toString(); // Devuelve el nombre del estado actual
     }
-         
-         
 }
