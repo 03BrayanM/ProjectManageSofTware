@@ -1,27 +1,23 @@
 package co.edu.unicauca.view;
 
-import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
-import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.IFrameEventListener;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.infra.ButtonEditor;
-import co.edu.unicauca.infra.Messages;
-import co.edu.unicauca.interfaces.IFrameFactory;
-import co.edu.unicauca.interfaces.IRepository;
-import javax.swing.JFrame;
+
 
 /**
  *
  * @author everson
  */
-public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFrameEventListener {
+public class GUILoginEmpresa extends javax.swing.JFrame implements IFrameEventListener {
 
     /**
      * Creates new form GUIGestionSofware
@@ -30,14 +26,14 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     private ProjectService projectService;
     private User user;
 
-    public GUIGestionSoftwareEmpresa(CompanyService companyService, ProjectService projectService, User user) {
+    public GUILoginEmpresa(CompanyService companyService, ProjectService projectService, User user) {
         initComponents();
         this.companyService = companyService;
         this.projectService = projectService;
         headersTable();
-        this.user = user;
+        this.user =user;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,28 +275,20 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user, companyService);
+        
+        GUIPostularProject instance = new GUIPostularProject(this, projectService, this, user,companyService);
         instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        IRepository userRepository = Factory.getInstance().getRepository("usuario");
-        UserService service = new UserService(userRepository);
-        IFrameFactory frameFactory = new FrameFactory();
-        GUILogin instance = new GUILogin(service, frameFactory);
-        instance.setExtendedState(JFrame.NORMAL);
-        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
-        instance.setLocationRelativeTo(null); // Centrar en pantalla
-        this.dispose();
-        instance.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
-private void actualizarTabla(){
+    private void actualizarTabla(){
 
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla
@@ -311,7 +299,7 @@ private void actualizarTabla(){
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
-
+          
             model.addRow(new Object[]{
                 p.getNombre(),
                 p.getNombreEmpresa(),
@@ -326,15 +314,19 @@ private void actualizarTabla(){
         ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
     }
      /**
-     
-Fija las columnas*/
-  private void headersTable() {
-      tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
-              new Object[][]{},
-              new String[]{"Título", "Empresa", "Fecha Entrega","Estado","Acción","oculto"}));// Ocultar la columna del objeto Project
-      tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
-      tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
-      tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
+     * Fija las columnas
+     */
+    private void headersTable() {
+        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Título", "Empresa", "Fecha Entrega","Estado","Acción","oculto"
+                }
+        ));
+        // Ocultar la columna del objeto Project
+        tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
 
         tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
         tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,this,this,projectService));
@@ -367,9 +359,9 @@ Fija las columnas*/
     private java.awt.Label label1;
     private javax.swing.JTable tblProyectos;
     // End of variables declaration//GEN-END:variables
-
+    
     @Override
     public void onEventTriggered() {
-        actualizarTabla();
+       actualizarTabla();
     }
 }

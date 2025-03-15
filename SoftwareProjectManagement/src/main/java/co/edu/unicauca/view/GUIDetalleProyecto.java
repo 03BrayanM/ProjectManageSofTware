@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package co.edu.unicauca.view;
-import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.Student;
@@ -11,15 +7,7 @@ import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
-import co.edu.unicauca.interfaces.IRepository;
-import co.edu.unicauca.view.GUIGestionSoftwareEmpresa;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *

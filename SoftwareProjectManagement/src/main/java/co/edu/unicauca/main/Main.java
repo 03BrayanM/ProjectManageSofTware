@@ -15,11 +15,13 @@ public class Main {
        IRepository userRepository = Factory.getInstance().getRepository("usuario");
        UserService service = new UserService(userRepository);
        IFrameFactory frameFactory = new FrameFactory();
-       GUILogin instance = new GUILogin(service, frameFactory);         
+       GUILogin instance = new GUILogin(service, frameFactory);  
+
+       IRepository cr = Factory.getInstance().getRepository("company");
+       IRepository pr = Factory.getInstance().getRepository("project");      
        instance.setExtendedState(JFrame.NORMAL);
        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
        instance.setLocationRelativeTo(null); // Centrar en pantalla
        instance.setVisible(true);
-
  }
 }

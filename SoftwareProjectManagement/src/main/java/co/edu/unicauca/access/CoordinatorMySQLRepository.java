@@ -29,7 +29,6 @@ import java.util.List;
  * @author Brayan
  */
 public class CoordinatorMySQLRepository implements ICoordinatorRepository {
-
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
@@ -59,7 +58,6 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
     }
 
     public List<Object> list() {
-        CalcularFecha calcular = new CalcularFecha();
         List<Project> listaproyectos = new ArrayList<>();
 
         if (conn == null) {
@@ -92,6 +90,7 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
 
         } catch (SQLException e) {
             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");
+
             return null;
         }
     }

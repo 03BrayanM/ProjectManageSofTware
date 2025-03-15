@@ -92,6 +92,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         List<Project> listaproyectos = new ArrayList<>();
         if (conn == null) {
             Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+
             return null; // Devuelve null si la conexión falla
 
         }
@@ -117,7 +118,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-
+            
             return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
@@ -189,8 +190,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
                     proyecto.setEstado(estado);
 
                     // Manejo de fecha correctamente
-                    proyecto.setFechaEntregadaEsperada(rs.getDate("fechaEntregaEsperada").toString());
-
+                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
                     proyecto.setDescripcion(rs.getString("descripcion"));
                     proyecto.setObjetivo(rs.getString("objetivo"));
                     proyecto.setResumen(rs.getString("resumen"));
