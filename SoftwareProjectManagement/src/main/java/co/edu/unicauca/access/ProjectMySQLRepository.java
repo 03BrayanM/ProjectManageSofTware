@@ -12,7 +12,6 @@ import co.edu.unicauca.domain.states.EnEjecucionState;
 import co.edu.unicauca.domain.states.RechazadoState;
 import co.edu.unicauca.domain.states.RecibidoState;
 import co.edu.unicauca.domain.states.CerradoState;
-import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;

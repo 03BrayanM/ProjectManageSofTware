@@ -14,7 +14,6 @@ import co.edu.unicauca.domain.states.EnEjecucionState;
 import co.edu.unicauca.domain.states.RechazadoState;
 import co.edu.unicauca.domain.states.RecibidoState;
 import co.edu.unicauca.domain.states.CerradoState;
-import co.edu.unicauca.infra.CalcularFecha;
 import co.edu.unicauca.interfaces.ProjectState;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -49,7 +48,7 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository{
     }
 
     public List<Object> list() {
-       CalcularFecha calcular = new CalcularFecha();
+       
         List<Project> listaproyectos = new ArrayList<>();
        Connection conexion = Conectionbd.conectar();
            if (conexion == null) {
