@@ -9,6 +9,7 @@ import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.UserService;
+import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IProjectObserver;
@@ -18,7 +19,6 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,6 +29,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
     ProjectService projectService;
     User usuario;
+
     public GUIGestionSofwareCoordination(ProjectService projectService, User usuario) {
 
         initComponents();
@@ -309,7 +310,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }//GEN-LAST:event_txtnombrecordinadorActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.dispose();
         IRepository userRepository = Factory.getInstance().getRepository("usuario");
         UserService service = new UserService(userRepository);
         IFrameFactory frameFactory = new FrameFactory();
@@ -317,7 +317,9 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         instance.setExtendedState(JFrame.NORMAL);
         instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
         instance.setLocationRelativeTo(null); // Centrar en pantalla
+        this.dispose();
         instance.setVisible(true);
+
     }//GEN-LAST:event_btnSalirActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;
@@ -368,7 +370,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
         if (proyectos == null || proyectos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            Messages.showMessageDialog("No existen proyectos registrados.", "Información");
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
@@ -405,7 +407,6 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         Project proyectoSeleccionado = null;
         if (filaSeleccionada != -1) {
             Object valorCelda = jTable1.getValueAt(filaSeleccionada, 0);
-            System.out.println("Tipo de valor en la celda: " + valorCelda.getClass().getName());
             String titulo = "";
 
             if (valorCelda instanceof Project) {
@@ -413,21 +414,19 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
             } else if (valorCelda instanceof String) {
                 titulo = (String) valorCelda; // Si ya es un String, lo usa directamente
             } else {
-                JOptionPane.showMessageDialog(null, "Error: El valor seleccionado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                Messages.showMessageDialog("Error: El valor seleccionado no es válido.", "Error");
                 return; // Evita continuar si hay un error
             }
 
             Project proyectoBusqueda = new Project();
             proyectoBusqueda.setNombre(titulo);
-            System.out.println("Buscando proyecto con nombre: " + titulo);
             proyectoSeleccionado = (Project) projectService.buscarProyectoPorNombre(proyectoBusqueda);
 
             if (proyectoSeleccionado != null) {
-                System.out.println("Proyecto encontrado: " + proyectoSeleccionado.getNombre());
                 abrirGUICoordinadorProject(proyectoSeleccionado);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Error: No se encontro ningun proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
+                Messages.showMessageDialog("Error: No se encontro ningun proyecto.", "Error");
             }
         }
     }

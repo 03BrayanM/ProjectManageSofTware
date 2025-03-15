@@ -21,8 +21,6 @@ public class Project {
     private String FechaEntregadaEsperada;
     private ProjectState estado;
     private String nombreEmpresa;
-    public Project() {
-   }
     public Project(){
         this.estado = new RecibidoState(); // Estado inicial del proyecto
     }

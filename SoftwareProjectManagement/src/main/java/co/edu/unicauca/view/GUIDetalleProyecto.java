@@ -12,7 +12,7 @@ import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IRepository;
-import co.edu.unicauca.view.GUILoginEmpresa;
+import co.edu.unicauca.view.GUIGestionSoftwareEmpresa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -100,7 +100,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtNombre.setEditable(false);
         txtNombre.setBackground(new java.awt.Color(242, 247, 249));
         txtNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
         txtNombre.setBorder(null);
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,23 +108,19 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Empresa:");
 
         txtEmpresa.setEditable(false);
         txtEmpresa.setBackground(new java.awt.Color(242, 247, 249));
         txtEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtEmpresa.setForeground(new java.awt.Color(0, 0, 0));
         txtEmpresa.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Fecha:");
 
         txtFecha.setEditable(false);
         txtFecha.setBackground(new java.awt.Color(242, 247, 249));
         txtFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtFecha.setForeground(new java.awt.Color(0, 0, 0));
         txtFecha.setBorder(null);
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,23 +129,19 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Tiempo Maximo");
 
         txtTiempoMaximo.setEditable(false);
         txtTiempoMaximo.setBackground(new java.awt.Color(242, 247, 249));
         txtTiempoMaximo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtTiempoMaximo.setForeground(new java.awt.Color(0, 0, 0));
         txtTiempoMaximo.setBorder(null);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Presupuesto:");
 
         txtPresupuesto.setEditable(false);
         txtPresupuesto.setBackground(new java.awt.Color(242, 247, 249));
         txtPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtPresupuesto.setForeground(new java.awt.Color(0, 0, 0));
         txtPresupuesto.setBorder(null);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -219,30 +210,25 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Objetivos:");
 
         jLabel8.setBackground(new java.awt.Color(153, 153, 153));
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Resumen");
 
         jScrollPane2.setBackground(new java.awt.Color(242, 247, 249));
         jScrollPane2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jScrollPane2.setForeground(new java.awt.Color(0, 0, 0));
 
         txtAreaResumen.setEditable(false);
         txtAreaResumen.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaResumen.setColumns(20);
         txtAreaResumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaResumen.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaResumen.setRows(5);
         jScrollPane2.setViewportView(txtAreaResumen);
         txtAreaResumen.getAccessibleContext().setAccessibleName("txtAreaResumen");
 
         jLabel9.setBackground(new java.awt.Color(242, 247, 249));
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Descripcion:");
 
         jScrollPane3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -251,7 +237,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtAreaDescripcion.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaDescripcion.setColumns(20);
         txtAreaDescripcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtAreaDescripcion);
         txtAreaDescripcion.getAccessibleContext().setAccessibleName("txtAreaDescripcion");
@@ -262,7 +247,6 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
         txtAreaObjetivos.setBackground(new java.awt.Color(242, 247, 249));
         txtAreaObjetivos.setColumns(20);
         txtAreaObjetivos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtAreaObjetivos.setForeground(new java.awt.Color(0, 0, 0));
         txtAreaObjetivos.setRows(5);
         jScrollPane4.setViewportView(txtAreaObjetivos);
 

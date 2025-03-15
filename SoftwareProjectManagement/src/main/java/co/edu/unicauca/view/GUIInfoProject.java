@@ -7,6 +7,7 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
+import co.edu.unicauca.infra.Messages;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -22,9 +23,10 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private String idProject;
     private IFrameEventListener listener;
     private ProjectService projectService;
-    public GUIInfoProject(JFrame parent, IFrameEventListener listener, String idProject,ProjectService projectService){
+
+    public GUIInfoProject(JFrame parent, IFrameEventListener listener, String idProject, ProjectService projectService) {
         super(parent, "Datos", true);
-        this.projectService=projectService;
+        this.projectService = projectService;
         this.listener = listener;
         this.idProject = idProject;
         initComponents();
@@ -283,7 +285,7 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private void llenarGUI() {
         Project project = projectService.consultarProyecto(idProject);
         if (project == null) {
-            JOptionPane.showMessageDialog(this, "El proyecto no está disponible.", "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("El proyecto no está disponible.", "Error");
             return;
         }
         lbNombreProject.setText(project.getNombre());

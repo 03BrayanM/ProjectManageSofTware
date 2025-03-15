@@ -4,7 +4,6 @@
  */
 package co.edu.unicauca.view;
 
-import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.Messages;
@@ -16,12 +15,13 @@ import javax.swing.JFrame;
  * @author Brayan
  */
 public class GUILogin extends javax.swing.JFrame {
+
     private UserService Service;
     private IFrameFactory frameFactory;
 
-    public GUILogin(UserService service ,IFrameFactory frame ) {       
-        this.Service=service;
-        this.frameFactory=frame;
+    public GUILogin(UserService service, IFrameFactory frame) {
+        this.Service = service;
+        this.frameFactory = frame;
         initComponents();
     }
 
@@ -166,17 +166,23 @@ public class GUILogin extends javax.swing.JFrame {
         String usuario = txtcontraseña.getText().trim();
         User result = Service.login(usuario, contrasenia);
         if (result != null) {
+            if (verifyPassword(contrasenia,result.getContrasenia() )) {
+                JFrame instance = frameFactory.createFrame(result);
+                instance.setExtendedState(JFrame.NORMAL);
+                instance.setVisible(true);
+                this.dispose();
 
-            JFrame instance = frameFactory.createFrame(result);
-            instance.setExtendedState(JFrame.NORMAL);
-            instance.setVisible(true);
-            this.dispose();
-
+            } else{
+                Messages.showMessageDialog("Credenciales invalidad", "Atención");
+            }
         } else {
-            Messages.showMessageDialog("Credenciales inválidas", "Atención");
+            Messages.showMessageDialog("Usuario inexistenete", "Atención");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private boolean verifyPassword(String rawPassword, String Passwordbd) {
+        // Lógica para comparar hash
+        return rawPassword.equals(Passwordbd);
+    }
     private void RegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrarseMouseClicked
         this.dispose();
         GUIRecordType instance = new GUIRecordType();

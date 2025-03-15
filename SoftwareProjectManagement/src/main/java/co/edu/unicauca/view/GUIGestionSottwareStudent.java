@@ -4,17 +4,13 @@
  */
 package co.edu.unicauca.view;
 
-
-import co.edu.unicauca.domain.entities.User;
-import co.edu.unicauca.domain.services.CompanyService;
-import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
-import co.edu.unicauca.infra.Subject;
+import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
 import java.awt.Component;
@@ -22,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
@@ -36,12 +31,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-
 /**
  *
  * @author Yisus
  */
 public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IProjectObserver {
+
     StudentService studentService;
     ProjectService projectService;
 
@@ -49,14 +44,13 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
 
     public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_) {
         initComponents();
-        usuario = usuario_;
+        this.usuario = usuario_;
         this.studentService = studentService_;
         this.projectService = projectService;
         this.projectService.agregarObservador(this);
         txtUsuarioMostrar.setText(usuario.getUsuario());
-        jTable1.setAutoCreateRowSorter(true);
-        actualizarTablaP(projectService.obtenerProyectos());
-      
+        tblProyectos.setAutoCreateRowSorter(true);
+        actualizarProyectos(projectService.obtenerProyectos());
 
     }
 
@@ -78,7 +72,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         lblMisProyectos = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProyectos = new javax.swing.JTable();
         btnsalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,18 +89,17 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
 
         txtUsuarioMostrar.setEditable(false);
         txtUsuarioMostrar.setBackground(new java.awt.Color(242, 247, 249));
-        txtUsuarioMostrar.setForeground(new java.awt.Color(0, 0, 0));
         txtUsuarioMostrar.setBorder(null);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
+        lblProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         lblProyectos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblProyectos.setText("Proyectos");
 
+        lblMisProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         lblMisProyectos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblMisProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblMisProyectos.setText("Mis Proyectos");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -115,9 +108,9 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(lblProyectos)
+                .addComponent(lblProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
-                .addComponent(lblMisProyectos)
+                .addComponent(lblMisProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(273, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -125,17 +118,15 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblProyectos)
-                    .addComponent(lblMisProyectos))
+                    .addComponent(lblProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMisProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(242, 247, 249));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -162,8 +153,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jScrollPane1.setViewportView(jTable1);
+        tblProyectos.setGridColor(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setViewportView(tblProyectos);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -261,35 +252,6 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         System.exit(0);
     }//GEN-LAST:event_btnsalirActionPerformed
 
-    private void actualizarTablaP(List<Project> proyectos) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla
-        model.setColumnIdentifiers(new String[]{"Nombre", "Duracion", "Fecha de Registro", "Ver Detalles"}); // Definir columnas
-
-        if (proyectos == null || proyectos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return; // Salir del método para no procesar datos vacíos
-        }
-
-        for (Project p : proyectos) {
-            model.addRow(new Object[]{
-                p.getNombre(),
-                p.getTiempoMaximo(),
-                p.getFechaEntregadaEsperada(),
-                "Ver Detalles"
-            });
-        }
-
-        // Asegurar que hay filas antes de asignar editor y renderer
-        if (jTable1.getRowCount() > 0) {
-            TableColumn detallesColumn = jTable1.getColumnModel().getColumn(3);
-            detallesColumn.setCellRenderer(new ButtonRenderer());
-
-            // Pasar una copia de la lista para evitar problemas de referencia
-            detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), new ArrayList<>(proyectos), jTable1));
-        }
-    }
-
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
@@ -355,7 +317,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         lblProyectos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                actualizarTablaP(projectService.obtenerProyectos());
+                actualizarProyectos(projectService.obtenerProyectos());
             }
         });
     }
@@ -368,7 +330,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         StudentService studentService = new StudentService(projectRepository);
 
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(studentService,usuario);
+        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(projectService, usuario, studentService);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }
@@ -380,15 +342,45 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblMisProyectos;
     private javax.swing.JLabel lblProyectos;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTable tblProyectos;
     private javax.swing.JTextField txtUsuarioMostrar;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
+        model.setRowCount(0); // Limpiar la tabla  
+        model.setColumnIdentifiers(new String[]{"Nombre", "Duracion", "Fecha de Registro", "Ver Detalles"});
+
+        if (proyectos == null || proyectos.isEmpty()) {
+            Messages.showMessageDialog("No existen proyectos registrados.", "Información");
+            return; // Salir del método para no procesar datos vacíos
+        }
+        for (Project p : proyectos) {
+            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
+
+            model.addRow(new Object[]{
+                p.getNombre(),
+                p.getNombreEmpresa(),
+                p.getFechaEntregadaEsperada(),
+                p.getEstado().toString(), // Convertimos la fecha a String
+                "Ver mas"
+            });
+        }
+
+        if (tblProyectos.getRowCount() > 0) {
+            TableColumn detallesColumn = tblProyectos.getColumnModel().getColumn(3);
+            detallesColumn.setCellRenderer(new ButtonRenderer());
+
+            // Pasar una copia de la lista para evitar problemas de referencia
+            detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), new ArrayList<>(proyectos), tblProyectos));
+        }
+        tblProyectos.revalidate();
+        tblProyectos.repaint();
+        ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
     }
+
 }

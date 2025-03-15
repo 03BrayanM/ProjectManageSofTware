@@ -5,6 +5,7 @@
 package co.edu.unicauca.access;
 
 import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IRepository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -12,13 +13,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Brayan
  */
-public class UserMySQLRepository implements IRepository  {
+public class UserMySQLRepository implements IRepository {
+
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
     private static final String user = "root"; // Cambia si usas otro usuario
@@ -31,6 +32,7 @@ public class UserMySQLRepository implements IRepository  {
             e.printStackTrace();
         }
     }
+
     @Override
     public boolean save(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -54,7 +56,7 @@ public class UserMySQLRepository implements IRepository  {
     @Override
     public User found(String username) {
         if (conn == null) {
-             JOptionPane.showMessageDialog(null, "Error: No se pudo conectar a la base de datos.", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null;
         }
 
@@ -83,21 +85,21 @@ public class UserMySQLRepository implements IRepository  {
             rs.close();
             stmt.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al ejecutar el procedimiento almacenado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Messages.showMessageDialog("Error al ejecutar el procedimiento almacenado:", "Error");
         } finally {
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Messages.showMessageDialog("Error al cerrar la conexión:", "Error de Conexión");
             }
         }
-        return usuario;    
+        return usuario;
     }
 
     @Override
     public Object buscarElemento(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }  
+    }
 }

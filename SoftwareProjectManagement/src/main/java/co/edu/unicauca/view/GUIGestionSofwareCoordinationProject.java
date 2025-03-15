@@ -21,7 +21,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     /**
      * Creates new form GUIGestionSofwareCoordinationProject
      */
-    public GUIGestionSofwareCoordinationProject(ProjectService projectService,Project project) {
+    public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project) {
         initComponents();
         llenarCampos(project);
     }
@@ -527,7 +527,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     }//GEN-LAST:event_txtInformacionActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        this.dispose();
         IRepository userRepository = Factory.getInstance().getRepository("usuario");
         UserService service = new UserService(userRepository);
         IFrameFactory frameFactory = new FrameFactory();
@@ -535,24 +534,20 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         instance.setExtendedState(JFrame.NORMAL);
         instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
         instance.setLocationRelativeTo(null); // Centrar en pantalla
+        this.dispose();
         instance.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-private void llenarCampos(Project proyecto) {
-    System.out.println("Nombre: " + proyecto.getNombre());
-    System.out.println("Empresa: " + proyecto.getNombreEmpresa());
-    System.out.println("Estado: "+proyecto.getEstado());
-
-
-    txtnombre.setText(proyecto.getNombre());
-    txtempresa.setText(proyecto.getNombreEmpresa());
-    txtfecha.setText(proyecto.getFechaEntregadaEsperada());
-    txttiempo.setText(String.valueOf(proyecto.getTiempoMaximo()));
-    txtPresupuesto.setText(String.valueOf(proyecto.getPresupuesto()));
-    txtobjetivos.setText(proyecto.getObjetivo());
-    txtresumen.setText(proyecto.getResumen());
-    txtdescripcion.setText(proyecto.getDescripcion());
-    txtestado.setText(proyecto.getEstadoActual().toString());
-}
+    private void llenarCampos(Project proyecto) {
+        txtnombre.setText(proyecto.getNombre());
+        txtempresa.setText(proyecto.getNombreEmpresa());
+        txtfecha.setText(proyecto.getFechaEntregadaEsperada());
+        txttiempo.setText(String.valueOf(proyecto.getTiempoMaximo()));
+        txtPresupuesto.setText(String.valueOf(proyecto.getPresupuesto()));
+        txtobjetivos.setText(proyecto.getObjetivo());
+        txtresumen.setText(proyecto.getResumen());
+        txtdescripcion.setText(proyecto.getDescripcion());
+        txtestado.setText(proyecto.getEstadoActual().toString());
+    }
     /**
      * @param args the command line arguments
      */
