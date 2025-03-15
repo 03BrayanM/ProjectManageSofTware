@@ -90,7 +90,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     public List<Object> list() {
 
         List<Project> listaproyectos = new ArrayList<>();
-        if (conn == null) {
+        if (!conectar()) {
             Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
 
             return null; // Devuelve null si la conexión falla
@@ -109,6 +109,10 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setNombre(rs.getString("titulo"));
                 proyecto.setNombreEmpresa(rs.getString("empresa"));
                 proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                proyecto.setDescripcion(rs.getString("descripcion"));
+                proyecto.setObjetivo(rs.getString("objetivo"));
+                proyecto.setPresupuesto(rs.getString("presupuesto"));
+                
                 String estadoBD = rs.getString("estado"); // Obtiene el estado como String
                 ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
                 proyecto.setEstado(estado); // Asigna el estado al proyecto
@@ -118,7 +122,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-            
+            conn.close();
             return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
@@ -165,12 +169,12 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
     @Override
     public Project getProject(String id) {
-        if (conn == null) {
-            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+         Project proyecto = null;
+         if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null;
-        }
-
-        Project proyecto = null;
+        }else{
+       
         String sql = "{CALL ObtenerProyecto(?)}"; // Procedimiento almacenado
 
         try (CallableStatement stmt = conn.prepareCall(sql)) {
@@ -201,7 +205,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
             Messages.showMessageDialog("\"Error al obtener el proyecto:", "Error");
         }
-
+         }
         return proyecto;
     }
 
@@ -220,5 +224,15 @@ public class ProjectMySQLRepository implements IProjectRepository {
             default:
                 throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
         }
+    }
+     private boolean conectar(){
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       
     }
 }

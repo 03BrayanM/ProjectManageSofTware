@@ -8,6 +8,7 @@ import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IFrameFactory;
+import java.util.Arrays;
 import javax.swing.JFrame;
 
 /**
@@ -33,12 +34,10 @@ public class GUILogin extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel3 = new javax.swing.JPanel();
-        txtcontrasenia = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        txtcontraseña = new javax.swing.JTextField();
+        txtusario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -48,6 +47,7 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        txtcontrasenia = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(39, 246, 249));
@@ -70,10 +70,6 @@ public class GUILogin extends javax.swing.JFrame {
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 0, 0);
 
-        txtcontrasenia.setName(""); // NOI18N
-        getContentPane().add(txtcontrasenia);
-        txtcontrasenia.setBounds(140, 230, 184, 22);
-
         jButton1.setBackground(new java.awt.Color(0, 0, 204));
         jButton1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,9 +82,9 @@ public class GUILogin extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(140, 280, 176, 26);
 
-        txtcontraseña.setName(""); // NOI18N
-        getContentPane().add(txtcontraseña);
-        txtcontraseña.setBounds(140, 190, 180, 22);
+        txtusario.setName(""); // NOI18N
+        getContentPane().add(txtusario);
+        txtusario.setBounds(140, 190, 180, 22);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(35, 38, 107));
@@ -129,7 +125,7 @@ public class GUILogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(Registrarse);
-        Registrarse.setBounds(250, 310, 57, 16);
+        Registrarse.setBounds(250, 310, 70, 16);
 
         jLabel5.setForeground(new java.awt.Color(242, 247, 249));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -144,16 +140,32 @@ public class GUILogin extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(242, 247, 249));
         jPanel2.setForeground(new java.awt.Color(192, 23, 23));
-        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Usuario");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(190, 28, 168, 368);
-        jPanel2.add(jLabel2, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel2)
+                .addGap(368, 368, 368))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 450, 380);
@@ -162,21 +174,29 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String contrasenia = txtcontrasenia.getText().trim();
-        String usuario = txtcontraseña.getText().trim();
-        User result = Service.login(usuario, contrasenia);
-        if (result != null) {
-            if (verifyPassword(contrasenia,result.getContrasenia() )) {
-                JFrame instance = frameFactory.createFrame(result);
-                instance.setExtendedState(JFrame.NORMAL);
-                instance.setVisible(true);
-                this.dispose();
+        char[] contrachars = txtcontrasenia.getPassword();
+        String contrasenia = new String(contrachars);
+        String usuario = txtusario.getText().trim();
 
-            } else{
-                Messages.showMessageDialog("Credenciales invalidad", "Atención");
-            }
+        if (usuario.isEmpty()) {
+            Messages.showMessageDialog("Ambos Campos son Obligatorios", "Atención");
         } else {
-            Messages.showMessageDialog("Usuario inexistenete", "Atención");
+            User result = Service.login(usuario, contrasenia);
+            txtcontrasenia.setText("");
+            txtusario.setText("");
+            if (result != null) {
+                if (verifyPassword(contrasenia, result.getContrasenia())) {
+                    JFrame instance = frameFactory.createFrame(result);
+                    instance.setExtendedState(JFrame.NORMAL);
+                    instance.setVisible(true);
+                    this.dispose();
+
+                } else {
+                    Messages.showMessageDialog("Credenciales invalidad", "Atención");
+                }
+            } else {
+                Messages.showMessageDialog("Usuario inexistenete", "Atención");
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     private boolean verifyPassword(String rawPassword, String Passwordbd) {
@@ -203,8 +223,8 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField txtcontrasenia;
-    private javax.swing.JTextField txtcontraseña;
+    private javax.swing.JPasswordField txtcontrasenia;
+    private javax.swing.JTextField txtusario;
     // End of variables declaration//GEN-END:variables
 
 }

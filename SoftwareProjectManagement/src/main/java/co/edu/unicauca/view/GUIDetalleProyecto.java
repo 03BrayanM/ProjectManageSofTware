@@ -344,9 +344,9 @@ public class GUIDetalleProyecto extends javax.swing.JFrame {
 
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
         Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
-        if (proyecto.getNit() != null) {
+        if (proyecto.getId()!= null) {
 
-            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getNit(), fechaActual);
+            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getId(), fechaActual);
             System.out.println("Postulación creada: " + postulation);
 
             boolean res = postulaciones.savePostulation(postulation);

@@ -13,23 +13,22 @@ import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.main.Main;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -39,8 +38,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
 
     StudentService studentService;
     ProjectService projectService;
-
     private User usuario;
+    List<Project> proyectos;
 
     public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_) {
         initComponents();
@@ -50,7 +49,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         this.projectService.agregarObservador(this);
         txtUsuarioMostrar.setText(usuario.getUsuario());
         tblProyectos.setAutoCreateRowSorter(true);
-        actualizarProyectos(projectService.obtenerProyectos());
+        proyectos = projectService.obtenerProyectos();
+        actualizarTablaP(proyectos);
 
     }
 
@@ -249,7 +249,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-        System.exit(0);
+      this.dispose();
+      Main.mostrarLogin();
     }//GEN-LAST:event_btnsalirActionPerformed
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -273,34 +274,45 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
     class ButtonEditor extends DefaultCellEditor {
 
         private JButton button;
-        private List<Project> proyectos;
         private int selectedRow;
         private JTable table;
 
         public ButtonEditor(JCheckBox checkBox, List<Project> proyectos, JTable table) {
             super(checkBox);
-            this.proyectos = proyectos;
             this.table = table;
             button = new JButton("Ver Detalles");
-
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     fireEditingStopped();
 
-                    // Convertir la fila de la vista a la fila del modelo
-                    int modelRow = table.convertRowIndexToModel(selectedRow);
+                    // Obtener la fila seleccionada en la vista
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow < 0) {
+                        Messages.showMessageDialog("Error: No se ha seleccionado ninguna fila.", "Error");
+                        return;
+                    }
 
-                    if (modelRow >= 0 && modelRow < proyectos.size()) {
-                        Project proyectoSeleccionado = new Project((Project) proyectos.get(modelRow));
+                    // Obtener el nombre del proyecto desde la tabla
+                    String nombreProyecto = (String) table.getValueAt(selectedRow, 0); // Columna 0 = Nombre del Proyecto
 
+                    // Buscar el proyecto en la lista usando el método auxiliar
+                    Project proyectoSeleccionado = obtenerProyectoPorNombre(nombreProyecto);
+
+                    if (proyectoSeleccionado != null) {
+                        // Obtener el repositorio y servicio de postulaciones
                         IRepository postulationRepository = Factory.getInstance().getRepository("postulation");
                         PostulationService postulationes = new PostulationService(postulationRepository);
 
-                        GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(proyectoSeleccionado, studentService.obtenerEstudiante(usuario.getUsuario()), postulationes);
+                        // Abrir la ventana con los detalles del proyecto
+                        GUIDetalleProyecto detalleVentana = new GUIDetalleProyecto(
+                                proyectoSeleccionado,
+                                studentService.obtenerEstudiante(usuario.getUsuario()),
+                                postulationes
+                        );
                         detalleVentana.setVisible(true);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error: Índice fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
+                        Messages.showMessageDialog("Error: No se encontró el proyecto.", "Error");
                     }
                 }
             });
@@ -317,23 +329,12 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
         lblProyectos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                actualizarProyectos(projectService.obtenerProyectos());
+                proyectos = projectService.obtenerProyectos();
+                actualizarTablaP(proyectos);
             }
         });
     }
 
-    private void abrirGUIStudent() {
-        // Obtener el repositorio de proyectos desde la fábrica
-        IRepository projectRepository = Factory.getInstance().getRepository("project");
-
-        // Crear el servicio de proyectos con su repositorio
-        StudentService studentService = new StudentService(projectRepository);
-
-        // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSottwareStudent instance = new GUIGestionSottwareStudent(projectService, usuario, studentService);
-        instance.setExtendedState(JFrame.NORMAL);
-        instance.setVisible(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnsalir;
@@ -351,36 +352,34 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IPr
 
     @Override
     public void actualizarProyectos(List<Project> proyectos) {
-        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
-        model.setRowCount(0); // Limpiar la tabla  
-        model.setColumnIdentifiers(new String[]{"Nombre", "Duracion", "Fecha de Registro", "Ver Detalles"});
-
-        if (proyectos == null || proyectos.isEmpty()) {
-            Messages.showMessageDialog("No existen proyectos registrados.", "Información");
-            return; // Salir del método para no procesar datos vacíos
-        }
-        for (Project p : proyectos) {
-            // Calcular la fecha de entrega sumando los meses de duración a la fecha actual
-
-            model.addRow(new Object[]{
-                p.getNombre(),
-                p.getNombreEmpresa(),
-                p.getFechaEntregadaEsperada(),
-                p.getEstado().toString(), // Convertimos la fecha a String
-                "Ver mas"
-            });
-        }
-
-        if (tblProyectos.getRowCount() > 0) {
-            TableColumn detallesColumn = tblProyectos.getColumnModel().getColumn(3);
-            detallesColumn.setCellRenderer(new ButtonRenderer());
-
-            // Pasar una copia de la lista para evitar problemas de referencia
-            detallesColumn.setCellEditor(new ButtonEditor(new JCheckBox(), new ArrayList<>(proyectos), tblProyectos));
-        }
-        tblProyectos.revalidate();
-        tblProyectos.repaint();
-        ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
+        actualizarTablaP(proyectos);
     }
 
+    private void actualizarTablaP(List<Project> proyectos) {
+        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+        model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado", "Acción"}); // Agregar columna de botón
+
+        if (proyectos == null || proyectos.isEmpty()) {
+            Messages.showMessageDialog("No existen proyectos...", "Atención");
+            return;
+        }
+
+        for (Project proyecto : proyectos) {
+            model.addRow(new Object[]{proyecto.getNombre(), proyecto.getNombreEmpresa(), proyecto.getFechaEntregadaEsperada(), proyecto.getEstado(), "Ver Detalles"});
+        }
+
+        // Asignar renderer y editor para la columna de botones
+        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), proyectos, tblProyectos));
+    }
+
+    private Project obtenerProyectoPorNombre(String nombreProyecto) {
+        for (Project proyecto : proyectos) {
+            if (proyecto.getNombre().equals(nombreProyecto)) {
+                return proyecto; // Retorna el proyecto si el nombre coincide
+            }
+        }
+        return null; // Retorna null si no se encuentra
+    }
 }

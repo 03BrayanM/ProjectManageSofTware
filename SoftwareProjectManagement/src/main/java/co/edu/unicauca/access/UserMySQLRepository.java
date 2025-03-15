@@ -26,11 +26,7 @@ public class UserMySQLRepository implements IRepository {
     private static final String password = "oracle"; // Cambia por tu contraseña
 
     public UserMySQLRepository() {
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        conectar();
     }
 
     @Override
@@ -55,13 +51,13 @@ public class UserMySQLRepository implements IRepository {
 
     @Override
     public User found(String username) {
-        if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
-            return null;
-        }
-
+        
         User usuario = null;
 
+        if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        }else{
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_obtener_usuario(?)}";
@@ -94,12 +90,22 @@ public class UserMySQLRepository implements IRepository {
             } catch (SQLException e) {
                 Messages.showMessageDialog("Error al cerrar la conexión:", "Error de Conexión");
             }
-        }
+        }}
         return usuario;
     }
 
     @Override
     public Object buscarElemento(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    private boolean conectar(){
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       
     }
 }

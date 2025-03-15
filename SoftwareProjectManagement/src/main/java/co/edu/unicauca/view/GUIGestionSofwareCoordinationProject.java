@@ -10,6 +10,7 @@ import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.main.Main;
 import javax.swing.JFrame;
 
 /**
@@ -527,15 +528,8 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     }//GEN-LAST:event_txtInformacionActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        IRepository userRepository = Factory.getInstance().getRepository("usuario");
-        UserService service = new UserService(userRepository);
-        IFrameFactory frameFactory = new FrameFactory();
-        GUILogin instance = new GUILogin(service, frameFactory);
-        instance.setExtendedState(JFrame.NORMAL);
-        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
-        instance.setLocationRelativeTo(null); // Centrar en pantalla
         this.dispose();
-        instance.setVisible(true);
+        Main.mostrarLogin();
     }//GEN-LAST:event_jButton5ActionPerformed
     private void llenarCampos(Project proyecto) {
         txtnombre.setText(proyecto.getNombre());

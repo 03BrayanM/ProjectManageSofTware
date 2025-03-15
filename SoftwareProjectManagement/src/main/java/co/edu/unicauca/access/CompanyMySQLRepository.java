@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,16 +42,17 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         Company empresa = (Company) usuario;
 
         if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");           
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
         }
 
+        CallableStatement stmt = null;
         try {
-            // Llamada al procedimiento almacenado con 9 parámetros
+            // Llamada al procedimiento almacenado
             String sql = "{CALL sp_registrar_empresa(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-            CallableStatement stmt = conn.prepareCall(sql);
+            stmt = conn.prepareCall(sql);
 
-            // Pasamos los 9 parámetros correctamente
+            // Pasamos los parámetros
             stmt.setString(1, empresa.getNit());
             stmt.setString(2, empresa.getNombre());
             stmt.setString(3, empresa.getEmail());
@@ -61,19 +61,25 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             stmt.setString(6, empresa.getApellido());
             stmt.setString(7, empresa.getSector());
             stmt.setString(8, empresa.getCargo());
-            stmt.setString(9, empresa.getEstado()); // Corregido el índice
+            stmt.setString(9, "HABILITADO"); // Estado por defecto
 
             // Ejecutamos el procedimiento
-            stmt.execute();
-
-            // Cerramos recursos
-            stmt.close();
-            conn.close();
-
-            return true; // Registro exitoso
+            stmt.execute();  
+            return true;
         } catch (SQLException e) {
-            Messages.showMessageDialog("Error al registrar la empresa", "Atención");
-            return false; // Fallo en el registro
+            Messages.showMessageDialog("Error al registrar la empresa: " + e.getMessage(), "Atención");
+            return false;
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("Error cerrando la conexión: " + ex.getMessage());
+            }
         }
     }
 
@@ -92,7 +98,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         List<Company> listaEmpresas = new ArrayList<>();
 
         if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");            
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Devuelve null si la conexión falla
         }
 
@@ -124,7 +130,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
             return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
         } catch (SQLException e) {
-            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");            
+            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");
             return null; // Devuelve null en caso de error
         }
     }

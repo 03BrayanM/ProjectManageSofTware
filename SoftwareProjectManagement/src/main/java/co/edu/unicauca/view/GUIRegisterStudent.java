@@ -7,6 +7,7 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.main.Main;
 
 public class GUIRegisterStudent extends javax.swing.JFrame {
 
@@ -273,7 +274,8 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Main.mostrarLogin();        
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
@@ -289,10 +291,6 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
             Messages.showMessageDialog("El campo Nombre no puede estar vacío.", "Atención");
             return false;
         }
-        if (nombre.matches(".*\\d.*")) {
-            Messages.showMessageDialog("El campo Nombre no puede contener números.", "Atención");
-            return false;
-        }
 
         // Validar que la cédula no esté vacía y solo contenga números
         if (cedula.isEmpty()) {
@@ -300,12 +298,11 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
             return false;
         }
         if (!cedula.matches("\\d+")) {
-            Messages.showMessageDialog("El campo Cédula solo puede contener números.", "Atención");
+            Messages.showMessageDialog("El campo cedula debe ser un número positivo.", "Atención");
             return false;
         }
-
         // Validar que el código sea un número positivo
-        if (codigo != null || codigo != " ") {
+        if (!codigo.matches("\\d+")) {
             Messages.showMessageDialog("El campo Código debe ser un número positivo.", "Atención");
             return false;
         }
@@ -315,11 +312,6 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
             Messages.showMessageDialog("El campo Email no puede estar vacío.", "Atención");
             return false;
         }
-        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            Messages.showMessageDialog("El campo Email no tiene un formato válido.", "Atención");
-            return false;
-        }
-
         // Validar que el teléfono no esté vacío y solo contenga números
         if (telefono.isEmpty()) {
             Messages.showMessageDialog("El campo Teléfono no puede estar vacío.", "Atención");
