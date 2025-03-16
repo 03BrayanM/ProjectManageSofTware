@@ -1,14 +1,9 @@
 package co.edu.unicauca.view;
-
-import javax.swing.JOptionPane; // Importar para mostrar mensajes en la GUI
 import co.edu.unicauca.domain.services.CompanyService;
-import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Company;
-import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
+import co.edu.unicauca.main.Main;
+
 
 /**
  *
@@ -302,7 +297,8 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        // TODO add your handling code here:
+     this.dispose();
+     Main.mostrarLogin();                                   
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtnombrecontactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecontactoActionPerformed

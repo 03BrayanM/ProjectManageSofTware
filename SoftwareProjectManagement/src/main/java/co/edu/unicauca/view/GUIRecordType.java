@@ -10,6 +10,7 @@ import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.main.Main;
 import javax.swing.JFrame;
 
 /**
@@ -175,13 +176,8 @@ public class GUIRecordType extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsiguienteActionPerformed
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        Main.mostrarLogin();
         this.dispose();
-        IRepository userRepository = Factory.getInstance().getRepository("usuario");
-        UserService service = new UserService(userRepository);
-        IFrameFactory frameFactory = new FrameFactory();
-
-        GUILogin instance = new GUILogin(service, frameFactory);
-        instance.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnvolverActionPerformed
 

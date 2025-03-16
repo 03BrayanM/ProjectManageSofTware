@@ -6,8 +6,8 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
 public class renderButton extends JButton implements TableCellRenderer {
-    public renderButton() {
-        setText("Ver"); // Texto del botón
+    public renderButton(String nombreButton) {
+        setText(nombreButton); // Texto del botón
     }
 
     @Override

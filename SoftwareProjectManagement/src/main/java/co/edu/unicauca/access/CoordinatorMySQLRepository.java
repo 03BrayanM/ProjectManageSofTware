@@ -60,10 +60,10 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
 
         List<Project> listaproyectos = new ArrayList<>();
 
-        if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de conexion");
-            return null; // Devuelve null si la conexión falla
-        }
+         if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        }else{
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_ListarProyectosPostulados()}";
@@ -92,7 +92,7 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
             Messages.showMessageDialog("Error al listar empresas:", "Error de Consulta");
 
             return null;
-        }
+        }}
     }
 
     @Override
@@ -121,5 +121,14 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
                 throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
         }
     }
-
+    private boolean conectar(){
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       
+    }
 }

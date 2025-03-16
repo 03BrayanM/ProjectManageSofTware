@@ -11,17 +11,22 @@ import javax.swing.JFrame;
 
 public class Main {
 
-    public static void main(String[] args) {
-       IRepository userRepository = Factory.getInstance().getRepository("usuario");
-       UserService service = new UserService(userRepository);
-       IFrameFactory frameFactory = new FrameFactory();
-       GUILogin instance = new GUILogin(service, frameFactory);  
+    private static GUILogin loginInstance = null;
 
-       IRepository cr = Factory.getInstance().getRepository("company");
-       IRepository pr = Factory.getInstance().getRepository("project");      
-       instance.setExtendedState(JFrame.NORMAL);
-       instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
-       instance.setLocationRelativeTo(null); // Centrar en pantalla
-       instance.setVisible(true);
- }
+    public static void mostrarLogin() {
+        if (loginInstance == null) {  // Solo se crea una vez
+            IRepository userRepository = Factory.getInstance().getRepository("usuario");
+            UserService service = new UserService(userRepository);
+            IFrameFactory frameFactory = new FrameFactory();
+            loginInstance = new GUILogin(service, frameFactory);
+            loginInstance.setSize(450, 380);
+            loginInstance.setLocationRelativeTo(null);
+        }
+        loginInstance.setVisible(true);
+        loginInstance.setExtendedState(JFrame.NORMAL);
+    }
+
+    public static void main(String[] args) {
+        mostrarLogin();
+    }
 }

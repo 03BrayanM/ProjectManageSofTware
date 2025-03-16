@@ -37,25 +37,35 @@ public class PostulationMySQLRepository implements IProjectRepository {
     @Override
     public boolean save(Object postular) {
         Postulation postulacion = (Postulation) postular;
-        if (conn== null) {
-            Messages.showMessageDialog("Error de conexión", "Atención");
+
+        if (!conectar()) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
-        }
+        } else {
 
-        try {
-            String sql = "{CALL InsertarInteres(?,?,?)}";
-            CallableStatement stmt = conn.prepareCall(sql);
+            String sql = "{CALL InsertarInteres(?,?,?)}"; // Llamado al procedimiento almacenado
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
 
-            // Corrección: Se debe usar setInt para los campos de tipo INT
-            stmt.setString(1, postulacion.getCodStudent());
-            stmt.setInt(2, Integer.valueOf(postulacion.getCodProject()));
-            stmt.setDate(3, new java.sql.Date(postulacion.getFecha().getTime()));
+                // Asignar parámetros al procedimiento almacenado
+                stmt.setString(1, postulacion.getCodStudent());
+                stmt.setInt(2, Integer.parseInt(postulacion.getCodProject())); // Asegurar conversión correcta
+                stmt.setDate(3, new java.sql.Date(postulacion.getFecha().getTime()));
 
-            stmt.execute();
-            stmt.close();            
-            return true;  // Registro exitoso
-        } catch (SQLException e) {
-            Messages.showMessageDialog("Error al registrar la Postulacion:", "Error");            
+                // Ejecutar el procedimiento
+                stmt.execute();
+                return true;  // Registro exitoso
+
+            } catch (NumberFormatException e) {
+                Messages.showMessageDialog("Error de formato: El ID del proyecto no es un número válido.", "Error");
+                e.printStackTrace(); // Imprimir detalles en la consola
+            } catch (SQLException e) {
+                Messages.showMessageDialog("Error SQL: " + e.getMessage(), "Error");
+                e.printStackTrace();
+            } catch (Exception e) {
+                Messages.showMessageDialog("Error inesperado: " + e.getMessage(), "Error");
+                e.printStackTrace();
+            }
+
             return false;  // Hubo un error
         }
     }
@@ -90,9 +100,15 @@ public class PostulationMySQLRepository implements IProjectRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public boolean actualizarEstado(Project p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private boolean conectar() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 }

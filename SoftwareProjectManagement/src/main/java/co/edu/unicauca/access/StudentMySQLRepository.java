@@ -44,14 +44,12 @@ public class StudentMySQLRepository implements IStudentRepository {
     @Override
     public boolean save(Object usuario) {
         Student estudiante = (Student) usuario;
-
-        if (conn == null) {
-            Messages.showMessageDialog("Error de conn", "Atención");
+if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
-        }
-
+        }else{ 
         try {
-            String sql = "{CALL RegistrarEstudiante(?, ?, ?, ?, ?)}";
+            String sql = "{CALL sp_registrar_estudiante(?, ?, ?, ?, ?, ?)}";
             CallableStatement stmt = conn.prepareCall(sql);
 
             stmt.setString(1, estudiante.getCodigo());
@@ -59,6 +57,7 @@ public class StudentMySQLRepository implements IStudentRepository {
             stmt.setString(3, estudiante.getCedula());
             stmt.setString(4, estudiante.getEmail());
             stmt.setString(5, estudiante.getTelefono());
+            stmt.setString(6, "HABILITADO"); // Estado predeterminado
 
             stmt.execute();
             stmt.close();
@@ -68,7 +67,7 @@ public class StudentMySQLRepository implements IStudentRepository {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar estudiante: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;  // Hubo un error
-        }
+        }}
     }
 
     @Override
@@ -85,10 +84,10 @@ public class StudentMySQLRepository implements IStudentRepository {
     public Object found(String nombre) {
 
         Student estudiante = new Student();
-        if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de conexion");
-            return null; // Devuelve null si la conexión falla
-        }
+        if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        }else{ 
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL BuscarEstudiante(?)}";
@@ -105,8 +104,7 @@ public class StudentMySQLRepository implements IStudentRepository {
                 estudiante.setCedula(rs.getString("cedula"));
                 estudiante.setTelefono(rs.getString("telefono"));
             } else {
-                Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de conexion");
-                JOptionPane.showMessageDialog(null, "No se encontro el Usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+                Messages.showMessageDialog("No se encontro el estudiante", "Error");
             }
             rs.close();
             stmt.close();
@@ -115,12 +113,22 @@ public class StudentMySQLRepository implements IStudentRepository {
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el estudiante", e);
             JOptionPane.showMessageDialog(null, "Error al obtener el estudiante: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return (Object)estudiante;
+        }}
+        return estudiante;
     }
 
     @Override
     public Object buscarElemento(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+        private boolean conectar(){
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       
     }
 }

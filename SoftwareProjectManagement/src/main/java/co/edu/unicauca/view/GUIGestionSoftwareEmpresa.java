@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.infra.ButtonEditor;
+import co.edu.unicauca.infra.ButtonEditorFactory;
 import co.edu.unicauca.infra.Messages;
+import co.edu.unicauca.infra.verProyectPostuladoContext;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
 import javax.swing.JFrame;
@@ -300,7 +302,7 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
-private void actualizarTabla(){
+    private void actualizarTabla() {
 
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla
@@ -317,27 +319,29 @@ private void actualizarTabla(){
                 p.getNombreEmpresa(),
                 p.getFechaEntregadaEsperada(),
                 p.getEstado().toString(),
-                "ver",
-                p.getId(),
-            });
-        } 
+                "postular",
+                p.getId(),});
+        }
         tblProyectos.revalidate();
         tblProyectos.repaint();
         ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
     }
-     /**
-     
-Fija las columnas*/
-  private void headersTable() {
-      tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
-              new Object[][]{},
-              new String[]{"Título", "Empresa", "Fecha Entrega","Estado","Acción","oculto"}));// Ocultar la columna del objeto Project
-      tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
-      tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
-      tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
 
-        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton());
-        tblProyectos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(tblProyectos,this,this,projectService));
+    /**
+     *
+     * Fija las columnas
+     */
+    private void headersTable() {
+        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Título", "Empresa", "Fecha Entrega", "Estado", "Acción", "oculto"}));// Ocultar la columna del objeto Project
+        tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
+        tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
+
+        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton("ver detalles"));
+        tblProyectos.getColumnModel().getColumn(4).setCellEditor(
+                ButtonEditorFactory.createButtonEditor("ver", tblProyectos, this, this, projectService));
 
     }
     /**
