@@ -5,10 +5,9 @@
 package co.edu.unicauca.access;
 
 import co.edu.unicauca.domain.entities.Postulation;
-import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
-import co.edu.unicauca.interfaces.IProjectRepository;
+import co.edu.unicauca.interfaces.IPostulationRepository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author RoLoNeGaTiVo
  */
-public class PostulationMySQLRepository implements IProjectRepository {
+public class PostulationMySQLRepository implements IPostulationRepository {
 
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
@@ -84,10 +83,6 @@ public class PostulationMySQLRepository implements IProjectRepository {
     public List<Object> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    @Override
-    public User found(Object usename) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     private boolean conectar() {
         try {
@@ -101,7 +96,7 @@ public class PostulationMySQLRepository implements IProjectRepository {
     }
 
     @Override
-    public boolean actualizarEstado(Project p) {
+    public Object found(Object usename) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

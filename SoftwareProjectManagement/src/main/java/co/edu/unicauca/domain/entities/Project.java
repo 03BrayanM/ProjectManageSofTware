@@ -39,6 +39,20 @@ public class Project {
         this.nombreEmpresa = nombreEmpresa;
         this.estado = new RecibidoState(); // Estado inicial
     }
+    public Project(String nitEmpresa, String nombre, String resumen, String descripcion, String objetivo, String TiempoMaximo, String presupuesto, String FechaEntregadaEsperada) {
+        this.id = id;
+        this.nitEmpresa = nitEmpresa;
+        this.nombre = nombre;
+        this.resumen = resumen;
+        this.descripcion = descripcion;
+        this.objetivo = objetivo;
+        this.TiempoMaximo = TiempoMaximo;
+        this.presupuesto = presupuesto;
+        this.FechaEntregadaEsperada = FechaEntregadaEsperada;
+        this.estado = estado;
+        this.nombreEmpresa = nombreEmpresa;
+        this.estado = new RecibidoState(); // Estado inicial
+    }
     
 
     public void avanzarEstado() {

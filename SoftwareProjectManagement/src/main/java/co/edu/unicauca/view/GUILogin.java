@@ -83,6 +83,7 @@ public class GUILogin extends javax.swing.JFrame {
         jButton1.setBounds(140, 280, 176, 26);
 
         txtusario.setName(""); // NOI18N
+        txtusario.setNextFocusableComponent(txtcontrasenia);
         getContentPane().add(txtusario);
         txtusario.setBounds(140, 190, 180, 22);
 
@@ -188,6 +189,7 @@ public class GUILogin extends javax.swing.JFrame {
                 if (verifyPassword(contrasenia, result.getContrasenia())) {
                     JFrame instance = frameFactory.createFrame(result);
                     instance.setExtendedState(JFrame.NORMAL);
+                    instance.setLocationRelativeTo(null);
                     instance.setVisible(true);
                     this.dispose();
 

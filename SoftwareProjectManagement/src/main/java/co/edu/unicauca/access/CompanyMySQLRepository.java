@@ -134,9 +134,10 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         }
     }
 
-    @Override
+ 
 
     public Object found(Object usename) {
+
         if (conn == null) {
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Retorna null si no hay conexión
@@ -214,5 +215,10 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             return false;
         }
 
+    }
+
+    @Override
+    public Object found(Object usename) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

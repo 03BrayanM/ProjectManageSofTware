@@ -8,5 +8,5 @@ public interface IRepository {
     boolean update(Object entity);
     boolean delete(int id);
     List<Object> list();
-    Object found(Object usename);   
+    Object found(Object usename);
 }

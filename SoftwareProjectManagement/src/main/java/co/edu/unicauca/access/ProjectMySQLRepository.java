@@ -130,41 +130,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
         }
     }
 
-    @Override
-    public Project found(Object idProject) {
-        Project proyecto = null;
-        String sql = "{CALL ObtenerProyecto(?) }";
-        if (!conectar()) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
-            return null;
-        } else {
-            try (CallableStatement stmt = conn.prepareCall(sql)) {
-
-                stmt.setString(1, (String) idProject);
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    proyecto = new Project();
-                    proyecto.setNombre(rs.getString("titulo"));
-                    proyecto.setNombreEmpresa(rs.getString("empresa"));
-                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-                    proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-                    proyecto.setPresupuesto(rs.getString("presupuesto"));
-                    String estadoBD = rs.getString("estado"); // Obtiene el estado como String
-                    ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
-                    proyecto.setEstado(estado); // Asigna el estado al proyecto
-                    proyecto.setObjetivo(rs.getString("objetivo"));
-                    proyecto.setResumen(rs.getString("resumen"));
-                    proyecto.setDescripcion(rs.getString("descripcion"));
-
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return proyecto;
-    }
-    
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD) {
             case "ACEPTADO":
@@ -213,6 +178,85 @@ public class ProjectMySQLRepository implements IProjectRepository {
             //Messages.showMessageDialog("\"Error al obtener el proyectooooo:", "Error");
             return false;
         }
+    }
+
+
+    @Override
+    public List<Object> getProjectsNit(String nit) {
+        List<Project> listaProyectos = new ArrayList<>();
+
+        if (!conectar()) {
+            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+            return null; // Devuelve una lista vacía en lugar de null
+        }
+
+        // Consulta SQL para el procedimiento almacenado
+        String sql = "{CALL ListarProyectosPostulados(?)}";
+
+        try (CallableStatement stmt = conn.prepareCall(sql)) { // Try-with-resources para evitar fugas de memoria
+            stmt.setString(1, nit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Project proyecto = new Project();
+                    proyecto.setId(rs.getString("idProject"));
+                    proyecto.setNombre(rs.getString("titulo"));
+                    proyecto.setNombreEmpresa(rs.getString("empresa"));
+                    proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                    proyecto.setDescripcion(rs.getString("descripcion"));
+                    proyecto.setObjetivo(rs.getString("objetivo"));
+                    proyecto.setPresupuesto(rs.getString("presupuesto"));
+
+                    // Obtener y asignar el estado del proyecto
+                    String estadoBD = rs.getString("estado");
+                    ProjectState estado = obtenerEstadoDesdeBD(estadoBD);
+                    proyecto.setEstado(estado);
+
+                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+
+                    listaProyectos.add(proyecto);
+                }
+            }
+        } catch (SQLException e) {
+            Messages.showMessageDialog("Error al listar proyectos: " + e.getMessage(), "Error de Consulta");
+            return null; // Retorna una lista vacía en caso de error
+        }
+
+        return new ArrayList<>(listaProyectos); // Devuelve la lista con los proyectos encontrados
+    }
+
+    @Override
+    public Project found(Object idProject){
+        Project proyecto = null;
+        String sql = "{CALL ObtenerProyecto(?) }";
+        if (!conectar()) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        } else {
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
+
+                stmt.setString(1, (String) idProject);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    proyecto = new Project();
+                    proyecto.setNombre(rs.getString("titulo"));
+                    proyecto.setNombreEmpresa(rs.getString("empresa"));
+                    proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
+                    proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
+                    proyecto.setPresupuesto(rs.getString("presupuesto"));
+                    String estadoBD = rs.getString("estado"); // Obtiene el estado como String
+                    ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
+                    proyecto.setEstado(estado); // Asigna el estado al proyecto
+                    proyecto.setObjetivo(rs.getString("objetivo"));
+                    proyecto.setResumen(rs.getString("resumen"));
+                    proyecto.setDescripcion(rs.getString("descripcion"));
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return proyecto;
     }
 
 }

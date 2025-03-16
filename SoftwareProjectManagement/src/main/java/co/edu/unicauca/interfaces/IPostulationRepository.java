@@ -4,12 +4,11 @@
  */
 package co.edu.unicauca.interfaces;
 
-import co.edu.unicauca.domain.entities.Project;
-import java.util.List;
-
-public interface IProjectRepository extends IRepository{
-
-    List<Object> getProjectsNit(String nit);
-    boolean actualizarEstado(Project p);
-
+/**
+ *
+ * @author evers
+ */
+public interface IPostulationRepository extends IRepository {
+    
+    
 }
