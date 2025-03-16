@@ -43,7 +43,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         Company empresa = (Company) usuario;
 
         if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");           
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
         }
 
@@ -92,7 +92,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         List<Company> listaEmpresas = new ArrayList<>();
 
         if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");            
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Devuelve null si la conexión falla
         }
 
@@ -124,15 +124,45 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
             return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
         } catch (SQLException e) {
-            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");            
+            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");
             return null; // Devuelve null en caso de error
         }
     }
 
     @Override
 
-    public User found(String usename) {
-        return null;
+    public Object found(String usename) {
+        if (conn == null) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null; // Retorna null si no hay conexión
+        }
+
+        Company company = null;
+        String sql = "{CALL ObtenerCompanyConUser(?)}"; // Nombre del procedimiento almacenado
+
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, usename); // Asignamos el ID del proyecto
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    company = new Company();
+                    company.setNit(rs.getString("nit"));
+                    company.setNombre(rs.getString("nombre"));
+                    company.setSector(rs.getString("sector"));
+                    company.setEstado(rs.getString("estado"));
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(CompanyMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
+            Messages.showMessageDialog("Error al obtener el proyecto: .", "Error al obtener el proyecto");
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
+            }
+        }
+        return company;
     }
 
     public Object buscarElemento(Object entity) {

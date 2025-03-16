@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Project {
     private String id;
-    private String nit;
     private String nitEmpresa;
     private String nombre;
     private String resumen;
@@ -21,12 +20,10 @@ public class Project {
     private String FechaEntregadaEsperada;
     private ProjectState estado;
     private String nombreEmpresa;
-    public Project(){
-        this.estado = new RecibidoState(); // Estado inicial del proyecto
-    }
+   
 
-    public Project(String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String nit_, String nitEmpresa_) {
-        this.nit = nit_;
+    public Project(String id,String nombre, String resumen, String descripcion, String objetivo, String tiempo, String presupuesto, String fecha, String nit_, String nitEmpresa_) {
+        this.id=id;
         this.nitEmpresa = nitEmpresa_;
         this.nombre = nombre;
         this.resumen = resumen;
@@ -37,6 +34,9 @@ public class Project {
         this.FechaEntregadaEsperada = fecha;
         this.estado = new RecibidoState(); // Estado inicial
     }
+    public Project(){
+        
+    }
 
     public String getId() {
         return id;
@@ -45,9 +45,14 @@ public class Project {
     public void setId(String id) {
         this.id = id;
     }
+     public void avanzarEstado() {
+        this.estado.avanzarEstado(this);
+    }
+      public void NoAvanzaEstado() {
+        this.estado.NoAvanzaEstado(this);
+    }
 
     public Project(Project pro) {
-        setNit(pro.getNit());
         setNitEmpresa(pro.getNitEmpresa());
         setNombre(pro.getNombre());
         setDescripcion(pro.getDescripcion());
@@ -131,14 +136,6 @@ public class Project {
         this.nitEmpresa = nit;
     }
 
-    public void setNit(String nit) {
-        this.nit = nit;
-    }
-
-    public String getNit() {
-        return nit;
-    }
-
     /**
      * @return the nombreEmpresa
      */
@@ -152,13 +149,8 @@ public class Project {
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
-public void cambiarEstado(String nuevoEstado) {
-        this.estado = this.estado.cambiarEstado(nuevoEstado);
-    }
-       public List<String> obtenerOpcionesEstado() {
-        return this.estado.obtenerOpcionesEstado();
-    }
-         public String getEstadoActual() {
-            return estado.toString(); // Devuelve el nombre del estado actual
+    
+    public String getEstadoString() {
+        return estado.getEstado().toString();
     }
 }

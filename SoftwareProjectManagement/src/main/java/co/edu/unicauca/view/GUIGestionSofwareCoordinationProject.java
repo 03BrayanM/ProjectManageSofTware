@@ -8,9 +8,20 @@ import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.UserService;
+import co.edu.unicauca.domain.states.AceptadoState;
+import co.edu.unicauca.domain.states.CerradoState;
+import co.edu.unicauca.domain.states.EnEjecucionState;
+import co.edu.unicauca.domain.states.RechazadoState;
+import co.edu.unicauca.domain.states.RecibidoState;
+import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IFrameFactory;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.interfaces.ProjectState;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,11 +29,20 @@ import javax.swing.JFrame;
  */
 public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
+    private Map<String, ProjectState> estadosMap;
+    private Project project;
+    private ProjectService projectService;
+
     /**
      * Creates new form GUIGestionSofwareCoordinationProject
      */
     public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project) {
+        this.project = project;
+        this.projectService = projectService;
         initComponents();
+        this.estadosMap = new HashMap<>();
+        inicializarComboBox();
+        cargarEstados();
         llenarCampos(project);
     }
 
@@ -345,13 +365,16 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         btnguardarCambios.setBackground(new java.awt.Color(9, 33, 103));
         btnguardarCambios.setForeground(new java.awt.Color(255, 255, 255));
         btnguardarCambios.setText("Guardar Cambios");
+        btnguardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarCambiosActionPerformed(evt);
+            }
+        });
 
         txtestado.setEditable(false);
         txtestado.setBackground(new java.awt.Color(228, 228, 228));
         txtestado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtestado.setBorder(null);
-
-        cbxestados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptado", "Rechazado", "En Ejecucion", "Terminado" }));
 
         txtmodificarestado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtmodificarestado.setText("Cambiar Estado:");
@@ -537,6 +560,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         this.dispose();
         instance.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnguardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarCambiosActionPerformed
+        cambiarEstado();
+    }//GEN-LAST:event_btnguardarCambiosActionPerformed
     private void llenarCampos(Project proyecto) {
         txtnombre.setText(proyecto.getNombre());
         txtempresa.setText(proyecto.getNombreEmpresa());
@@ -546,11 +573,93 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtobjetivos.setText(proyecto.getObjetivo());
         txtresumen.setText(proyecto.getResumen());
         txtdescripcion.setText(proyecto.getDescripcion());
-        txtestado.setText(proyecto.getEstadoActual().toString());
+        txtestado.setText(proyecto.getEstadoString());
     }
-    /**
-     * @param args the command line arguments
-     */
+
+    private void inicializarComboBox() {
+        // No cargamos nada fijo aquí
+        cbxestados.setModel(new DefaultComboBoxModel<>());
+        actualizarOpcionesEstado(project.getEstadoString());
+    }
+
+    private void cargarEstados() {
+        estadosMap.put("RECIBIDO", new RecibidoState());
+        estadosMap.put("ACEPTADO", new AceptadoState());
+        estadosMap.put("EJECUCION", new EnEjecucionState());
+        estadosMap.put("CERRADO", new CerradoState());
+        estadosMap.put("RECHAZADO", new RechazadoState());
+    }
+
+    private void actualizarOpcionesEstado(String estadoActual) {
+        cbxestados.removeAllItems(); // Limpia el JComboBox
+
+        switch (estadoActual) {
+            case "RECIBIDO":
+                cbxestados.addItem("ACEPTADO");
+                cbxestados.addItem("RECHAZADO");
+                break;
+            case "ACEPTADO":
+                cbxestados.addItem("EJECUCION");
+                break;
+            case "RECHAZADO":
+                cbxestados.addItem("No hay opciones disponibles");
+                break;
+            case "EJECUCION":
+                cbxestados.addItem("CERRADO");
+                break;
+            case "CERRADO":
+                cbxestados.addItem("No hay opciones disponibles");
+                break;
+            default:
+                cbxestados.addItem("No hay opciones disponibles");
+                break;
+        }
+
+    }
+
+    private void cambiarEstado() {
+        String nuevoEstadoStr = (String) cbxestados.getSelectedItem();
+
+        if (nuevoEstadoStr == null || nuevoEstadoStr.equals("No hay opciones disponibles")) {
+            Messages.showMessageDialog("No se puede cambiar a este Estado", "Error");
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de cambiar el estado del proyecto a " + nuevoEstadoStr + "?",
+                "Confirmar cambio de estado", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        ProjectState estadoActual = project.getEstado();
+        ProjectState nuevoEstado = null;
+
+        if (nuevoEstadoStr.equals("RECHAZADO")) {
+            nuevoEstado = estadoActual.NoAvanzaEstado(project);
+        } else {
+            nuevoEstado = estadoActual.avanzarEstado(project);
+        }
+
+        // Validación para evitar inconsistencias
+        if (!nuevoEstado.getEstado().equals(nuevoEstadoStr)) {
+            Messages.showMessageDialog("No se puede avanzar a este estado", "Error");
+            return;
+        }
+
+        project.setEstado(nuevoEstado);
+
+        boolean cambioExitoso = projectService.cambiarEstado(project, nuevoEstado);
+
+        if (cambioExitoso) {
+            txtestado.setText(project.getEstadoString());
+            actualizarOpcionesEstado(project.getEstadoString());
+            Messages.showMessageDialog("Estado Actualizado Correctamente", "Estado Actualizado");
+        } else {
+            Messages.showMessageDialog("No se pudo Actualizar el Estado", "Error");
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

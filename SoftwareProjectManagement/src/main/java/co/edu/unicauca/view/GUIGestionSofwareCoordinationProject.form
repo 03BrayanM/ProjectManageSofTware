@@ -704,6 +704,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Guardar Cambios"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnguardarCambiosActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtestado">
               <Properties>
@@ -722,12 +725,7 @@
             <Component class="javax.swing.JComboBox" name="cbxestados">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Aceptado"/>
-                    <StringItem index="1" value="Rechazado"/>
-                    <StringItem index="2" value="En Ejecucion"/>
-                    <StringItem index="3" value="Terminado"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>

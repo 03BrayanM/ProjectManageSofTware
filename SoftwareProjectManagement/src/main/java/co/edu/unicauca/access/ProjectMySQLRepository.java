@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -118,7 +117,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-            
+
             return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
@@ -178,7 +177,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    proyecto = new Project();
+                    
                     proyecto.setId(rs.getString("idProject"));
                     proyecto.setNombre(rs.getString("titulo"));
                     proyecto.setNombreEmpresa(rs.getString("empresa"));
@@ -209,7 +208,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         switch (estadoBD) {
             case "ACEPTADO":
                 return new AceptadoState();
-            case "EN EJECUCION":
+            case "EJECUCION":
                 return new EnEjecucionState();
             case "RECHAZADO":
                 return (ProjectState) new RechazadoState();
@@ -219,6 +218,29 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 return new CerradoState();
             default:
                 throw new IllegalArgumentException("Estado no reconocido: " + estadoBD);
+        }
+    }
+
+    @Override
+    public boolean actualizarEstado(Project proyecto) {
+        if (conn == null) {
+            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+            return false;
+        }
+
+        String sql = "{CALL ActualizarEstadoProyecto(?, ?)}"; // Procedimiento almacenado
+
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, proyecto.getNombre().trim());
+            stmt.setString(2, proyecto.getEstadoString());
+
+            stmt.execute();
+            return true;
+
+        } catch (SQLException e) {
+            Messages.showMessageDialog("Error SQL: " + e.getMessage(), "Error");
+            //Messages.showMessageDialog("\"Error al obtener el proyectooooo:", "Error");
+            return false;
         }
     }
 }
