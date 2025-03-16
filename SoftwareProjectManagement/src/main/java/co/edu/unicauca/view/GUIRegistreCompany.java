@@ -297,8 +297,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-     this.dispose();
-     Main.mostrarLogin();                                   
+     this.dispose();                                      
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtnombrecontactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecontactoActionPerformed

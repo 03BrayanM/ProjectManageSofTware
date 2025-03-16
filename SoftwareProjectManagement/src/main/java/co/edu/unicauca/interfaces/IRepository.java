@@ -9,5 +9,4 @@ public interface IRepository {
     boolean delete(int id);
     List<Object> list();
     Object found(Object usename);
-
 }

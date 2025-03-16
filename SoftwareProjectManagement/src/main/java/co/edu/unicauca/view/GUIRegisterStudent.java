@@ -274,8 +274,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
-        this.dispose();
-        Main.mostrarLogin();        
+        this.dispose();               
     }//GEN-LAST:event_btnvolverActionPerformed
 
     private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed

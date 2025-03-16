@@ -112,7 +112,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setDescripcion(rs.getString("descripcion"));
                 proyecto.setObjetivo(rs.getString("objetivo"));
                 proyecto.setPresupuesto(rs.getString("presupuesto"));
-
+                proyecto.setResumen(rs.getString("resumen"));
                 String estadoBD = rs.getString("estado"); // Obtiene el estado como String
                 ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
                 proyecto.setEstado(estado); // Asigna el estado al proyecto
@@ -129,8 +129,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return null; // Devuelve null en caso de error 
         }
     }
-
-
 
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD) {
@@ -181,6 +179,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return false;
         }
     }
+
 
     @Override
     public List<Object> getProjectsNit(String nit) {

@@ -10,7 +10,6 @@ import java.util.List;
 public interface IProjectRepository extends IRepository{
 
     List<Object> getProjectsNit(String nit);
-    
     boolean actualizarEstado(Project p);
 
 }

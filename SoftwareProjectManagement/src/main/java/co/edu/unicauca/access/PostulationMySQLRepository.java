@@ -84,7 +84,6 @@ public class PostulationMySQLRepository implements IPostulationRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
     private boolean conectar() {
         try {
             conn = DriverManager.getConnection(url, user, password);

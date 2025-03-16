@@ -6,6 +6,7 @@ package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.domain.states.AceptadoState;
@@ -36,18 +37,21 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private Map<String, ProjectState> estadosMap;
     private Project project;
     private ProjectService projectService;
+    private User usuario;
 
     /**
      * Creates new form GUIGestionSofwareCoordinationProject
      */
-    public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project) {
+    public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project, User usuario) {
         this.project = project;
+        this.usuario = usuario;
         this.projectService = projectService;
         initComponents();
         this.estadosMap = new HashMap<>();
         inicializarComboBox();
         cargarEstados();
         llenarCampos(project);
+        this.usuario = usuario;
     }
 
     /**
@@ -117,6 +121,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jLabel8.setText("Estudiantes");
 
         lblProyectos.setText("Proyectos");
+        lblProyectos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblProyectosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -144,9 +153,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 204));
-        jLabel13.setText("Coordinador de sistema");
+        jLabel13.setText("Coordinador de sistemas");
 
+        txtnombrecordinador.setEditable(false);
         txtnombrecordinador.setBackground(new java.awt.Color(247, 247, 247));
+        txtnombrecordinador.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtnombrecordinador.setBorder(null);
         txtnombrecordinador.setFocusable(false);
 
@@ -209,6 +220,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtobjetivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtobjetivos.setBorder(null);
 
+        txtresumen.setEditable(false);
         txtresumen.setBackground(new java.awt.Color(228, 228, 228));
         txtresumen.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtresumen.setBorder(null);
@@ -456,24 +468,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(txtnombrecordinador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(142, 142, 142))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel10)
-                        .addGap(88, 88, 88))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)))
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRegistrarEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -485,22 +479,37 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtnombrecordinador)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel3)
+                        .addGap(148, 148, 148))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnombrecordinador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(txtnombrecordinador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(25, 25, 25)
                         .addComponent(jLabel10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,7 +524,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -561,7 +570,12 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private void btnguardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarCambiosActionPerformed
         cambiarEstado();
     }//GEN-LAST:event_btnguardarCambiosActionPerformed
+
+    private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
+        this.dispose();;
+    }//GEN-LAST:event_lblProyectosMouseClicked
     private void llenarCampos(Project proyecto) {
+        txtnombrecordinador.setText(usuario.getUsuario());
         txtnombre.setText(proyecto.getNombre());
         txtempresa.setText(proyecto.getNombreEmpresa());
         txtfecha.setText(proyecto.getFechaEntregadaEsperada());

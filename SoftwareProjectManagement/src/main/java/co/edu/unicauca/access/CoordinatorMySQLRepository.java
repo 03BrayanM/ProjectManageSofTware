@@ -97,7 +97,7 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
 
     @Override
     public User found(Object username) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

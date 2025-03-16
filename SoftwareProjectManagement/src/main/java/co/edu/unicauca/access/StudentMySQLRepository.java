@@ -88,6 +88,7 @@ public class StudentMySQLRepository implements IStudentRepository {
         if (!conectar()) {
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null;
+
         } else {
             try {
                 // Llamada al procedimiento almacenado
@@ -119,7 +120,7 @@ public class StudentMySQLRepository implements IStudentRepository {
         return estudiante;
     }
 
-   
+
 
     private boolean conectar() {
         try {

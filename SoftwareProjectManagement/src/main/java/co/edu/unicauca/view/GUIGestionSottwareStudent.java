@@ -16,6 +16,7 @@ import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.renderButton;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.main.Main;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -253,7 +254,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-        System.exit(0);
+        this.dispose();
+        Main.mostrarLogin();
     }//GEN-LAST:event_btnsalirActionPerformed
 
     @Override

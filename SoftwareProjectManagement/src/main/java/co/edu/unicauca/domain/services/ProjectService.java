@@ -57,14 +57,19 @@ public class ProjectService extends Subject {
         }
         // Devuelves la lista de Project como List<Object>
         return new ArrayList<>(projects);
+
     }
 
     public boolean saveProject(Project project) {
         return repository.save(project);
 
     }
+    
+   public Project buscarProyectoPorNombre(Project project){
+       return (Project) repository.found(project.getNombre()); 
+   }
+   public boolean cambiarEstado(Project proyecto, ProjectState nuevoEstado) {
 
-    public boolean cambiarEstado(Project proyecto, ProjectState nuevoEstado) {
         if (!validarCambioEstado(proyecto, nuevoEstado)) {
             return false;
         }

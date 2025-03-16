@@ -136,7 +136,8 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
  
 
-    public Object found(String username) {
+    public Object found(Object usename) {
+
         if (conn == null) {
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null; // Retorna null si no hay conexión
@@ -146,7 +147,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
         String sql = "{CALL ObtenerCompanyConUser(?)}"; // Nombre del procedimiento almacenado
 
         try (CallableStatement stmt = conn.prepareCall(sql)) {
-            stmt.setString(1, username); // Asignamos el ID del proyecto
+            stmt.setString(1, (String)usename); // Asignamos el ID del proyecto
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -168,11 +169,6 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             }
         }
         return company;
-    }
-
-    public Object buscarElemento(Object entity) {
-
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Company getCompanyWithUser(String username) {
