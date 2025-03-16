@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -123,7 +122,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
             }
             rs.close();
             stmt.close();
-            conn.close();
             return (List<Object>) (List<?>) listaproyectos;
 
         } catch (SQLException e) {
@@ -218,7 +216,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         switch (estadoBD) {
             case "ACEPTADO":
                 return new AceptadoState();
-            case "EN EJECUCION":
+            case "EJECUCION":
                 return new EnEjecucionState();
             case "RECHAZADO":
                 return (ProjectState) new RechazadoState();
@@ -238,7 +236,30 @@ public class ProjectMySQLRepository implements IProjectRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } 
+}
+
+    @Override
+    public boolean actualizarEstado(Project p) {
+        if (conn == null) {
+            Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
+            return false;
         }
 
+        String sql = "{CALL ActualizarEstadoProyecto(?, ?)}"; // Procedimiento almacenado
+
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setString(1, p.getNombre().trim());
+            stmt.setString(2, p.getEstadoString());
+
+            stmt.execute();
+            return true;
+
+        } catch (SQLException e) {
+            Messages.showMessageDialog("Error SQL: " + e.getMessage(), "Error");
+            //Messages.showMessageDialog("\"Error al obtener el proyectooooo:", "Error");
+            return false;
+        }
     }
+    
 }

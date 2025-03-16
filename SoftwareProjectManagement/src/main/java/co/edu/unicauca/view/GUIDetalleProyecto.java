@@ -32,6 +32,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         this.username = username;
         this.postulaciones = postulaciones;
         this.proyecto=proyecto;
+
         inicializarDatos(proyecto);
 
     }
@@ -353,9 +354,11 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
     private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
         Student estudiante = new Student();
         estudiante = serviceStudent.obtenerEstudiante(username);
+
         if (proyecto.getId() != null) {
             Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
             Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getId(), fechaActual);
+
 
             boolean res = postulaciones.savePostulation(postulation);
 

@@ -5,15 +5,12 @@
 package co.edu.unicauca.interfaces;
 
 import co.edu.unicauca.domain.entities.Project;
-import java.util.List;
+import co.edu.unicauca.domain.entities.User;
 
 /**
  *
  * @author Yisus
  */
-public interface ProjectState {
-    ProjectState avanzarEstado(Project proyecto);
-    ProjectState NoAvanzaEstado(Project proyecto);
-    String getEstado();
-    }
-
+public interface NotificationService {
+     void notificarCambioEstado(User receptor,User emisor,String mensaje);
+}

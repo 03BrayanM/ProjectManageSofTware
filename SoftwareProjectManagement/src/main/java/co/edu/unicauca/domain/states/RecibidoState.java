@@ -16,23 +16,23 @@ import java.util.List;
 public class RecibidoState implements ProjectState{
 
     @Override
-    public List<String> obtenerOpcionesEstado() {
-        return Arrays.asList("ACEPTADO", "RECHAZADO");
+    public ProjectState avanzarEstado(Project proyecto) {
+        proyecto.setEstado(new AceptadoState());
+        return proyecto.getEstado();
     }
 
     @Override
-    public ProjectState cambiarEstado(String nuevoEstado) {
-        switch (nuevoEstado) {
-            case "ACEPTADO":
-                return new EnEjecucionState();  
-            case "RECHAZADO":
-                return (ProjectState) new RechazadoState();
-            default:
-                return this; // No cambia si la opción no es válida
-        }
+    public ProjectState NoAvanzaEstado(Project proyecto) {
+        proyecto.setEstado(new RechazadoState());
+        return proyecto.getEstado();
     }
-     @Override  
-     public String toString() {
-        return "Recibido";
+
+    @Override
+    public String getEstado() {
+        return "RECIBIDO";
     }
+
+  
+
+   
 }

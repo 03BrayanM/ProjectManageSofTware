@@ -110,4 +110,10 @@ public class PostulationMySQLRepository implements IProjectRepository {
         }
 
     }
+
+    @Override
+    public boolean actualizarEstado(Project p) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

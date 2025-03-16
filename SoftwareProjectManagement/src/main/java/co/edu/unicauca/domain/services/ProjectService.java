@@ -10,6 +10,7 @@ import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
 import co.edu.unicauca.interfaces.IProjectRepository;
 import co.edu.unicauca.interfaces.IRepository;
+import co.edu.unicauca.interfaces.ProjectState;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,4 +59,29 @@ public class ProjectService extends Subject {
    public Project buscarProyectoPorNombre(Project project){
        return (Project) repository.buscarElemento(project.getNombre()); 
    }
+   public boolean cambiarEstado(Project proyecto, ProjectState nuevoEstado) {
+        if (!validarCambioEstado(proyecto, nuevoEstado)) {
+            return false;
+        }
+        
+        proyecto.setEstado(nuevoEstado);
+        repository.actualizarEstado(proyecto);
+        System.out.println(repository.actualizarEstado(proyecto));
+        notificarCambioEstado(proyecto);
+        
+        return true;
+    }
+
+    private boolean validarCambioEstado(Project proyecto, ProjectState nuevoEstado) {
+        ProjectState estadoActual = proyecto.getEstado();
+
+        if (estadoActual.getEstado().equals("RECIBIDO") && nuevoEstado.getEstado().equals("CERRADO")) {
+            return false;
+        }
+
+        return true;
+    }
+    private void notificarCambioEstado(Project proyecto) {
+        
+    }
 }

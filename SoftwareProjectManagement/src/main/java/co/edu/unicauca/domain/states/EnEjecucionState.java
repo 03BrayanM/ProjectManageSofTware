@@ -16,19 +16,22 @@ import java.util.List;
 public class EnEjecucionState implements ProjectState {
 
     @Override
-    public List<String> obtenerOpcionesEstado() {
-        return Collections.singletonList("CERRADO");
+    public ProjectState avanzarEstado(Project proyecto) {
+        proyecto.setEstado(new CerradoState());
+        return proyecto.getEstado();
     }
 
     @Override
-    public ProjectState cambiarEstado(String nuevoEstado) {
-        if("CERRADO".equals(nuevoEstado)){
-        return  new CerradoState();
+    public ProjectState NoAvanzaEstado(Project proyecto) {
+        return proyecto.getEstado();
     }
-        return this;
+    
+    @Override
+    public String getEstado() {
+        return "EJECUCION";
     }
-    @Override  
-     public String toString() {
-        return "En ejecucion";
-    }
+
+ 
+
+    
 }

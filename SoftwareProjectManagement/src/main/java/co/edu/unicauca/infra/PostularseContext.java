@@ -22,7 +22,7 @@ public class PostularseContext implements IButtonContext {
     private Project project;
     private String username;
     private JTable table;
-     private int row;
+    private int row;
 
     public PostularseContext(JTable table,JFrame parent, IFrameEventListener listener,
             String username,StudentService serviceStudent ,PostulationService postulaciones_){
@@ -33,9 +33,7 @@ public class PostularseContext implements IButtonContext {
         this.serviceStudent = serviceStudent;
         this.postulaciones = postulaciones_;
     }
-    public void setRow(int row){
-    this.row=row;
-}
+ 
     /**
      * @return the button
      */
@@ -97,6 +95,13 @@ public class PostularseContext implements IButtonContext {
      */
     public int getRow() {
         return row;
+    }
+
+    /**
+     * @param row the row to set
+     */
+    public void setRow(int row) {
+        this.row = row;
     }
 
   

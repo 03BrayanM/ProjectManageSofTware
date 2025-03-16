@@ -9,5 +9,6 @@ package co.edu.unicauca.infra;
  * @author evers
  */
 public interface IButtonContext {
-    
+
+
 }
