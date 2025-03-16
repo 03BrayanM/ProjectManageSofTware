@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.unicauca.infra;
 
 import co.edu.unicauca.domain.services.ProjectService;
@@ -23,14 +20,12 @@ public class verProyectPostuladoContext implements IButtonContext {
     private ProjectService projectService;
 
     public verProyectPostuladoContext(JTable table ,JFrame parent, IFrameEventListener listener, ProjectService projectService) {
-        this.table = table;        
+        this.table = table;
         this.parent = parent;
         this.listener = listener;
         this.projectService = projectService;
     }
-public void setRow(int row){
-    this.row=row;
-}
+
     public JTable getTable() {
         return table;
     }
@@ -49,5 +44,12 @@ public void setRow(int row){
 
     public ProjectService getProjectService() {
         return projectService;
+    }
+
+    /**
+     * @param row the row to set
+     */
+    public void setRow(int row) {
+        this.row = row;
     }
 }

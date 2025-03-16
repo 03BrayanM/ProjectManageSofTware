@@ -218,7 +218,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         switch (estadoBD) {
             case "ACEPTADO":
                 return new AceptadoState();
-            case "EN EJECUCION":
+            case "EJECUCION":
                 return new EnEjecucionState();
             case "RECHAZADO":
                 return (ProjectState) new RechazadoState();
