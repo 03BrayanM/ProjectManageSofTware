@@ -49,7 +49,7 @@ public class ProjectService extends Subject {
         return new ArrayList<>(projects);
     }
     public Project consultarProyecto(String id){
-        return this.repository.getProject(id);
+        return (Project) this.repository.found(id);
     }
     public boolean saveProject(Project project){
       return repository.save(project);
@@ -57,7 +57,7 @@ public class ProjectService extends Subject {
     }
     
    public Project buscarProyectoPorNombre(Project project){
-       return (Project) repository.buscarElemento(project.getNombre()); 
+       return (Project) repository.found(project.getNombre()); 
    }
    public boolean cambiarEstado(Project proyecto, ProjectState nuevoEstado) {
         if (!validarCambioEstado(proyecto, nuevoEstado)) {

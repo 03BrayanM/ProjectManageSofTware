@@ -50,7 +50,7 @@ public class UserMySQLRepository implements IRepository {
     }
 
     @Override
-    public User found(String username) {
+    public User found(Object username) {
         
         User usuario = null;
 
@@ -62,7 +62,7 @@ public class UserMySQLRepository implements IRepository {
             // Llamada al procedimiento almacenado
             String sql = "{CALL sp_obtener_usuario(?)}";
             CallableStatement stmt = conn.prepareCall(sql);
-            stmt.setString(1, username); // Establecemos el parámetro userName
+            stmt.setString(1, (String)username); // Establecemos el parámetro userName
 
             // Ejecutamos el procedimiento almacenado
             ResultSet rs = stmt.executeQuery();
@@ -93,11 +93,7 @@ public class UserMySQLRepository implements IRepository {
         }}
         return usuario;
     }
-
-    @Override
-    public Object buscarElemento(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     private boolean conectar(){
         try {
             conn = DriverManager.getConnection(url, user, password);

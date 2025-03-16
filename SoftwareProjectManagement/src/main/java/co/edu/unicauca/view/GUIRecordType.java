@@ -157,8 +157,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
             instance.setExtendedState(JFrame.NORMAL);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
-            instance.setLocationRelativeTo(null); // Centrar en pantalla
-            this.dispose();
+            instance.setLocationRelativeTo(null); // Centrar en pantalla            
             instance.setVisible(true);
         } else {
             IRepository CompanyRepository = Factory.getInstance().getRepository("company");
@@ -169,8 +168,7 @@ public class GUIRecordType extends javax.swing.JFrame {
             GUIRegistreCompany instance = new GUIRegistreCompany(servicecompany);
             instance.setExtendedState(JFrame.NORMAL);
             instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
-            instance.setLocationRelativeTo(null); // Centrar en pantalla
-            this.dispose();
+            instance.setLocationRelativeTo(null); // Centrar en pantalla            
             instance.setVisible(true);
         }
     }//GEN-LAST:event_btnsiguienteActionPerformed

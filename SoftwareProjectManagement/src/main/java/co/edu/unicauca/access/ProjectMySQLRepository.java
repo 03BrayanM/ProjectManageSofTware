@@ -112,6 +112,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setDescripcion(rs.getString("descripcion"));
                 proyecto.setObjetivo(rs.getString("objetivo"));
                 proyecto.setPresupuesto(rs.getString("presupuesto"));
+                proyecto.setResumen(rs.getString("resumen"));
 
                 String estadoBD = rs.getString("estado"); // Obtiene el estado como String
                 ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
@@ -131,7 +132,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
     }
 
     @Override
-    public Object buscarElemento(Object entity) {
+    public Project found(Object username) {
         Project proyecto = null;
         String sql = "{CALL BuscarProyectoPorNombre(?) }";
         if (!conectar()) {
@@ -140,7 +141,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         } else {
             try (CallableStatement stmt = conn.prepareCall(sql)) {
 
-                stmt.setString(1, (String) entity);
+                stmt.setString(1, (String) username);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
@@ -164,54 +165,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         }
         return proyecto;
     }
-
-    @Override
-    public User found(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Project getProject(String id) {
-        Project proyecto = null;
-        if (!conectar()) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
-            return null;
-        } else {
-
-            String sql = "{CALL ObtenerProyecto(?)}"; // Procedimiento almacenado
-
-            try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setString(1, id);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        proyecto = new Project();
-                        proyecto.setId(rs.getString("idProject"));
-                        proyecto.setNombre(rs.getString("titulo"));
-                        proyecto.setNombreEmpresa(rs.getString("empresa"));
-                        proyecto.setTiempoMaximo(rs.getString("tiempoEst"));
-
-                        // Conversión de estado
-                        String estadoBD = rs.getString("estado");
-                        ProjectState estado = obtenerEstadoDesdeBD(estadoBD);
-                        proyecto.setEstado(estado);
-
-                        // Manejo de fecha correctamente
-                        proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
-                        proyecto.setDescripcion(rs.getString("descripcion"));
-                        proyecto.setObjetivo(rs.getString("objetivo"));
-                        proyecto.setResumen(rs.getString("resumen"));
-                        proyecto.setPresupuesto(rs.getString("presupuesto"));
-                    }
-                }
-            } catch (SQLException e) {
-                Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
-                Messages.showMessageDialog("\"Error al obtener el proyecto:", "Error");
-            }
-        }
-        return proyecto;
-    }
-
+    
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD) {
             case "ACEPTADO":
@@ -236,8 +190,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } 
-}
+        }
+    }
 
     @Override
     public boolean actualizarEstado(Project p) {
@@ -261,5 +215,5 @@ public class ProjectMySQLRepository implements IProjectRepository {
             return false;
         }
     }
-    
+
 }

@@ -4,12 +4,16 @@
  */
 package co.edu.unicauca.view;
 
+import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.domain.entities.User;
+import co.edu.unicauca.domain.services.CompanyService;
 import co.edu.unicauca.domain.services.ProjectService;
+import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.Subject;
 import co.edu.unicauca.interfaces.IProjectObserver;
+import co.edu.unicauca.interfaces.IRepository;
 import co.edu.unicauca.main.Main;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -114,6 +118,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
         btnRegistrarEmpresa.setBackground(new java.awt.Color(223, 224, 226));
         btnRegistrarEmpresa.setText("Registrar Empresa");
+        btnRegistrarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarEmpresaActionPerformed(evt);
+            }
+        });
 
         btnGestionarProyecto.setBackground(new java.awt.Color(223, 224, 226));
         btnGestionarProyecto.setText("Gestionar proyecto");
@@ -138,6 +147,11 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         jLabel8.setText("Estudiantes");
 
         lblProyectos.setText("Proyectos");
+        lblProyectos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblProyectosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -301,7 +315,16 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        IRepository studentRepository = Factory.getInstance().getRepository("student");
+
+        //   CompanyService servicecompany = new CompanyService(serviceRepository);
+        StudentService servicestudent = new StudentService(studentRepository);
+
+        GUIRegisterStudent instance = new GUIRegisterStudent(servicestudent);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+        instance.setLocationRelativeTo(null); // Centrar en pantalla        
+        instance.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtnombrecordinadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombrecordinadorActionPerformed
@@ -313,6 +336,24 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         this.dispose();
 
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegistrarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEmpresaActionPerformed
+        IRepository CompanyRepository = Factory.getInstance().getRepository("company");
+
+        //   CompanyService servicecompany = new CompanyService(serviceRepository);
+        CompanyService servicecompany = new CompanyService(CompanyRepository);
+
+        GUIRegistreCompany instance = new GUIRegistreCompany(servicecompany);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setSize(450, 380); // Ajusta el tamaño a 600x400 píxeles
+        instance.setLocationRelativeTo(null); // Centrar en pantalla        
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnRegistrarEmpresaActionPerformed
+
+    private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
+    
+    }//GEN-LAST:event_lblProyectosMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGestionarProyecto;
     private javax.swing.JButton btnRegistrarEmpresa;
@@ -414,7 +455,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
 
     private void abrirGUICoordinadorProject(Project p) {
         // Instanciar la GUI del coordinador y mostrarla
-        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p);
+        GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
     }

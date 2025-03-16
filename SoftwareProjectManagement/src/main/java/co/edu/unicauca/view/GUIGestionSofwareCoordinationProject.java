@@ -6,6 +6,7 @@ package co.edu.unicauca.view;
 
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.UserService;
 import co.edu.unicauca.domain.states.AceptadoState;
@@ -36,11 +37,12 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private Map<String, ProjectState> estadosMap;
     private Project project;
     private ProjectService projectService;
+    private User usuario;
 
     /**
      * Creates new form GUIGestionSofwareCoordinationProject
      */
-    public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project) {
+    public GUIGestionSofwareCoordinationProject(ProjectService projectService, Project project, User usuario) {
         this.project = project;
         this.projectService = projectService;
         initComponents();
@@ -48,6 +50,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         inicializarComboBox();
         cargarEstados();
         llenarCampos(project);
+        this.usuario = usuario;
     }
 
     /**
@@ -117,6 +120,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jLabel8.setText("Estudiantes");
 
         lblProyectos.setText("Proyectos");
+        lblProyectos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblProyectosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -561,6 +569,10 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private void btnguardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarCambiosActionPerformed
         cambiarEstado();
     }//GEN-LAST:event_btnguardarCambiosActionPerformed
+
+    private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
+        this.dispose();;
+    }//GEN-LAST:event_lblProyectosMouseClicked
     private void llenarCampos(Project proyecto) {
         txtnombre.setText(proyecto.getNombre());
         txtempresa.setText(proyecto.getNombreEmpresa());

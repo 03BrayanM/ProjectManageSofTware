@@ -81,7 +81,7 @@ if(!conectar()){
     }
 
     @Override
-    public Object found(String nombre) {
+    public Object found(Object nombre) {
 
         Student estudiante = new Student();
         if(!conectar()){
@@ -93,7 +93,7 @@ if(!conectar()){
             String sql = "{CALL BuscarEstudiante(?)}";
             CallableStatement stmt = conn.prepareCall(sql);
 
-            stmt.setString(1, nombre);
+            stmt.setString(1, (String)nombre);
 
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
@@ -117,10 +117,6 @@ if(!conectar()){
         return estudiante;
     }
 
-    @Override
-    public Object buscarElemento(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
         private boolean conectar(){
         try {
             conn = DriverManager.getConnection(url, user, password);
