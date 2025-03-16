@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Project {
 
-    private String id;    
+    private String id;
     private String nitEmpresa;
     private String nombre;
     private String resumen;
@@ -38,7 +38,6 @@ public class Project {
         this.FechaEntregadaEsperada = fecha;
         this.estado = new RecibidoState(); // Estado inicial
     }
-    
     public String getId() {
         return id;
     }
@@ -49,6 +48,15 @@ public class Project {
     
     public Project(Project pro) {
         setId(pro.getId());
+
+     public void avanzarEstado() {
+        this.estado.avanzarEstado(this);
+    }
+      public void NoAvanzaEstado() {
+        this.estado.NoAvanzaEstado(this);
+    }
+
+    public Project(Project pro) {
         setNitEmpresa(pro.getNitEmpresa());
         setNombre(pro.getNombre());
         setDescripcion(pro.getDescripcion());
@@ -146,6 +154,7 @@ public class Project {
         this.nombreEmpresa = nombreEmpresa;
     }
 
+
     public void cambiarEstado(String nuevoEstado) {
         this.estado = this.estado.cambiarEstado(nuevoEstado);
     }
@@ -156,5 +165,9 @@ public class Project {
 
     public String getEstadoActual() {
         return estado.toString(); // Devuelve el nombre del estado actual
+
+    
+    public String getEstadoString() {
+        return estado.getEstado().toString();
     }
 }

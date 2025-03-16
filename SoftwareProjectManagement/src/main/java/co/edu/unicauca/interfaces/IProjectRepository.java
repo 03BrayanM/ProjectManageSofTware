@@ -9,5 +9,6 @@ import co.edu.unicauca.domain.entities.Project;
 public interface IProjectRepository extends IRepository{
 
     Project getProject(String id);
+    boolean actualizarEstado(Project p);
 
 }

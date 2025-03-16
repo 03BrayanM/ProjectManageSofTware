@@ -380,7 +380,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
                 p.getNombre(),
                 p.getNombreEmpresa(),
                 fechaEntrega.toString(),
-                p.getEstado()
+                p.getEstadoString()
             });
         }
     }

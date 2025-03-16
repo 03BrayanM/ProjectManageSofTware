@@ -6,9 +6,7 @@ package co.edu.unicauca.domain.states;
 
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.ProjectState;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+
 
 /**
  *
@@ -17,22 +15,18 @@ import java.util.List;
 public class AceptadoState implements ProjectState{
 
     @Override
-    public List<String> obtenerOpcionesEstado() {
-       return Collections.singletonList("EJECUCION");
+    public ProjectState avanzarEstado(Project proyecto) {
+       proyecto.setEstado(new EnEjecucionState());
+       return proyecto.getEstado(); 
+    }
+ 
+    @Override
+    public ProjectState NoAvanzaEstado(Project proyecto) {
+       return proyecto.getEstado();
     }
 
     @Override
-    public ProjectState cambiarEstado(String nuevoEstado) {
-        if("EJECUCION".equals(nuevoEstado)){
-        return  new EnEjecucionState();
-    }
-        return this;
-
-    }
-
- 
-   @Override  
-     public String toString() {
-        return "Aceptado";
-    } 
+    public String getEstado() {
+        return "ACEPTADO";
+    }  
 }

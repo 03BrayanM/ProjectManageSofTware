@@ -16,18 +16,20 @@ import java.util.List;
 public class RechazadoState implements ProjectState {
 
     @Override
-    public List<String> obtenerOpcionesEstado() {
-        return Collections.emptyList(); // No hay opciones disponibles
-
+    public ProjectState avanzarEstado(Project proyecto) {
+        return proyecto.getEstado();
     }
 
     @Override
-    public ProjectState cambiarEstado(String nuevoEstado) {
-        return this;
+    public ProjectState NoAvanzaEstado(Project proyecto) {
+        return proyecto.getEstado();
     }
 
     @Override
-    public String toString() {
-        return "Rechazado";
+    public String getEstado() {
+        return "RECHAZADO";
     }
+
+
+    
 }

@@ -6,8 +6,6 @@ package co.edu.unicauca.domain.states;
 
 import co.edu.unicauca.domain.entities.Project;
 import co.edu.unicauca.interfaces.ProjectState;
-import java.util.Collections;
-import java.util.List;
 
 /**
  *
@@ -16,18 +14,20 @@ import java.util.List;
 public class CerradoState implements ProjectState{
 
     @Override
-    public List<String> obtenerOpcionesEstado() {
-       return Collections.emptyList(); // No hay opciones disponibles
+    public ProjectState avanzarEstado(Project proyecto) {
+        return proyecto.getEstado();
     }
 
     @Override
-    public ProjectState cambiarEstado(String nuevoEstado) {
-        return this;
+    public ProjectState NoAvanzaEstado(Project proyecto) {
+        return proyecto.getEstado();
+    }
+
+    @Override
+    public String getEstado() {
+        return "CERRADO";
     }
 
   
-   @Override  
-     public String toString() {
-        return "Cerrado";
-    } 
+  
 }
