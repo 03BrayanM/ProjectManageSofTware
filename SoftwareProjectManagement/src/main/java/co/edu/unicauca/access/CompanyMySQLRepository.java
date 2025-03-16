@@ -41,11 +41,10 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     public boolean save(Object usuario) {
         Company empresa = (Company) usuario;
 
-        if (conn == null) {
+        if(!conectar()){
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
-        }
-
+        }else{ 
         CallableStatement stmt = null;
         try {
             // Llamada al procedimiento almacenado
@@ -64,7 +63,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             stmt.setString(9, "HABILITADO"); // Estado por defecto
 
             // Ejecutamos el procedimiento
-            stmt.execute();  
+            stmt.execute();
             return true;
         } catch (SQLException e) {
             Messages.showMessageDialog("Error al registrar la empresa: " + e.getMessage(), "Atención");
@@ -80,7 +79,7 @@ public class CompanyMySQLRepository implements ICompanyRepository {
             } catch (SQLException ex) {
                 System.err.println("Error cerrando la conexión: " + ex.getMessage());
             }
-        }
+        }}
     }
 
     @Override
@@ -97,41 +96,41 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     public List<Object> list() {
         List<Company> listaEmpresas = new ArrayList<>();
 
-        if (conn == null) {
+        if (!conectar()) {
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
-            return null; // Devuelve null si la conexión falla
-        }
+            return null;
+        } else {
+            try {
+                // Llamada al procedimiento almacenado
+                String sql = "{CALL sp_listar_empresas()}";
+                CallableStatement stmt = conn.prepareCall(sql);
 
-        try {
-            // Llamada al procedimiento almacenado
-            String sql = "{CALL sp_listar_empresas()}";
-            CallableStatement stmt = conn.prepareCall(sql);
+                // Ejecutamos el procedimiento y obtenemos los resultados
+                ResultSet rs = stmt.executeQuery();
 
-            // Ejecutamos el procedimiento y obtenemos los resultados
-            ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    Company empresa = new Company();
+                    empresa.setNit(rs.getString("nit"));
+                    empresa.setNombre(rs.getString("nombre"));
+                    empresa.setEmail(rs.getString("email"));
+                    empresa.setTelefono(rs.getString("telefono"));
+                    empresa.setNombrecontaccto(rs.getString("nombrecontacto"));
+                    empresa.setApellido(rs.getString("apellido"));
+                    empresa.setSector(rs.getString("sector"));
 
-            while (rs.next()) {
-                Company empresa = new Company();
-                empresa.setNit(rs.getString("nit"));
-                empresa.setNombre(rs.getString("nombre"));
-                empresa.setEmail(rs.getString("email"));
-                empresa.setTelefono(rs.getString("telefono"));
-                empresa.setNombrecontaccto(rs.getString("nombrecontacto"));
-                empresa.setApellido(rs.getString("apellido"));
-                empresa.setSector(rs.getString("sector"));
+                    listaEmpresas.add(empresa);
+                }
 
-                listaEmpresas.add(empresa);
+                // Cerramos recursos
+                rs.close();
+                stmt.close();
+                conn.close();
+
+                return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
+            } catch (SQLException e) {
+                Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");
+                return null; // Devuelve null en caso de error
             }
-
-            // Cerramos recursos
-            rs.close();
-            stmt.close();
-            conn.close();
-
-            return new ArrayList(listaEmpresas); // Devuelve la lista con las empresas
-        } catch (SQLException e) {
-            Messages.showMessageDialog("Error al listar empresas: ", "Error de Consulta");
-            return null; // Devuelve null en caso de error
         }
     }
 
@@ -147,38 +146,48 @@ public class CompanyMySQLRepository implements ICompanyRepository {
     }
 
     public Company getCompanyWithUser(String username) {
-        if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
-            return null; // Retorna null si no hay conexión
-        }
-
         Company company = null;
-        String sql = "{CALL ObtenerCompanyConUser(?)}"; // Nombre del procedimiento almacenado
+        if (!conectar()) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        } else {
+            String sql = "{CALL ObtenerCompanyConUser(?)}"; // Nombre del procedimiento almacenado
 
-        try (CallableStatement stmt = conn.prepareCall(sql)) {
-            stmt.setString(1, username); // Asignamos el ID del proyecto
+            try (CallableStatement stmt = conn.prepareCall(sql)) {
+                stmt.setString(1, username); // Asignamos el ID del proyecto
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    company = new Company();
-                    company.setNit(rs.getString("nit"));
-                    company.setNombre(rs.getString("nombre"));
-                    company.setSector(rs.getString("sector"));
-                    company.setEstado(rs.getString("estado"));
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        company = new Company();
+                        company.setNit(rs.getString("nit"));
+                        company.setNombre(rs.getString("nombre"));
+                        company.setSector(rs.getString("sector"));
+                        company.setEstado(rs.getString("estado"));
+                    }
                 }
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(CompanyMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
-            Messages.showMessageDialog("Error al obtener el proyecto: .", "Error al obtener el proyecto");
-        } finally {
-            try {
-                conn.close();
             } catch (SQLException e) {
-                Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
+                Logger.getLogger(CompanyMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el proyecto", e);
+                Messages.showMessageDialog("Error al obtener el proyecto: .", "Error al obtener el proyecto");
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", e);
+                }
             }
         }
         return company;
 
     }
 
+    private boolean conectar() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }

@@ -44,12 +44,10 @@ public class StudentMySQLRepository implements IStudentRepository {
     @Override
     public boolean save(Object usuario) {
         Student estudiante = (Student) usuario;
-
-        if (conn == null) {
-            Messages.showMessageDialog("Error de conexión", "Atención");
+if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return false;
-        }
-
+        }else{ 
         try {
             String sql = "{CALL sp_registrar_estudiante(?, ?, ?, ?, ?, ?)}";
             CallableStatement stmt = conn.prepareCall(sql);
@@ -69,7 +67,7 @@ public class StudentMySQLRepository implements IStudentRepository {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al registrar estudiante: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return false;  // Hubo un error
-        }
+        }}
     }
 
     @Override
@@ -86,10 +84,10 @@ public class StudentMySQLRepository implements IStudentRepository {
     public Object found(String nombre) {
 
         Student estudiante = new Student();
-        if (conn == null) {
-            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de conexion");
-            return null; // Devuelve null si la conexión falla
-        }
+        if(!conectar()){
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        }else{ 
         try {
             // Llamada al procedimiento almacenado
             String sql = "{CALL BuscarEstudiante(?)}";
@@ -115,12 +113,22 @@ public class StudentMySQLRepository implements IStudentRepository {
         } catch (SQLException e) {
             Logger.getLogger(ProjectMySQLRepository.class.getName()).log(Level.SEVERE, "Error al obtener el estudiante", e);
             JOptionPane.showMessageDialog(null, "Error al obtener el estudiante: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        }}
         return estudiante;
     }
 
     @Override
     public Object buscarElemento(Object entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+        private boolean conectar(){
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+       
     }
 }
