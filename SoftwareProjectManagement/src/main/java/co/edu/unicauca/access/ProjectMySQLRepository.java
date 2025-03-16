@@ -131,16 +131,16 @@ public class ProjectMySQLRepository implements IProjectRepository {
     }
 
     @Override
-    public Project found(Object username) {
+    public Project found(Object idProject) {
         Project proyecto = null;
-        String sql = "{CALL BuscarProyectoPorNombre(?) }";
+        String sql = "{CALL ObtenerProyecto(?) }";
         if (!conectar()) {
             Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
             return null;
         } else {
             try (CallableStatement stmt = conn.prepareCall(sql)) {
 
-                stmt.setString(1, (String) username);
+                stmt.setString(1, (String) idProject);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
