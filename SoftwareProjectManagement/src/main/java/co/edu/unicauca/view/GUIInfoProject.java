@@ -52,9 +52,12 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lbObjetivos = new javax.swing.JLabel();
-        lbResumen = new javax.swing.JLabel();
-        lbDescripcion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaResumen = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaObjetivos = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaDescrip = new javax.swing.JTextArea();
         jPanel9 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -93,19 +96,25 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel7.setText("Objetivos:");
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setText("Fecha:");
+        jLabel9.setText("Descripcion:");
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel8.setText("Resumen:");
 
-        lbObjetivos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbObjetivos.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtAreaResumen.setLineWrap(true);
+        txtAreaResumen.setColumns(20);
+        txtAreaResumen.setRows(5);
+        jScrollPane1.setViewportView(txtAreaResumen);
 
-        lbResumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbResumen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtAreaObjetivos.setColumns(20);
+        txtAreaObjetivos.setLineWrap(true);
+        txtAreaObjetivos.setRows(5);
+        jScrollPane2.setViewportView(txtAreaObjetivos);
 
-        lbDescripcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbDescripcion.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtAreaDescrip.setLineWrap(true);
+        txtAreaDescrip.setColumns(20);
+        txtAreaDescrip.setRows(5);
+        jScrollPane3.setViewportView(txtAreaDescrip);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -113,38 +122,45 @@ public class GUIInfoProject extends javax.swing.JDialog {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel9))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel7)
-                        .addGap(5, 5, 5)
-                        .addComponent(lbObjetivos, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbResumen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(107, 107, 107)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(14, Short.MAX_VALUE)))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(lbObjetivos, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(lbResumen, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel7)
+                .addGap(69, 69, 69)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(62, 62, 62))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(lbDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(185, Short.MAX_VALUE)))
         );
 
         jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 450, 290));
@@ -302,8 +318,11 @@ public class GUIInfoProject extends javax.swing.JDialog {
         lbFecha.setText(project.getFechaEntregadaEsperada());
         lbTiempo.setText(project.getTiempoMaximo());
         lbPresupuesto.setText(project.getPresupuesto());
-        lbObjetivos.setText(project.getObjetivo());
-        lbResumen.setText(project.getResumen());
+        txtAreaObjetivos.setText(project.getObjetivo());
+        txtAreaDescrip.setText(project.getDescripcion());
+        txtAreaResumen.setText(project.getResumen());
+        
+
 
     }
 
@@ -325,14 +344,17 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JLabel lbDescripcion;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbFecha;
     private javax.swing.JLabel lbNombreProject;
-    private javax.swing.JLabel lbObjetivos;
     private javax.swing.JLabel lbPresupuesto;
-    private javax.swing.JLabel lbResumen;
     private javax.swing.JLabel lbTiempo;
     private javax.swing.JLabel lbnombreEmpresa;
+    private javax.swing.JTextArea txtAreaDescrip;
+    private javax.swing.JTextArea txtAreaObjetivos;
+    private javax.swing.JTextArea txtAreaResumen;
     private javax.swing.JTextField txtpresupuesto;
     // End of variables declaration//GEN-END:variables
 }

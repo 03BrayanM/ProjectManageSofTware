@@ -8,6 +8,7 @@ import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.infra.IFrameEventListener;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.infra.gotaAguaTexto;
+import java.math.BigDecimal;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,7 +77,6 @@ public class GUIPostularProject extends javax.swing.JDialog {
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(897, 509));
         setSize(new java.awt.Dimension(897, 509));
         setType(java.awt.Window.Type.POPUP);
 
@@ -188,8 +188,9 @@ public class GUIPostularProject extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbEstimatedDeliveryDate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(lbWarningEstimatedDeliveryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbWarningEstimatedDeliveryDate, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lbEstimatedBudge)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -212,7 +213,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
                         .addComponent(lbWarningOverView, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lbDescription)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(lbWarningDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -304,11 +305,12 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
 
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
-        boolean validarEntero = validarNumero(tiempoMaximo);
-        if (validacion && validarEntero) {
+        boolean validarPresupuesto=validarNumero(presupuesto);
+        if (validacion && validarPresupuesto) {
             Company compania = companyService.obtenerCompanyPorUser(user.getUsuario());
 
-            Project project = new Project();
+            Project project = new Project(compania.getNit(),nombre,resumen,descripcion,objetivo,tiempoMaximo,presupuesto,fechaEntregaEsperada);
+            
             if (projectService.saveProject(project)) {
                 if (listener != null) {
                     listener.onEventTriggered(); // Notificamos al primer frame
@@ -352,6 +354,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
             return false;
         }
         if (presupuesto.isEmpty() || presupuesto.equalsIgnoreCase("estimated budget")) {
+            
             Messages.showMessageDialog("Debe agregar el presupuesto estimado", "Atención");
             txtEstimatedBudge.requestFocus();
             mostrarAdv(lbWarningEstimatedBudge);
@@ -369,18 +372,18 @@ public class GUIPostularProject extends javax.swing.JDialog {
     }
 
     private boolean validarNumero(String numero) {
-        if (numero == null || numero.trim().isEmpty()) {
-            return false; // Si es nulo o vacío, no es válido
-        }
-
-        try {
-            Integer.parseInt(numero.trim()); // Intenta convertir a entero
-            return true;
-        } catch (NumberFormatException e) {
-            return false; // Si ocurre una excepción, no es un número válido
-        }
+    if (numero == null || numero.trim().isEmpty()) {
+        return false; // Si es nulo o vacío, no es válido
     }
 
+    try {
+        new BigDecimal(numero.trim()); 
+        return true; 
+    } catch (NumberFormatException e) {
+         Messages.showMessageDialog("Ingrese un número válido para el presupuesto.", "Atención");
+        return false; 
+    }
+}
     private void mostrarAdv(JLabel lb) {
         lb.setText("*"); // Color rojo para mayor visibilidad
         lb.setVisible(true);
