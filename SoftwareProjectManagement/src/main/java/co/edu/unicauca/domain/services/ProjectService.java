@@ -82,8 +82,6 @@ public class ProjectService extends Subject {
         return true;
     }
     private void notificarCambioEstado(Project proyecto) {
-        System.out.println("📩 Enviando notificación...");
-        System.out.println("Nuevo estado: " + proyecto.getEstado());
-        // Aquí iría la lógica real de envío de correos.
+        
     }
 }
