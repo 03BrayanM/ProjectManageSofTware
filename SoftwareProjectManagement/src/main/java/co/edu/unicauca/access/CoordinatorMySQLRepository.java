@@ -96,14 +96,10 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
     }
 
     @Override
-    public User found(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User found(Object username) {
+        return null;
     }
 
-    @Override
-    public Object buscarElemento(Object entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD.trim().toUpperCase()) {
@@ -131,4 +127,6 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
         }
        
     }
+
+   
 }

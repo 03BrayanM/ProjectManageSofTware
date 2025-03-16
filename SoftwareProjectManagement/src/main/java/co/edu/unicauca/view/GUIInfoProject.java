@@ -290,8 +290,9 @@ public class GUIInfoProject extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void llenarGUI() {
-        Project project = projectService.consultarProyecto(idProject);
+    private void llenarGUI(){
+        Project project = projectService.getProject((Object)idProject);
+        
         if (project == null) {
             Messages.showMessageDialog("El proyecto no está disponible.", "Error");
             return;
