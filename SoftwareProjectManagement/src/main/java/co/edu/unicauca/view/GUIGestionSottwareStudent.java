@@ -46,7 +46,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
     PostulationService postulationService;
     private User usuario;
 
-    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_,PostulationService postulationService) {
+    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_, PostulationService postulationService) {
         initComponents();
         this.usuario = usuario_;
         this.studentService = studentService_;
@@ -291,7 +291,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         List<Project> proyectos = projectService.obtenerProyectos();
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla  
-        model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles","escondido"});
+        model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles", "escondido"});
 
         if (proyectos == null || proyectos.isEmpty()) {
             Messages.showMessageDialog("No existen proyectos registrados.", "Información");
@@ -301,7 +301,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         for (Project p : proyectos) {
 
             model.addRow(new Object[]{
-                i,
+                i++,
                 p.getFechaEntregadaEsperada(),
                 p.getNombreEmpresa(),
                 p.getNombre(),
@@ -317,12 +317,10 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
                 tblProyectos.getColumnModel().getColumn(6).setMinWidth(0);
                 tblProyectos.getColumnModel().getColumn(6).setMaxWidth(0);
                 tblProyectos.getColumnModel().getColumn(6).setPreferredWidth(0);
-                        
-                
 
                 // Pasar una copia de la lista para evitar problemas de referencia
-                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar",tblProyectos,this, this,usuario.getUsuario(),studentService,postulationService));
-      
+                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar", tblProyectos, this, this, usuario.getUsuario(), studentService, postulationService));
+
             }
             tblProyectos.revalidate();
             tblProyectos.repaint();

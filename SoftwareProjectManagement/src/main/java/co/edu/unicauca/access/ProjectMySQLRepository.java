@@ -118,7 +118,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setEstado(estado); // Asigna el estado al proyecto
                 proyecto.setFechaEntregadaEsperada(rs.getString("fechaEntregaEsperada"));
 
-                listaproyectos.add(proyecto);
+                listaproyectos.add((Project) proyecto);
             }
             rs.close();
             stmt.close();
@@ -164,7 +164,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         }
         return proyecto;
     }
-    
+
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD) {
             case "ACEPTADO":
