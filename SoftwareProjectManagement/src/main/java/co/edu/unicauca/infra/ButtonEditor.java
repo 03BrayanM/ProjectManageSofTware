@@ -1,47 +1,47 @@
-
 package co.edu.unicauca.infra;
-import co.edu.unicauca.domain.entities.Project;
-import co.edu.unicauca.domain.services.ProjectService;
-import co.edu.unicauca.view.GUIInfoProject;
-import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
+import javax.swing.table.TableCellEditor;
+import java.awt.Component;
+import javax.swing.AbstractCellEditor;
+import javax.swing.JButton;
+import javax.swing.JTable;
+
+public class ButtonEditor<T extends IButtonContext> extends AbstractCellEditor implements TableCellEditor {
+
     private JButton button;
     private JTable table;
     private int row;
-    private JFrame parent; 
-    private IFrameEventListener listener; 
-    private ProjectService projectService;
-    public ButtonEditor(JTable table,JFrame parent, IFrameEventListener listener,ProjectService projectService) {
+    private IButtonAction<T> action;
+    private T context;
+
+    public ButtonEditor(JTable table, T context, IButtonAction<T> action, String buttonText) {
         this.table = table;
-        this.projectService=projectService;
-        button = new JButton("Ver"); 
-        this.parent = parent;
-        this.listener = listener;
-        // Nueva acción al hacer clic en el botón
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUIInfoProject instance = new GUIInfoProject(parent, listener,(String)table.getValueAt(row, 5),projectService);
-                instance.setVisible(true);     
-                fireEditingStopped(); // Terminar edición del botón
+        this.context = context;
+        this.action = action;
+        button = new JButton(buttonText);
+
+        button.addActionListener(e -> {
+            if (context instanceof verProyectPostuladoContext) {
+                ((verProyectPostuladoContext) context).setRow(row);
+            } else if (context instanceof PostularseContext) {
+                ((PostularseContext) context).setRow(row);
             }
+
+            action.execute(context);
+            fireEditingStopped();
         });
+
     }
 
+    // Inside your ButtonEditor class
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        this.row = row;
-        return button;
+        this.row = row; // Guardar la fila actual
+        return this.button;
     }
 
     @Override
     public Object getCellEditorValue() {
-        return "Ver";
+        return button.getText();
     }
-
 }

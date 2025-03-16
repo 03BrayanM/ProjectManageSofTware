@@ -7,6 +7,7 @@ package co.edu.unicauca.view;
 import co.edu.unicauca.access.Factory;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.domain.services.CompanyService;
+import co.edu.unicauca.domain.services.PostulationService;
 import co.edu.unicauca.domain.services.ProjectService;
 import co.edu.unicauca.domain.services.StudentService;
 import co.edu.unicauca.interfaces.IFrameFactory;
@@ -26,9 +27,11 @@ public class FrameFactory implements IFrameFactory {
             case "ESTUDIANTE":
                 IRepository repositorys = Factory.getInstance().getRepository("student");
                 IRepository repositoryp = Factory.getInstance().getRepository("project");
+                IRepository repositorypos=Factory.getInstance().getRepository("postulation");
                 ProjectService projectServi = new ProjectService(repositoryp);
-                StudentService service = new StudentService(repositorys);
-                return new GUIGestionSottwareStudent(projectServi, user, service);
+                StudentService studentService = new StudentService(repositorys);
+                PostulationService postulationService = new PostulationService(repositorypos);
+                return new GUIGestionSottwareStudent(projectServi, user, studentService,postulationService);
             case "COORDINADOR":
                 IRepository repository2 = Factory.getInstance().getRepository("project");
                 ProjectService projectService = new ProjectService(repository2);
