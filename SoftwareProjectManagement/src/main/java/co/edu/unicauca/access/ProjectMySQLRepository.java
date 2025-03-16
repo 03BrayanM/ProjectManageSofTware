@@ -112,7 +112,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
                 proyecto.setDescripcion(rs.getString("descripcion"));
                 proyecto.setObjetivo(rs.getString("objetivo"));
                 proyecto.setPresupuesto(rs.getString("presupuesto"));
-
+                proyecto.setResumen(rs.getString("resumen"));
                 String estadoBD = rs.getString("estado"); // Obtiene el estado como String
                 ProjectState estado = obtenerEstadoDesdeBD(estadoBD); // Convierte el estado a un objeto
                 proyecto.setEstado(estado); // Asigna el estado al proyecto
