@@ -17,7 +17,7 @@ public class AceptadoState implements ProjectState{
     @Override
     public ProjectState avanzarEstado(Project proyecto) {
        proyecto.setEstado(new EnEjecucionState());
-       return proyecto.getEstado(); 
+       return proyecto.getEstado();
     }
  
     @Override

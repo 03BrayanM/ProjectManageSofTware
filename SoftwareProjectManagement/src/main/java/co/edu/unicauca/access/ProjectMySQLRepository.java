@@ -236,11 +236,11 @@ public class ProjectMySQLRepository implements IProjectRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        }
-
+        } 
+}
 
     @Override
-    public boolean actualizarEstado(Project proyecto) {
+    public boolean actualizarEstado(Project p) {
         if (conn == null) {
             Messages.showMessageDialog("No se pudo conectar a la base de datos", "Atención");
             return false;
@@ -249,8 +249,8 @@ public class ProjectMySQLRepository implements IProjectRepository {
         String sql = "{CALL ActualizarEstadoProyecto(?, ?)}"; // Procedimiento almacenado
 
         try (CallableStatement stmt = conn.prepareCall(sql)) {
-            stmt.setString(1, proyecto.getNombre().trim());
-            stmt.setString(2, proyecto.getEstadoString());
+            stmt.setString(1, p.getNombre().trim());
+            stmt.setString(2, p.getEstadoString());
 
             stmt.execute();
             return true;
@@ -260,6 +260,6 @@ public class ProjectMySQLRepository implements IProjectRepository {
             //Messages.showMessageDialog("\"Error al obtener el proyectooooo:", "Error");
             return false;
         }
-
     }
+    
 }
