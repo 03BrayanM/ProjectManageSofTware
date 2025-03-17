@@ -63,14 +63,14 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         lbPresupuesto = new javax.swing.JLabel();
-        lbNombreProject = new javax.swing.JLabel();
-        lbnombreEmpresa = new javax.swing.JLabel();
-        lbFecha = new javax.swing.JLabel();
-        lbTiempo = new javax.swing.JLabel();
+        txtPresupuesto = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
+        txtEmpresa = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JLabel();
+        txtTiempo = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txtpresupuesto = new javax.swing.JTextField();
+        txtEstado = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -102,16 +102,19 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel8.setText("Resumen:");
 
         txtAreaResumen.setLineWrap(true);
+        txtAreaResumen.setEditable(false);
         txtAreaResumen.setColumns(20);
         txtAreaResumen.setRows(5);
         jScrollPane1.setViewportView(txtAreaResumen);
 
+        txtAreaObjetivos.setEditable(false);
         txtAreaObjetivos.setColumns(20);
         txtAreaObjetivos.setLineWrap(true);
         txtAreaObjetivos.setRows(5);
         jScrollPane2.setViewportView(txtAreaObjetivos);
 
         txtAreaDescrip.setLineWrap(true);
+        txtAreaDescrip.setEditable(false);
         txtAreaDescrip.setColumns(20);
         txtAreaDescrip.setRows(5);
         jScrollPane3.setViewportView(txtAreaDescrip);
@@ -123,12 +126,10 @@ public class GUIInfoProject extends javax.swing.JDialog {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel9))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))))
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,23 +180,24 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Tiempo:");
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel6.setText("Presupuesto:");
+        lbPresupuesto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lbPresupuesto.setText("Presupuesto:");
 
-        lbPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbPresupuesto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtPresupuesto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtPresupuesto.setForeground(new java.awt.Color(60, 63, 65));
+        txtPresupuesto.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        lbNombreProject.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbNombreProject.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtNombre.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        lbnombreEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbnombreEmpresa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtEmpresa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtEmpresa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        lbFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtFecha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        lbTiempo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lbTiempo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtTiempo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtTiempo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -207,26 +209,26 @@ public class GUIInfoProject extends javax.swing.JDialog {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbNombreProject, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(lbnombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(22, 22, 22)
-                                .addComponent(lbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(lbPresupuesto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -235,23 +237,23 @@ public class GUIInfoProject extends javax.swing.JDialog {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lbNombreProject, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(lbnombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(lbPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbPresupuesto)
+                    .addComponent(txtPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -261,10 +263,12 @@ public class GUIInfoProject extends javax.swing.JDialog {
         jLabel14.setText("Estado");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
 
-        txtpresupuesto.setBackground(new java.awt.Color(228, 228, 228));
-        txtpresupuesto.setBorder(null);
-        txtpresupuesto.setEnabled(false);
-        jPanel4.add(txtpresupuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 151, -1));
+        txtEstado.setBackground(new java.awt.Color(228, 228, 228));
+        txtEstado.setForeground(new java.awt.Color(0, 0, 0));
+        txtEstado.setBorder(null);
+        txtEstado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtEstado.setEnabled(false);
+        jPanel4.add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 151, -1));
 
         jPanel2.setBackground(new java.awt.Color(247, 247, 247));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -313,14 +317,15 @@ public class GUIInfoProject extends javax.swing.JDialog {
             Messages.showMessageDialog("El proyecto no está disponible.", "Error");
             return;
         }
-        lbNombreProject.setText(project.getNombre());
-        lbnombreEmpresa.setText(project.getNombreEmpresa());
-        lbFecha.setText(project.getFechaEntregadaEsperada());
-        lbTiempo.setText(project.getTiempoMaximo());
-        lbPresupuesto.setText(project.getPresupuesto());
+        txtNombre.setText(project.getNombre());
+        txtEmpresa.setText(project.getNombreEmpresa());
+        txtFecha.setText(project.getFechaEntregadaEsperada());
+        txtTiempo.setText(project.getTiempoMaximo());
+        txtPresupuesto.setText(project.getPresupuesto());
         txtAreaObjetivos.setText(project.getObjetivo());
         txtAreaDescrip.setText(project.getDescripcion());
         txtAreaResumen.setText(project.getResumen());
+        txtEstado.setText(project.getEstadoString());
         
 
 
@@ -334,7 +339,6 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -347,14 +351,15 @@ public class GUIInfoProject extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lbFecha;
-    private javax.swing.JLabel lbNombreProject;
     private javax.swing.JLabel lbPresupuesto;
-    private javax.swing.JLabel lbTiempo;
-    private javax.swing.JLabel lbnombreEmpresa;
     private javax.swing.JTextArea txtAreaDescrip;
     private javax.swing.JTextArea txtAreaObjetivos;
     private javax.swing.JTextArea txtAreaResumen;
-    private javax.swing.JTextField txtpresupuesto;
+    private javax.swing.JLabel txtEmpresa;
+    private javax.swing.JTextField txtEstado;
+    private javax.swing.JLabel txtFecha;
+    private javax.swing.JLabel txtNombre;
+    private javax.swing.JLabel txtPresupuesto;
+    private javax.swing.JLabel txtTiempo;
     // End of variables declaration//GEN-END:variables
 }
