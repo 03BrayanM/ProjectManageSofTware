@@ -100,6 +100,7 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+
     private ProjectState obtenerEstadoDesdeBD(String estadoBD) {
         switch (estadoBD.trim().toUpperCase()) {
             case "ACEPTADO":
@@ -126,4 +127,6 @@ public class CoordinatorMySQLRepository implements ICoordinatorRepository {
         }
        
     }
+
+   
 }

@@ -22,17 +22,14 @@ public class ProjectService extends Subject {
 
     private IProjectRepository repository;
 
-  
+    public ProjectService() {
 
-    public ProjectService(){
-        
     }
+
     public ProjectService(IRepository repository) {
-        this.repository = (IProjectRepository)repository;
+        this.repository = (IProjectRepository) repository;
     }
     // Método para agregar observadores
-
-    
 
     // Método para obtener proyectos
     public List<Project> obtenerProyectos() {
@@ -41,18 +38,30 @@ public class ProjectService extends Subject {
         List<Project> projects = new ArrayList<>();
         for (Object obj : objects) {
             if (obj instanceof Project) {
-                projects.add((Project) obj); 
+                projects.add((Project) obj);
             }
         }
         notificarObservadores(projects);
         // Devuelves la lista de Project como List<Object>
         return new ArrayList<>(projects);
     }
-    public Project consultarProyecto(String id){
-        return (Project) this.repository.found(id);
+
+    public List<Project> obtenerProyectosPorNit(String nit) {
+
+        List<Object> objects = repository.getProjectsNit(nit);
+        List<Project> projects = new ArrayList<>();
+        for (Object obj : objects) {
+            if (obj instanceof Project) {
+                projects.add((Project) obj);
+            }
+        }
+        // Devuelves la lista de Project como List<Object>
+        return new ArrayList<>(projects);
+
     }
-    public boolean saveProject(Project project){
-      return repository.save(project);
+
+    public boolean saveProject(Project project) {
+        return repository.save(project);
 
     }
     
@@ -60,15 +69,16 @@ public class ProjectService extends Subject {
        return (Project) repository.found(project.getNombre()); 
    }
    public boolean cambiarEstado(Project proyecto, ProjectState nuevoEstado) {
+
         if (!validarCambioEstado(proyecto, nuevoEstado)) {
             return false;
         }
-        
+
         proyecto.setEstado(nuevoEstado);
         repository.actualizarEstado(proyecto);
         System.out.println(repository.actualizarEstado(proyecto));
         notificarCambioEstado(proyecto);
-        
+
         return true;
     }
 
@@ -81,7 +91,12 @@ public class ProjectService extends Subject {
 
         return true;
     }
+
+    public Project getProject(Object idProject) {
+        return (Project) repository.found(idProject);
+    }
+
     private void notificarCambioEstado(Project proyecto) {
-        
+
     }
 }

@@ -11,26 +11,26 @@ import java.sql.Timestamp;
  * @author RoLoNeGaTiVo
  */
 public class Postulation {
-    
+
     private String codStudent;
     private String codProject;
     private Timestamp fecha;
-    
+
     public Postulation(String codStudent_, String codProject_, Timestamp fecha_) {
         this.codStudent = codStudent_;
         this.codProject = codProject_;
         this.fecha = fecha_;
     }
-    
+
     public Postulation() {
-        
+
     }
-    
+
     public Postulation(Postulation pos) {
         this.setCodProject(pos.getCodProject());
         this.setCodStudent(pos.getCodStudent());
         this.setFecha(pos.getFecha());
-        
+
     }
 
     /**

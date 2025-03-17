@@ -359,7 +359,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
+    private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {
         Student estudiante = new Student();
         estudiante = serviceStudent.obtenerEstudiante(username);
         Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
@@ -400,16 +400,10 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         txtAreaDescripcion.setText(proyecto.getDescripcion());
     }
 
-    public static void main(String args[]) {
-
-    }//GEN-LAST:event_btnPostularseActionPerformed
-
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-    private void iniciar(ProjectService project, StudentService student, PostulationService postulation) {
 
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPostularse;

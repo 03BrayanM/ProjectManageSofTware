@@ -21,9 +21,10 @@ public class ButtonEditor<T extends IButtonContext> extends AbstractCellEditor i
         button = new JButton(buttonText);
 
         button.addActionListener(e -> {
-            if (context instanceof verProyectPostuladoContext) {
+            if (this.context instanceof verProyectPostuladoContext) {
                 ((verProyectPostuladoContext) context).setRow(row);
-            } else if (context instanceof PostularseContext) {
+            } 
+            else if (this.context instanceof PostularseContext) {
                 ((PostularseContext) context).setRow(row);
             }
 

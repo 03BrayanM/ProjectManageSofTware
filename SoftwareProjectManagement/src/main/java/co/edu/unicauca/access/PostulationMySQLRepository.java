@@ -5,11 +5,9 @@
 package co.edu.unicauca.access;
 
 import co.edu.unicauca.domain.entities.Postulation;
-import co.edu.unicauca.domain.entities.Project;
-import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
-import co.edu.unicauca.interfaces.IProjectRepository;
+import co.edu.unicauca.interfaces.IPostulationRepository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +19,7 @@ import java.util.List;
  *
  * @author RoLoNeGaTiVo
  */
-public class PostulationMySQLRepository implements IProjectRepository {
+public class PostulationMySQLRepository implements IPostulationRepository {
 
     private Connection conn;
     private static final String url = "jdbc:mysql://localhost:3306/gestion_proyectos_software";
@@ -87,10 +85,22 @@ public class PostulationMySQLRepository implements IProjectRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    private boolean conectar() {
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     @Override
     public Postulation found(Object post) {
 
         Postulation pos = new Postulation();
+        
         if (!(post instanceof Postulation)) {
             Messages.showMessageDialog("Error: El objeto no es una Psotulacion", "Atención");
         }
@@ -140,18 +150,4 @@ public class PostulationMySQLRepository implements IProjectRepository {
         }
     }
 
-    private boolean conectar() {
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean actualizarEstado(Project p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
