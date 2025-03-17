@@ -217,8 +217,5 @@ public class CompanyMySQLRepository implements ICompanyRepository {
 
     }
 
-    @Override
-    public Object found(Object usename) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+  
 }

@@ -98,7 +98,7 @@ public class ProjectMySQLRepository implements IProjectRepository {
         }
         try {
             // Llamada al procedimiento almacenado
-            String sql = "{CALL ListarProyectosPostulados()}";
+            String sql = "{CALL ListarProyectos()}";
             CallableStatement stmt = conn.prepareCall(sql);
             // Ejecutamos el procedimiento y obtenemos los resultados
             ResultSet rs = stmt.executeQuery();
