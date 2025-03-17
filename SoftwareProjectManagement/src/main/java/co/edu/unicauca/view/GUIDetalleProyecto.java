@@ -388,16 +388,10 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         txtAreaDescripcion.setText(proyecto.getDescripcion());
     }
 
-    public static void main(String args[]) {
-
-    }//GEN-LAST:event_btnPostularseActionPerformed
-
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-    private void iniciar(ProjectService project, StudentService student, PostulationService postulation) {
-
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPostularse;
