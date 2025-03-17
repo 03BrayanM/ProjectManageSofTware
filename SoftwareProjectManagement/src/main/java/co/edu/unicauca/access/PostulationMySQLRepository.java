@@ -6,12 +6,14 @@ package co.edu.unicauca.access;
 
 import co.edu.unicauca.domain.entities.Postulation;
 import co.edu.unicauca.domain.entities.Project;
+import co.edu.unicauca.domain.entities.Student;
 import co.edu.unicauca.domain.entities.User;
 import co.edu.unicauca.infra.Messages;
 import co.edu.unicauca.interfaces.IProjectRepository;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -84,9 +86,58 @@ public class PostulationMySQLRepository implements IProjectRepository {
     public List<Object> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     @Override
-    public User found(Object usename) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Postulation found(Object post) {
+
+        Postulation pos = new Postulation();
+        if (!(post instanceof Postulation)) {
+            Messages.showMessageDialog("Error: El objeto no es una Psotulacion", "Atención");
+        }
+
+        Postulation postulacion = (Postulation) post;
+
+        if (!conectar()) {
+            Messages.showMessageDialog("Error: No se pudo conectar a la base de datos.", "Error de Conexión");
+            return null;
+        } else {
+            try {
+                // Llamada al procedimiento almacenado
+                String sql = "{CALL BuscarInteres(?, ?)}";
+                CallableStatement stmt = conn.prepareCall(sql);
+                stmt.setString(1, (String) postulacion.getCodStudent());
+                stmt.setInt(2, (int) Integer.parseInt(postulacion.getCodProject()));
+                // Ejecutamos el procedimiento almacenado
+                ResultSet rs = stmt.executeQuery();
+
+                // Si hay resultados, creamos un objeto Usuario
+                if (rs.next()) {
+                    pos.setCodProject(rs.getString("idProject"));
+                    pos.setCodStudent(rs.getString("codEst"));
+                    pos.setFecha(rs.getTimestamp("fecha"));
+                }
+
+                // Cerramos los recursos
+                rs.close();
+                stmt.close();
+            } catch (SQLException e) {
+                Messages.showMessageDialog("Error al ejecutar el procedimiento almacenado:", "Error");
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    Messages.showMessageDialog("Error al cerrar la conexión:", "Error de Conexión");
+                }
+            }
+        }
+
+        if (pos != null) {
+            return pos;
+        } else {
+            return new Postulation(null, null, null);
+        }
     }
 
     private boolean conectar() {
@@ -97,7 +148,6 @@ public class PostulationMySQLRepository implements IProjectRepository {
             e.printStackTrace();
             return false;
         }
-
     }
 
     @Override
