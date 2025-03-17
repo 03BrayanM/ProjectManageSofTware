@@ -391,7 +391,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
 
     private void inicializarDatos(Project proyecto) {
         txtNombre.setText(proyecto.getNombre());
-        txtEmpresa.setText(proyecto.getNitEmpresa());
+        txtEmpresa.setText(proyecto.getNombreEmpresa());
         txtFecha.setText(proyecto.getFechaEntregadaEsperada());
         txtTiempoMaximo.setText(proyecto.getTiempoMaximo());
         txtPresupuesto.setText(proyecto.getPresupuesto());
