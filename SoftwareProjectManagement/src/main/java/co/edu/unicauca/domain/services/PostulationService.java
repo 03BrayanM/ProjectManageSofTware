@@ -26,4 +26,15 @@ public class PostulationService {
     public boolean savePostulation(Postulation postulation) {
         return repository.save((Postulation) postulation);
     }
+
+    public boolean existePostulacion(Postulation postulation) {
+
+        Postulation pos = new Postulation((Postulation) repository.found(postulation));
+
+        if (pos.getCodProject() == null && pos.getCodStudent() == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -46,7 +46,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
     PostulationService postulationService;
     private User usuario;
 
-    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_,PostulationService postulationService) {
+    public GUIGestionSottwareStudent(ProjectService projectService, User usuario_, StudentService studentService_, PostulationService postulationService) {
         initComponents();
         this.usuario = usuario_;
         this.studentService = studentService_;
@@ -56,6 +56,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         txtUsuarioMostrar.setText(usuario.getUsuario());
         tblProyectos.setAutoCreateRowSorter(true);
         actualizarProyectos();
+        agregarEventos();
 
     }
 
@@ -94,18 +95,21 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
 
         txtUsuarioMostrar.setEditable(false);
         txtUsuarioMostrar.setBackground(new java.awt.Color(242, 247, 249));
+        txtUsuarioMostrar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuarioMostrar.setBorder(null);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        lblProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         lblProyectos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblProyectos.setText("Proyectos");
+        lblProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
 
-        lblMisProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
         lblMisProyectos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblMisProyectos.setForeground(new java.awt.Color(0, 0, 0));
         lblMisProyectos.setText("Mis Proyectos");
+        lblMisProyectos.setPreferredSize(new java.awt.Dimension(80, 23));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -115,8 +119,8 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
                 .addGap(39, 39, 39)
                 .addComponent(lblProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
-                .addComponent(lblMisProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addComponent(lblMisProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,6 +135,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         jPanel6.setBackground(new java.awt.Color(242, 247, 249));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
+        tblProyectos.setBackground(new java.awt.Color(242, 247, 249));
         tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -167,14 +172,14 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -193,28 +198,23 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
+                .addComponent(txtUsuarioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(lblTitulo)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtUsuarioMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(100, 100, 100)
+                        .addComponent(jLabel13))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnsalir)
-                            .addComponent(jLabel13))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(47, 47, 47)
-                                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblTitulo)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46))))))
+                        .addGap(57, 57, 57)
+                        .addComponent(btnsalir)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +291,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         List<Project> proyectos = projectService.obtenerProyectos();
         DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
         model.setRowCount(0); // Limpiar la tabla  
-        model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles","escondido"});
+        model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles", "escondido"});
 
         if (proyectos == null || proyectos.isEmpty()) {
             Messages.showMessageDialog("No existen proyectos registrados.", "Información");
@@ -301,7 +301,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
         for (Project p : proyectos) {
 
             model.addRow(new Object[]{
-                i,
+                i++,
                 p.getFechaEntregadaEsperada(),
                 p.getNombreEmpresa(),
                 p.getNombre(),
@@ -317,12 +317,10 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
                 tblProyectos.getColumnModel().getColumn(6).setMinWidth(0);
                 tblProyectos.getColumnModel().getColumn(6).setMaxWidth(0);
                 tblProyectos.getColumnModel().getColumn(6).setPreferredWidth(0);
-                        
-                
 
                 // Pasar una copia de la lista para evitar problemas de referencia
-                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar",tblProyectos,this, this,usuario.getUsuario(),studentService,postulationService));
-      
+                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar", tblProyectos, this, this, usuario.getUsuario(), studentService, postulationService));
+
             }
             tblProyectos.revalidate();
             tblProyectos.repaint();

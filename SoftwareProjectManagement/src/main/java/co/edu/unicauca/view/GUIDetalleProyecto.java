@@ -31,7 +31,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         this.serviceStudent = serviceStudent;
         this.username = username;
         this.postulaciones = postulaciones;
-        this.proyecto=proyecto;
+        this.proyecto = proyecto;
 
         inicializarDatos(proyecto);
 
@@ -92,6 +92,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         jPanel3.setPreferredSize(new java.awt.Dimension(313, 322));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre:");
 
         txtNombre.setEditable(false);
@@ -105,6 +106,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Empresa:");
 
         txtEmpresa.setEditable(false);
@@ -113,6 +115,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         txtEmpresa.setBorder(null);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Fecha:");
 
         txtFecha.setEditable(false);
@@ -126,6 +129,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Tiempo Maximo");
 
         txtTiempoMaximo.setEditable(false);
@@ -134,6 +138,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         txtTiempoMaximo.setBorder(null);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Presupuesto:");
 
         txtPresupuesto.setEditable(false);
@@ -207,10 +212,12 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Objetivos:");
 
         jLabel8.setBackground(new java.awt.Color(153, 153, 153));
         jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Resumen");
 
         jScrollPane2.setBackground(new java.awt.Color(242, 247, 249));
@@ -226,6 +233,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
 
         jLabel9.setBackground(new java.awt.Color(242, 247, 249));
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Descripcion:");
 
         jScrollPane3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -351,35 +359,39 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostularseActionPerformed
+    private void btnPostularseActionPerformed(java.awt.event.ActionEvent evt) {
         Student estudiante = new Student();
         estudiante = serviceStudent.obtenerEstudiante(username);
+        Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
+        Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getId(), fechaActual);
 
-        if (proyecto.getId() != null) {
-            Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
-            Postulation postulation = new Postulation(estudiante.getCodigo(), proyecto.getId(), fechaActual);
+        if (postulaciones.existePostulacion((Postulation) postulation) == true) {
 
+            if (proyecto.getId() != null) {
 
-            boolean res = postulaciones.savePostulation(postulation);
+                boolean res = postulaciones.savePostulation(postulation);
 
-            if (res) {
-                Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
-                listener.onEventTriggered();
-                this.dispose();
+                if (res) {
+                    Messages.showMessageDialog("Te has postulado al Proyecto", "Atención");
+                    listener.onEventTriggered();
+                    this.dispose();
+                } else {
+                    Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
+                    this.dispose();
+                }
             } else {
-                Messages.showMessageDialog("Ocurrió un error al intentar postularse", "Atención");
-                this.dispose();
+                Messages.showMessageDialog("El codigo de projecto es Nulo", "Atención");
             }
-        } else {
-            Messages.showMessageDialog("El codigo de projecto es Nulo", "Atención");
-        }
 
-        this.dispose();
+            this.dispose();
+        } else {
+            Messages.showMessageDialog("Ya te has Postulado a este Proyecto", "Atención");
+        }
     }
 
     private void inicializarDatos(Project proyecto) {
         txtNombre.setText(proyecto.getNombre());
-        txtEmpresa.setText(proyecto.getNitEmpresa());
+        txtEmpresa.setText(proyecto.getNombreEmpresa());
         txtFecha.setText(proyecto.getFechaEntregadaEsperada());
         txtTiempoMaximo.setText(proyecto.getTiempoMaximo());
         txtPresupuesto.setText(proyecto.getPresupuesto());
@@ -391,7 +403,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
-  
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPostularse;
