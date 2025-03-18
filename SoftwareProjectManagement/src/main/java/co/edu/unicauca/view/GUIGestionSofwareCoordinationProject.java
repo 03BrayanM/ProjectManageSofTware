@@ -72,9 +72,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtnombrecordinador = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        btnRegistrarEstudiante = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtInformacion = new javax.swing.JTextField();
@@ -163,25 +160,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Opciones");
-
-        btnRegistrarEstudiante.setBackground(new java.awt.Color(223, 224, 226));
-        btnRegistrarEstudiante.setText("Registrar Estudiante");
-        btnRegistrarEstudiante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarEstudianteActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(223, 224, 226));
-        jButton3.setText("Registrar Empresa");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setBackground(new java.awt.Color(223, 224, 226));
-        jButton4.setText("Gestionar proyecto");
 
         jButton5.setBackground(new java.awt.Color(223, 224, 226));
         jButton5.setText("Salir");
@@ -468,13 +446,9 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegistrarEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -513,15 +487,8 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
                         .addComponent(jLabel10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnRegistrarEstudiante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(9, Short.MAX_VALUE))
@@ -546,14 +513,6 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEstudianteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarEstudianteActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void txtempresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtempresaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtempresaActionPerformed
@@ -572,7 +531,11 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     }//GEN-LAST:event_btnguardarCambiosActionPerformed
 
     private void lblProyectosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProyectosMouseClicked
+        GUIGestionSofwareCoordination instance = new GUIGestionSofwareCoordination(projectService,usuario);
+        instance.setExtendedState(JFrame.NORMAL);
+        instance.setVisible(true);
         this.dispose();;
+        
     }//GEN-LAST:event_lblProyectosMouseClicked
     private void llenarCampos(Project proyecto) {
         txtnombrecordinador.setText(usuario.getUsuario());
@@ -674,11 +637,8 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrarEstudiante;
     private javax.swing.JButton btnguardarCambios;
     private javax.swing.JComboBox<String> cbxestados;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
