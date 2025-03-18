@@ -167,7 +167,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 43, 0, 0);
         jPanel2.add(jLabel5, gridBagConstraints);
 
-        cbxsector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tegnologia", "Salud", "Education", "Otros" }));
+        cbxsector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnologia", "Salud", "Education", "Otros" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 1;

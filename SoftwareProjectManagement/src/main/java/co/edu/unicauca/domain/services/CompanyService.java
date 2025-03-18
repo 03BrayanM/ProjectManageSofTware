@@ -59,7 +59,7 @@ public class CompanyService {
             return false;
         }
         if (contieneNumeros(cargo)) {
-            Messages.showMessageDialog("El campo Nombre no puede contener números.", "Atención");
+            Messages.showMessageDialog("El campo Cargo no puede contener números.", "Atención");
             return false;
         }
         if (contieneNumeros(nombrecontacto)) {

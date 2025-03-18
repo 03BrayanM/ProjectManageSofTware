@@ -97,14 +97,10 @@ public class PostulationMySQLRepository implements IPostulationRepository {
     }
 
     @Override
-
-    public Object found(Object usename) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
     public Postulation found(Object post) {
 
         Postulation pos = new Postulation();
-        
+
         if (!(post instanceof Postulation)) {
             Messages.showMessageDialog("Error: El objeto no es una Psotulacion", "Atención");
         }
