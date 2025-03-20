@@ -547,12 +547,12 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         txtobjetivos.setText(proyecto.getObjetivo());
         txtresumen.setText(proyecto.getResumen());
         txtdescripcion.setText(proyecto.getDescripcion());
-        txtestado.setText(proyecto.getEstadoString());
+        getTxtestado().setText(proyecto.getEstadoString());
     }
 
     private void inicializarComboBox() {
         // No cargamos nada fijo aquí
-        cbxestados.setModel(new DefaultComboBoxModel<>());
+        getCbxestados().setModel(new DefaultComboBoxModel<>());
         actualizarOpcionesEstado(project.getEstadoString());
     }
 
@@ -565,34 +565,34 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     }
 
     private void actualizarOpcionesEstado(String estadoActual) {
-        cbxestados.removeAllItems(); // Limpia el JComboBox
+        getCbxestados().removeAllItems(); // Limpia el JComboBox
 
         switch (estadoActual) {
             case "RECIBIDO":
-                cbxestados.addItem("ACEPTADO");
-                cbxestados.addItem("RECHAZADO");
+                getCbxestados().addItem("ACEPTADO");
+                getCbxestados().addItem("RECHAZADO");
                 break;
             case "ACEPTADO":
-                cbxestados.addItem("EJECUCION");
+                getCbxestados().addItem("EJECUCION");
                 break;
             case "RECHAZADO":
-                cbxestados.addItem("No hay opciones disponibles");
+                getCbxestados().addItem("No hay opciones disponibles");
                 break;
             case "EJECUCION":
-                cbxestados.addItem("CERRADO");
+                getCbxestados().addItem("CERRADO");
                 break;
             case "CERRADO":
-                cbxestados.addItem("No hay opciones disponibles");
+                getCbxestados().addItem("No hay opciones disponibles");
                 break;
             default:
-                cbxestados.addItem("No hay opciones disponibles");
+                getCbxestados().addItem("No hay opciones disponibles");
                 break;
         }
 
     }
 
-    private void cambiarEstado() {
-        String nuevoEstadoStr = (String) cbxestados.getSelectedItem();
+    public void cambiarEstado() {
+        String nuevoEstadoStr = (String) getCbxestados().getSelectedItem();
 
         if (nuevoEstadoStr == null || nuevoEstadoStr.equals("No hay opciones disponibles")) {
             Messages.showMessageDialog("No se puede cambiar a este Estado", "Error");
@@ -627,7 +627,7 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
         boolean cambioExitoso = projectService.cambiarEstado(project, nuevoEstado);
 
         if (cambioExitoso) {
-            txtestado.setText(project.getEstadoString());
+            getTxtestado().setText(project.getEstadoString());
             actualizarOpcionesEstado(project.getEstadoString());
             Messages.showMessageDialog("Estado Actualizado Correctamente", "Estado Actualizado");
         } else {
@@ -676,4 +676,25 @@ public class GUIGestionSofwareCoordinationProject extends javax.swing.JFrame {
     private javax.swing.JTextField txtresumen;
     private javax.swing.JTextField txttiempo;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the cbxestados
+     */
+    public javax.swing.JComboBox<String> getCbxestados() {
+        return cbxestados;
+    }
+
+    /**
+     * @param cbxestados the cbxestados to set
+     */
+    public void setCbxestados(javax.swing.JComboBox<String> cbxestados) {
+        this.cbxestados = cbxestados;
+    }
+
+    /**
+     * @return the txtestado
+     */
+    public javax.swing.JTextField getTxtestado() {
+        return txtestado;
+    }
 }

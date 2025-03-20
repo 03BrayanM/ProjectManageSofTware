@@ -289,7 +289,7 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
 
     public void actualizarProyectos() {
         List<Project> proyectos = projectService.obtenerProyectos();
-        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
+        DefaultTableModel model = (DefaultTableModel) getTblProyectos().getModel();
         model.setRowCount(0); // Limpiar la tabla  
         model.setColumnIdentifiers(new String[]{"No", "Fecha", "Nombre de Empresa", "Nombre del Proyecto", "Resumen", "Ver Detalles", "escondido"});
 
@@ -310,22 +310,29 @@ public class GUIGestionSottwareStudent extends javax.swing.JFrame implements IFr
                 p
             });
 
-            if (tblProyectos.getRowCount() > 0) {
-                TableColumn detallesColumn = tblProyectos.getColumnModel().getColumn(5);
+            if (getTblProyectos().getRowCount() > 0) {
+                TableColumn detallesColumn = getTblProyectos().getColumnModel().getColumn(5);
                 detallesColumn.setCellRenderer(new renderButton("postular"));
 
-                tblProyectos.getColumnModel().getColumn(6).setMinWidth(0);
-                tblProyectos.getColumnModel().getColumn(6).setMaxWidth(0);
-                tblProyectos.getColumnModel().getColumn(6).setPreferredWidth(0);
+                getTblProyectos().getColumnModel().getColumn(6).setMinWidth(0);
+                getTblProyectos().getColumnModel().getColumn(6).setMaxWidth(0);
+                getTblProyectos().getColumnModel().getColumn(6).setPreferredWidth(0);
 
                 // Pasar una copia de la lista para evitar problemas de referencia
-                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar", tblProyectos, this, this, usuario.getUsuario(), studentService, postulationService));
+                detallesColumn.setCellEditor(ButtonEditorFactory.createButtonEditor("aprobar", getTblProyectos(), this, this, usuario.getUsuario(), studentService, postulationService));
 
             }
-            tblProyectos.revalidate();
-            tblProyectos.repaint();
-            ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
+            getTblProyectos().revalidate();
+            getTblProyectos().repaint();
+            ((DefaultTableModel) getTblProyectos().getModel()).fireTableDataChanged();
         }
 
+    }
+
+    /**
+     * @return the tblProyectos
+     */
+    public javax.swing.JTable getTblProyectos() {
+        return tblProyectos;
     }
 }

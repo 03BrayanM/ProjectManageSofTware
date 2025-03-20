@@ -20,8 +20,8 @@ public class UserService {
     }
 
     public User login(String username, String password) {
-        User user = (User)userRepository.found(username);                
-        return user;
+        User user = (User) userRepository.found(username);
+        return (user != null) ? user : null;
     }
 
 }

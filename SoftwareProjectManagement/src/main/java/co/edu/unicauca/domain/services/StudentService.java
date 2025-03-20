@@ -43,7 +43,7 @@ public class StudentService {
         return (Student) repository.found(username);
     }
 
-    private boolean validarcampos(String nombre, String email, String telefono,String cedula,String codigo) {
+    public boolean validarcampos(String nombre, String email, String telefono,String cedula,String codigo) {
        if (nombre.matches(".*\\d.*")) {
         Messages.showMessageDialog("El campo Nombre no puede contener números.", "Atención");
         return false;
@@ -76,7 +76,7 @@ public class StudentService {
     return true; // Todas las validaciones pasaron
 }
 
-    private boolean validarEmail(String email) {
+    public boolean validarEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);

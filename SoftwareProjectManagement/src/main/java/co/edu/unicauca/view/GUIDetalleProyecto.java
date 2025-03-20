@@ -389,7 +389,7 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
         }
     }
 
-    private void inicializarDatos(Project proyecto) {
+    public void inicializarDatos(Project proyecto) {
         txtNombre.setText(proyecto.getNombre());
         txtEmpresa.setText(proyecto.getNombreEmpresa());
         txtFecha.setText(proyecto.getFechaEntregadaEsperada());
@@ -406,8 +406,8 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPostularse;
-    private javax.swing.JButton btnVolver;
+    public javax.swing.JButton btnPostularse;
+    public javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -424,13 +424,69 @@ public class GUIDetalleProyecto extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea txtAreaDescripcion;
-    private javax.swing.JTextArea txtAreaObjetivos;
-    private javax.swing.JTextArea txtAreaResumen;
-    private javax.swing.JTextField txtEmpresa;
-    private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPresupuesto;
-    private javax.swing.JTextField txtTiempoMaximo;
+    public javax.swing.JTextArea txtAreaDescripcion;
+    public javax.swing.JTextArea txtAreaObjetivos;
+    public javax.swing.JTextArea txtAreaResumen;
+    public javax.swing.JTextField txtEmpresa;
+    public javax.swing.JTextField txtFecha;
+    public javax.swing.JTextField txtNombre;
+    public javax.swing.JTextField txtPresupuesto;
+    public javax.swing.JTextField txtTiempoMaximo;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @param txtAreaDescripcion the txtAreaDescripcion to set
+     */
+    public void setTxtAreaDescripcion(javax.swing.JTextArea txtAreaDescripcion) {
+        this.txtAreaDescripcion = txtAreaDescripcion;
+    }
+
+    /**
+     * @param txtAreaObjetivos the txtAreaObjetivos to set
+     */
+    public void setTxtAreaObjetivos(javax.swing.JTextArea txtAreaObjetivos) {
+        this.txtAreaObjetivos = txtAreaObjetivos;
+    }
+
+    /**
+     * @param txtAreaResumen the txtAreaResumen to set
+     */
+    public void setTxtAreaResumen(javax.swing.JTextArea txtAreaResumen) {
+        this.txtAreaResumen = txtAreaResumen;
+    }
+
+    /**
+     * @param txtEmpresa the txtEmpresa to set
+     */
+    public void setTxtEmpresa(javax.swing.JTextField txtEmpresa) {
+        this.txtEmpresa = txtEmpresa;
+    }
+
+    /**
+     * @param txtFecha the txtFecha to set
+     */
+    public void setTxtFecha(javax.swing.JTextField txtFecha) {
+        this.txtFecha = txtFecha;
+    }
+
+    /**
+     * @param txtNombre the txtNombre to set
+     */
+    public void setTxtNombre(javax.swing.JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    /**
+     * @param txtPresupuesto the txtPresupuesto to set
+     */
+    public void setTxtPresupuesto(javax.swing.JTextField txtPresupuesto) {
+        this.txtPresupuesto = txtPresupuesto;
+    }
+
+    /**
+     * @param txtTiempoMaximo the txtTiempoMaximo to set
+     */
+    public void setTxtTiempoMaximo(javax.swing.JTextField txtTiempoMaximo) {
+        this.txtTiempoMaximo = txtTiempoMaximo;
+    }
 }

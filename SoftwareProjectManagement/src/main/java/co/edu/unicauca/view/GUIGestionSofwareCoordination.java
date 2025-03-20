@@ -389,9 +389,9 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         });
     }
 
-    private void actualizarTablaP(List<Project> proyectos) {
+    public void actualizarTablaP(List<Project> proyectos) {
         txtnombrecordinador.setText(usuario.getUsuario());
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) getjTable1().getModel();
         model.setRowCount(0); // Limpiar la tabla
         model.setColumnIdentifiers(new String[]{"Título", "Empresa", "Fecha Entrega", "Estado"}); // Definir columnas
 
@@ -419,7 +419,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }
 
     private void configurarEventosTabla() {
-        jTable1.addMouseListener(new MouseAdapter() {
+        getjTable1().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 manejarSeleccionProyecto();
@@ -428,7 +428,7 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
     }
 
     private void manejarSeleccionProyecto() {
-        int filaSeleccionada = jTable1.getSelectedRow();
+        int filaSeleccionada = getjTable1().getSelectedRow();
 
         if (filaSeleccionada == -1) {
             Messages.showMessageDialog("Por favor, seleccione un proyecto.", "Advertencia");
@@ -451,6 +451,13 @@ public class GUIGestionSofwareCoordination extends javax.swing.JFrame implements
         GUIGestionSofwareCoordinationProject instance = new GUIGestionSofwareCoordinationProject(projectService, p,usuario);
         instance.setExtendedState(JFrame.NORMAL);
         instance.setVisible(true);
+    }
+
+    /**
+     * @return the jTable1
+     */
+    public javax.swing.JTable getjTable1() {
+        return jTable1;
     }
 
 }

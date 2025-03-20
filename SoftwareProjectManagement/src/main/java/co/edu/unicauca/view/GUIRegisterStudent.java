@@ -284,7 +284,7 @@ public class GUIRegisterStudent extends javax.swing.JFrame {
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcodigoActionPerformed
-    private boolean validarFormulario(String nombre, String cedula, String codigo, String email, String telefono) {
+    public boolean validarFormulario(String nombre, String cedula, String codigo, String email, String telefono) {
         // Validar que el nombre no esté vacío y no contenga números
         if (nombre.isEmpty()) {
             Messages.showMessageDialog("El campo Nombre no puede estar vacío.", "Atención");

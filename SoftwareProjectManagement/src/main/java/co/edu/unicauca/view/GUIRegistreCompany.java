@@ -337,7 +337,7 @@ public class GUIRegistreCompany extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombreActionPerformed
 
-    private boolean validarFormulario(String nit, String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
+    public boolean validarFormulario(String nit, String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
         // Validar que los campos no estén vacíos
         if (nit.isEmpty()) {
             Messages.showMessageDialog("El campo NIT no puede estar vacío.", "Atención");

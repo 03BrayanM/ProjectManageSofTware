@@ -48,7 +48,7 @@ public class CompanyService {
         return companies;
     }
 
-    private boolean validarcampos(String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
+    public boolean validarcampos(String nombre, String email, String nombrecontacto, String apellido, String cargo, String telefono, String sector) {
         // Validar que el nombre y apellido no contengan números
         if (contieneNumeros(nombre)) {
             Messages.showMessageDialog("El campo Nombre no puede contener números.", "Atención");
@@ -78,7 +78,7 @@ public class CompanyService {
         }
 
         // Validar que el teléfono solo contenga números
-        if (esNumero(telefono)) {
+        if (telefono == null || !esNumero(telefono.trim())) {
             Messages.showMessageDialog("El campo Teléfono solo puede contener números.", "Atención");
             return false;
         }
@@ -86,18 +86,18 @@ public class CompanyService {
         return true;
     }
 
-    private static boolean contieneNumeros(String texto) {
+    public static boolean contieneNumeros(String texto) {
         return texto.matches(".*\\d.*");
     }
 
-    private boolean validarEmail(String email) {
+    public boolean validarEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    private boolean esNumero(String texto) {
+    public boolean esNumero(String texto) {
         return texto.matches("\\d+");
     }
 

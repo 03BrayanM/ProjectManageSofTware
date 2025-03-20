@@ -305,8 +305,9 @@ public class GUIPostularProject extends javax.swing.JDialog {
         String fechaEntregaEsperada = txteEstimatedDeliveryDate.getText().trim();
 
         boolean validacion = validarCamposVacios(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
+        boolean validarTamaño= validarLongitudCampos(nombre, resumen, descripcion, objetivo, tiempoMaximo, presupuesto, fechaEntregaEsperada);
         boolean validarPresupuesto=validarNumero(presupuesto);
-        if (validacion && validarPresupuesto) {
+        if (validacion && validarPresupuesto && validarTamaño) {
             Company compania = companyService.obtenerCompanyPorUser(user.getUsuario());
 
             Project project = new Project(compania.getNit(),nombre,resumen,descripcion,objetivo,tiempoMaximo,presupuesto,fechaEntregaEsperada);
@@ -322,7 +323,7 @@ public class GUIPostularProject extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnRegistrarProyectoActionPerformed
-    private boolean validarCamposVacios(String nombre, String resumen, String descripcion, String objetivo, String tiempoMaximo, String presupuesto, String fechaEntregaEsperada) {
+    public boolean validarCamposVacios(String nombre, String resumen, String descripcion, String objetivo, String tiempoMaximo, String presupuesto, String fechaEntregaEsperada) {
         if (nombre.isEmpty() || nombre.equalsIgnoreCase("project name")) {
             Messages.showMessageDialog("Debe agregar el nombre del proyecto", "Atención");
             txtNameProyect.requestFocus();
@@ -370,8 +371,47 @@ public class GUIPostularProject extends javax.swing.JDialog {
         return true;
 
     }
+    private boolean validarLongitudCampos(String nombre, String resumen, String descripcion, String objetivo, String tiempoMaximo, String presupuesto, String fechaEntregaEsperada) {
+    if (nombre.length() > 100) {
+        Messages.showMessageDialog("El nombre del proyecto no debe exceder " + 100 + " caracteres.", "Atención");
+        txtNameProyect.requestFocus();
+        return false;
+    }
+    if (resumen.length() > 250) {
+        Messages.showMessageDialog("El resumen no debe exceder " + 250 + " caracteres.", "Atención");
+        txtOverView.requestFocus();
+        return false;
+    }
+    if (descripcion.length() > 500 ) {
+        Messages.showMessageDialog("La descripción no debe exceder " + 500 + " caracteres.", "Atención");
+        txtDescription.requestFocus();
+        return false;
+    }
+    if (objetivo.length() > 300 ) {
+        Messages.showMessageDialog("El objetivo no debe exceder " + 300 + " caracteres.", "Atención");
+        txtObjetivo.requestFocus();
+        return false;
+    }
+    if (tiempoMaximo.length() > 50) {
+        Messages.showMessageDialog("El tiempo máximo no debe exceder " + 50 + " caracteres.", "Atención");
+        txtMaximumTime.requestFocus();
+        return false;
+    }
+    if (presupuesto.length() > 20) {
+        Messages.showMessageDialog("El presupuesto no debe exceder " + 20 + " caracteres.", "Atención");
+        txtEstimatedBudge.requestFocus();
+        return false;
+    }
+    if (fechaEntregaEsperada.length() > 50) {
+        Messages.showMessageDialog("La fecha de entrega esperada no debe exceder " + 50 + " caracteres.", "Atención");
+        txteEstimatedDeliveryDate.requestFocus();
+        return false;
+    }
 
-    private boolean validarNumero(String numero) {
+    return true; // Si todos los campos cumplen con el límite, retorna true
+}
+
+    public boolean validarNumero(String numero) {
     if (numero == null || numero.trim().isEmpty()) {
         return false; // Si es nulo o vacío, no es válido
     }
@@ -384,13 +424,13 @@ public class GUIPostularProject extends javax.swing.JDialog {
         return false; 
     }
 }
-    private void mostrarAdv(JLabel lb) {
+    public void mostrarAdv(JLabel lb) {
         lb.setText("*"); // Color rojo para mayor visibilidad
         lb.setVisible(true);
 
     }
 
-    private void limpiarWarnings() {
+    public void limpiarWarnings() {
         lbWarningProjectName.setText("");
         lbWarningOverView.setText("");
         lbWarningDescription.setText("");

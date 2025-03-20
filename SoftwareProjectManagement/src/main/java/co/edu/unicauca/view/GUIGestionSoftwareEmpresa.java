@@ -314,17 +314,19 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         actualizarTabla();
     }//GEN-LAST:event_jButton4ActionPerformed
-    private void actualizarTabla() {
+    public void actualizarTabla() {
 
-        DefaultTableModel model = (DefaultTableModel) tblProyectos.getModel();
+        DefaultTableModel model = (DefaultTableModel) getTblProyectos().getModel();
         model.setRowCount(0); // Limpiar la tabla
-        Company com  = companyService.obtenerCompanyPorUser(user.getUsuario());
-        
-        
-        
+        Company com = companyService.obtenerCompanyPorUser(user.getUsuario());
+        if (com == null) {
+            Messages.showMessageDialog("No se encontró una empresa asociada al usuario.", "Información");
+            return; // Salir del método si no hay empresa asociada
+        }
+
         List<Project> proyectos = projectService.obtenerProyectosPorNit(com.getNit());
         if (proyectos == null || proyectos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No existen proyectos registrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            Messages.showMessageDialog("No existen proyectos registrados.", "Información");
             return; // Salir del método para no procesar datos vacíos
         }
         for (Project p : proyectos) {
@@ -337,26 +339,25 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
                 "postular",
                 p.getId(),});
         }
-        tblProyectos.revalidate();
-        tblProyectos.repaint();
-        ((DefaultTableModel) tblProyectos.getModel()).fireTableDataChanged();
+        getTblProyectos().revalidate();
+        getTblProyectos().repaint();
+        ((DefaultTableModel) getTblProyectos().getModel()).fireTableDataChanged();
     }
 
     /**
      *
      * Fija las columnas
      */
-    private void headersTable() {
-        tblProyectos.setModel(new javax.swing.table.DefaultTableModel(
+    public void headersTable() {
+        getTblProyectos().setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{"Título", "Empresa", "Fecha Entrega", "Estado", "Acción", "oculto"}));// Ocultar la columna del objeto Project
-        tblProyectos.getColumnModel().getColumn(5).setMinWidth(0);
-        tblProyectos.getColumnModel().getColumn(5).setMaxWidth(0);
-        tblProyectos.getColumnModel().getColumn(5).setPreferredWidth(0);
+        getTblProyectos().getColumnModel().getColumn(5).setMinWidth(0);
+        getTblProyectos().getColumnModel().getColumn(5).setMaxWidth(0);
+        getTblProyectos().getColumnModel().getColumn(5).setPreferredWidth(0);
 
-        tblProyectos.getColumnModel().getColumn(4).setCellRenderer(new renderButton("ver detalles"));
-        tblProyectos.getColumnModel().getColumn(4).setCellEditor(
-                ButtonEditorFactory.createButtonEditor("ver", tblProyectos, this, this, projectService));
+        getTblProyectos().getColumnModel().getColumn(4).setCellRenderer(new renderButton("ver detalles"));
+        getTblProyectos().getColumnModel().getColumn(4).setCellEditor(ButtonEditorFactory.createButtonEditor("ver", getTblProyectos(), this, this, projectService));
 
     }
     /**
@@ -390,5 +391,12 @@ public class GUIGestionSoftwareEmpresa extends javax.swing.JFrame implements IFr
     @Override
     public void onEventTriggered() {
         actualizarTabla();
+    }
+
+    /**
+     * @return the tblProyectos
+     */
+    public javax.swing.JTable getTblProyectos() {
+        return tblProyectos;
     }
 }

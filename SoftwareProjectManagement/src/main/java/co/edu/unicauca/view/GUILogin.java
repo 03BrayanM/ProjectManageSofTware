@@ -179,7 +179,7 @@ public class GUILogin extends javax.swing.JFrame {
         String contrasenia = new String(contrachars);
         String usuario = txtusario.getText().trim();
 
-        if (usuario.isEmpty()) {
+        if (usuario.isEmpty() || usuario == null) {
             Messages.showMessageDialog("Ambos Campos son Obligatorios", "Atención");
         } else {
             User result = Service.login(usuario, contrasenia);
@@ -201,7 +201,7 @@ public class GUILogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    private boolean verifyPassword(String rawPassword, String Passwordbd) {
+    public boolean verifyPassword(String rawPassword, String Passwordbd) {
         // Lógica para comparar hash
         return rawPassword.equals(Passwordbd);
     }
